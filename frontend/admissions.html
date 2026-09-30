@@ -1,0 +1,1689 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta
+    name="viewport"
+    content="width=device-width, initial-scale=1.0"
+  />
+
+  <title>Admissions Administration | School Management System</title>
+
+  <script src="https://cdn.tailwindcss.com"></script>
+
+  <script>
+    tailwind.config = {
+      theme: {
+        extend: {
+          colors: {
+            school: {
+              50: "#f0fdf4",
+              100: "#dcfce7",
+              600: "#16a34a",
+              700: "#15803d",
+              800: "#166534",
+              900: "#14532d"
+            }
+          }
+        }
+      }
+    };
+  </script>
+
+  <style>
+    html {
+      scroll-behavior: smooth;
+    }
+
+    body {
+      font-family: Arial, Helvetica, sans-serif;
+    }
+
+    .sidebar-link {
+      transition: all 0.2s ease;
+    }
+
+    .sidebar-link:hover {
+      background: #dcfce7;
+      color: #166534;
+    }
+
+    .sidebar-link.active {
+      background: #166534;
+      color: white;
+    }
+
+    .sidebar-link.active:hover {
+      background: #166534;
+      color: white;
+    }
+
+    .section {
+      scroll-margin-top: 90px;
+    }
+
+    .modal-backdrop {
+      background: rgba(0, 0, 0, 0.55);
+    }
+  </style>
+</head>
+
+<body class="bg-gray-100 text-gray-800">
+
+  <!-- =========================================================
+       MOBILE OVERLAY
+  ========================================================== -->
+
+  <div
+    id="mobileOverlay"
+    class="fixed inset-0 bg-black/40 z-30 hidden lg:hidden"
+    onclick="closeSidebar()"
+  ></div>
+
+
+  <!-- =========================================================
+       SIDEBAR
+  ========================================================== -->
+
+  <aside
+    id="sidebar"
+    class="fixed top-0 left-0 z-40 h-screen w-72 bg-white border-r border-gray-200 transform -translate-x-full lg:translate-x-0 transition-transform duration-300"
+  >
+
+    <div class="h-full flex flex-col">
+
+      <!-- SCHOOL BRAND -->
+
+      <div class="px-6 py-6 border-b border-gray-200">
+
+        <div class="flex items-center gap-3">
+
+          <div
+            class="w-11 h-11 rounded-xl bg-school-800 text-white flex items-center justify-center font-bold"
+          >
+            SMS
+          </div>
+
+          <div>
+            <h1 class="font-bold text-gray-900">
+              School Management
+            </h1>
+
+            <p class="text-xs text-gray-500">
+              Admissions Administration
+            </p>
+          </div>
+
+        </div>
+
+      </div>
+
+
+      <!-- NAVIGATION -->
+
+      <nav class="flex-1 overflow-y-auto px-4 py-5 space-y-1">
+
+        <p class="px-3 mb-2 text-xs font-semibold text-gray-400 uppercase">
+          Main
+        </p>
+
+        <a
+          href="#dashboard"
+          class="sidebar-link active flex items-center gap-3 px-3 py-3 rounded-lg"
+          onclick="setActive(this)"
+        >
+          <span>▦</span>
+          <span>Dashboard</span>
+        </a>
+
+
+        <p class="px-3 mt-6 mb-2 text-xs font-semibold text-gray-400 uppercase">
+          Students
+        </p>
+
+        <a
+          href="#students"
+          class="sidebar-link flex items-center gap-3 px-3 py-3 rounded-lg"
+          onclick="setActive(this)"
+        >
+          <span>👨‍🎓</span>
+          <span>Students</span>
+        </a>
+
+        <a
+          href="#enrollments"
+          class="sidebar-link flex items-center gap-3 px-3 py-3 rounded-lg"
+          onclick="setActive(this)"
+        >
+          <span>📚</span>
+          <span>Enrollments</span>
+        </a>
+
+
+        <p class="px-3 mt-6 mb-2 text-xs font-semibold text-gray-400 uppercase">
+          People
+        </p>
+
+        <a
+          href="#teachers"
+          class="sidebar-link flex items-center gap-3 px-3 py-3 rounded-lg"
+          onclick="setActive(this)"
+        >
+          <span>👨‍🏫</span>
+          <span>Teachers</span>
+        </a>
+
+        <a
+          href="#parents"
+          class="sidebar-link flex items-center gap-3 px-3 py-3 rounded-lg"
+          onclick="setActive(this)"
+        >
+          <span>👨‍👩‍👧</span>
+          <span>Parents</span>
+        </a>
+
+      </nav>
+
+
+      <!-- USER -->
+
+      <div class="border-t border-gray-200 p-4">
+
+        <div class="flex items-center gap-3">
+
+          <div
+            id="adminInitial"
+            class="w-10 h-10 rounded-full bg-school-100 text-school-800 flex items-center justify-center font-bold"
+          >
+            A
+          </div>
+
+          <div class="flex-1 min-w-0">
+
+            <p
+              id="adminName"
+              class="font-semibold text-sm truncate"
+            >
+              Admissions Admin
+            </p>
+
+            <p class="text-xs text-gray-500">
+              Admissions Administration
+            </p>
+
+          </div>
+
+          <button
+            type="button"
+            onclick="logout()"
+            class="text-gray-400 hover:text-red-600"
+            title="Logout"
+          >
+            ↪
+          </button>
+
+        </div>
+
+      </div>
+
+    </div>
+
+  </aside>
+
+
+  <!-- =========================================================
+       MAIN
+  ========================================================== -->
+
+  <main class="lg:ml-72 min-h-screen">
+
+    <!-- HEADER -->
+
+    <header class="sticky top-0 z-20 bg-white border-b border-gray-200">
+
+      <div class="px-4 sm:px-6 lg:px-8 py-4 flex items-center gap-4">
+
+        <button
+          type="button"
+          onclick="openSidebar()"
+          class="lg:hidden text-gray-600 text-xl"
+        >
+          ☰
+        </button>
+
+        <div class="flex-1">
+
+          <h2 class="text-xl font-bold text-gray-900">
+            Admissions Administration
+          </h2>
+
+          <p class="text-sm text-gray-500">
+            Manage students, enrollments, parents and teachers.
+          </p>
+
+        </div>
+
+        <span
+          id="currentDate"
+          class="hidden sm:block text-sm text-gray-500"
+        ></span>
+
+      </div>
+
+    </header>
+
+
+    <div class="p-4 sm:p-6 lg:p-8 space-y-8">
+
+
+      <!-- =====================================================
+           GLOBAL MESSAGES
+      ====================================================== -->
+
+      <div
+        id="successMessage"
+        class="hidden rounded-xl border border-green-200 bg-green-50 text-green-800 px-4 py-3"
+      ></div>
+
+      <div
+        id="errorMessage"
+        class="hidden rounded-xl border border-red-200 bg-red-50 text-red-800 px-4 py-3"
+      ></div>
+
+
+      <!-- =====================================================
+           DASHBOARD
+      ====================================================== -->
+
+      <section id="dashboard" class="section">
+
+        <div class="mb-6">
+
+          <h3 class="text-2xl font-bold text-gray-900">
+            Admissions Dashboard
+          </h3>
+
+          <p class="text-gray-500 mt-1">
+            Overview of admissions and student administration.
+          </p>
+
+        </div>
+
+
+        <div class="grid grid-cols-1 sm:grid-cols-2 xl:grid-cols-4 gap-5">
+
+          <div class="bg-white rounded-xl border p-5">
+            <p class="text-sm text-gray-500">
+              Students
+            </p>
+
+            <p
+              id="studentsCount"
+              class="text-3xl font-bold mt-2"
+            >
+              —
+            </p>
+          </div>
+
+
+          <div class="bg-white rounded-xl border p-5">
+            <p class="text-sm text-gray-500">
+              Active Enrollments
+            </p>
+
+            <p
+              id="enrollmentsCount"
+              class="text-3xl font-bold mt-2"
+            >
+              —
+            </p>
+          </div>
+
+
+          <div class="bg-white rounded-xl border p-5">
+            <p class="text-sm text-gray-500">
+              Teachers
+            </p>
+
+            <p
+              id="teachersCount"
+              class="text-3xl font-bold mt-2"
+            >
+              —
+            </p>
+          </div>
+
+
+          <div class="bg-white rounded-xl border p-5">
+            <p class="text-sm text-gray-500">
+              Parents
+            </p>
+
+            <p
+              id="parentsCount"
+              class="text-3xl font-bold mt-2"
+            >
+              —
+            </p>
+          </div>
+
+        </div>
+
+      </section>
+
+
+      <!-- =====================================================
+           STUDENTS
+      ====================================================== -->
+
+      <section
+        id="students"
+        class="section bg-white rounded-xl border"
+      >
+
+        <div class="p-6 border-b">
+
+          <div class="flex flex-col lg:flex-row lg:items-center lg:justify-between gap-4">
+
+            <div>
+
+              <h3 class="text-lg font-bold">
+                Student Admissions
+              </h3>
+
+              <p class="text-sm text-gray-500 mt-1">
+                Search, view, admit and update student records.
+              </p>
+
+            </div>
+
+            <button
+              type="button"
+              onclick="openAdmitStudentModal()"
+              class="px-4 py-2 rounded-lg bg-school-800 hover:bg-school-700 text-white font-semibold"
+            >
+              + Admit Student
+            </button>
+
+          </div>
+
+        </div>
+
+
+        <div class="p-5 flex flex-col sm:flex-row gap-3">
+
+          <input
+            id="studentSearch"
+            type="search"
+            placeholder="Search by admission number or student name..."
+            class="flex-1 border rounded-lg px-4 py-2"
+            onkeydown="handleStudentSearchKey(event)"
+          />
+
+          <button
+            type="button"
+            onclick="searchStudents()"
+            class="px-5 py-2 rounded-lg bg-gray-900 text-white"
+          >
+            Search
+          </button>
+
+          <button
+            type="button"
+            onclick="loadStudents()"
+            class="px-5 py-2 rounded-lg border border-gray-300"
+          >
+            Reset
+          </button>
+
+        </div>
+
+
+        <div class="overflow-x-auto">
+
+          <table class="w-full text-sm">
+
+            <thead class="bg-gray-50">
+
+              <tr>
+
+                <th class="text-left p-4">
+                  Admission No.
+                </th>
+
+                <th class="text-left p-4">
+                  Student
+                </th>
+
+                <th class="text-left p-4">
+                  Gender
+                </th>
+
+                <th class="text-left p-7">
+                  Prent
+                </th>
+
+            
+                <th class="text-right p-4">
+                  Action
+                </th>
+
+              </tr>
+
+            </thead>
+
+            <tbody id="studentsTable">
+
+              <tr>
+                <td
+                  colspan="5"
+                  class="p-8 text-center text-gray-500"
+                >
+                  Loading students...
+                </td>
+              </tr>
+
+            </tbody>
+
+          </table>
+
+        </div>
+
+      </section>
+
+
+      <!-- =====================================================
+           ENROLLMENTS
+      ====================================================== -->
+
+      <section
+        id="enrollments"
+        class="section bg-white rounded-xl border"
+      >
+
+        <div class="p-6 border-b">
+
+          <h3 class="text-lg font-bold">
+            Student Enrollment
+          </h3>
+
+          <p class="text-sm text-gray-500 mt-1">
+            Manage a selected student's academic enrollment.
+          </p>
+
+        </div>
+
+
+        <div
+          id="selectedStudentPanel"
+          class="hidden p-6"
+        >
+
+          <div class="bg-gray-50 rounded-xl p-5">
+
+            <div class="flex flex-col lg:flex-row lg:items-center lg:justify-between gap-4">
+
+              <div>
+
+                <p class="text-xs text-gray-500 uppercase font-semibold">
+                  Selected Student
+                </p>
+
+                <h4
+                  id="selectedStudentName"
+                  class="text-xl font-bold mt-1"
+                >
+                  —
+                </h4>
+
+                <p
+                  id="selectedStudentAdmission"
+                  class="text-sm text-gray-500 mt-1"
+                >
+                  —
+                </p>
+
+              </div>
+
+              <button
+                type="button"
+                onclick="openEnrollmentModal()"
+                class="px-4 py-2 rounded-lg bg-school-800 text-white"
+              >
+                + New Enrollment
+              </button>
+
+            </div>
+
+          </div>
+
+
+          <div class="mt-6 overflow-x-auto">
+
+            <table class="w-full text-sm">
+
+              <thead class="bg-gray-50">
+
+                <tr>
+
+                  <th class="p-4 text-left">
+                    Academic Year
+                  </th>
+
+                  <th class="p-4 text-left">
+                    Term
+                  </th>
+
+                  <th class="p-4 text-left">
+                    Grade
+                  </th>
+
+                  <th class="p-4 text-left">
+                    Stream
+                  </th>
+
+                  
+
+                  <th class="p-4 text-right">
+                    Action
+                  </th>
+
+                </tr>
+
+              </thead>
+
+              <tbody id="enrollmentsTable">
+
+                <tr>
+                  <td
+                    colspan="6"
+                    class="p-8 text-center text-gray-500"
+                  >
+                    Select a student to view enrollments.
+                  </td>
+                </tr>
+
+              </tbody>
+
+            </table>
+
+          </div>
+
+        </div>
+
+
+        <div
+          id="noSelectedStudent"
+          class="p-10 text-center text-gray-500"
+        >
+          Select a student from the Students section.
+        </div>
+
+      </section>
+
+
+      <!-- =====================================================
+           TEACHERS
+      ====================================================== -->
+
+      <section
+        id="teachers"
+        class="section bg-white rounded-xl border"
+      >
+
+        <div class="p-6 border-b">
+
+          <div class="flex flex-col lg:flex-row lg:items-center lg:justify-between gap-4">
+
+            <div>
+
+              <h3 class="text-lg font-bold">
+                Teachers
+              </h3>
+
+              <p class="text-sm text-gray-500 mt-1">
+                View, create and update teacher accounts.
+              </p>
+
+            </div>
+
+            <button
+              type="button"
+              onclick="openTeacherModal()"
+              class="px-4 py-2 rounded-lg bg-school-800 text-white font-semibold"
+            >
+              + Create Teacher
+            </button>
+
+          </div>
+
+        </div>
+
+
+        <div class="p-5 flex flex-col sm:flex-row gap-3">
+
+          <input
+            id="teacherSearch"
+            type="search"
+            placeholder="Search teachers..."
+            class="flex-1 border rounded-lg px-4 py-2"
+            onkeydown="handleTeacherSearchKey(event)"
+          />
+
+          <button
+            type="button"
+            onclick="searchTeachers()"
+            class="px-5 py-2 rounded-lg bg-gray-900 text-white"
+          >
+            Search
+          </button>
+
+          <button
+            type="button"
+            onclick="loadTeachers()"
+            class="px-5 py-2 rounded-lg border border-gray-300"
+          >
+            Reset
+          </button>
+
+        </div>
+
+
+        <div class="overflow-x-auto">
+
+          <table class="w-full text-sm">
+
+            <thead class="bg-gray-50">
+
+              <tr>
+
+                <th class="p-4 text-left">
+                  Employee No.
+                </th>
+
+                <th class="p-4 text-left">
+                  Teacher
+                </th>
+
+                <th class="p-4 text-left">
+                  Email
+                </th>
+
+                <th class="p-4 text-left">
+                  Phone
+                </th>
+
+                <th class="p-4 text-left">
+                  Status
+                </th>
+
+                <th class="p-4 text-right">
+                  Action
+                </th>
+
+              </tr>
+
+            </thead>
+
+            <tbody id="teachersTable">
+
+              <tr>
+                <td
+                  colspan="6"
+                  class="p-8 text-center text-gray-500"
+                >
+                  Loading teachers...
+                </td>
+              </tr>
+
+            </tbody>
+
+          </table>
+
+        </div>
+
+      </section>
+
+
+      <!-- =====================================================
+           PARENTS
+      ====================================================== -->
+
+      <section
+        id="parents"
+        class="section bg-white rounded-xl border"
+      >
+
+        <div class="p-6 border-b">
+
+          <h3 class="text-lg font-bold">
+            Parent Accounts
+          </h3>
+
+          <p class="text-sm text-gray-500 mt-1">
+            Create parent accounts and manage their links to students.
+          </p>
+
+        </div>
+
+        <div class="p-5 flex flex-col sm:flex-row gap-3">
+
+          <input
+            id="parentSearch"
+            type="search"
+            placeholder="Search by name or phone number..."
+            class="flex-1 border rounded-lg px-4 py-2"
+            onkeydown="handleParentsSearchKey(event)"
+          />
+
+          <button
+            type="button"
+            onclick="searchParents()"
+            class="px-5 py-2 rounded-lg bg-gray-900 text-white"
+          >
+            Search
+          </button>
+
+          <button
+            type="button"
+            onclick="loadParents()"
+            class="px-5 py-2 rounded-lg border border-gray-300"
+          >
+            Reset
+          </button>
+
+        </div>
+
+        <div class="overflow-x-auto">
+
+          <table class="w-full text-sm">
+
+            <thead class="bg-gray-50">
+
+              <tr>
+
+                <th class="text-left p-4">
+                  Email/Phone.
+                </th>
+
+                <th class="text-left p-4">
+                  Parent
+                </th>
+
+                <th class="text-left p-4">
+                  Gender
+                </th>
+
+                <th class="text-left p-4">
+                  student
+                </th>
+
+                <th class="text-left p-4">
+                  Status
+                </th>
+
+                <th class="text-right p-4">
+                  Action
+                </th>
+
+              </tr>
+
+            </thead>
+
+            <tbody id="parentsTable">
+
+              <tr>
+                <td
+                  colspan="6"
+                  class="p-8 text-center text-gray-500"
+                >
+                  Loading parents...
+                </td>
+              </tr>
+
+            </tbody>
+
+          </table>
+
+        </div>
+
+
+        <div class="p-6">
+
+          <div class="max-w-3xl">
+
+            <div class="mb-5">
+
+              <label class="block text-sm font-semibold mb-2">
+                Select Student
+              </label>
+
+              <select
+                id="parentStudentSelect"
+                class="w-full border rounded-lg px-4 py-2"
+                onchange="loadStudentParentsFromSelect()"
+              >
+
+                <option value="">
+                  Select a student
+                </option>
+
+              </select>
+
+            </div>
+
+
+            <div
+              id="studentParentsContainer"
+              class="hidden"
+            >
+
+              <div class="flex items-center justify-between mb-4">
+
+                <div>
+
+                  <h4 class="font-bold">
+                    Linked Parents
+                  </h4>
+
+                  <p class="text-sm text-gray-500">
+                    Parents currently linked to this student.
+                  </p>
+
+                </div>
+
+                <button
+                  type="button"
+                  onclick="openParentModal()"
+                  class="px-4 py-2 rounded-lg bg-school-800 text-white"
+                >
+                  + Create Parent
+                </button>
+
+              </div>
+
+
+              <div
+                id="studentParentsList"
+                class="space-y-3"
+              ></div>
+
+              
+
+            </div>
+
+          </div>
+
+        </div>
+
+      </section>
+
+    </div>
+
+  </main>
+
+
+  <!-- =========================================================
+       ADMIT STUDENT MODAL
+  ========================================================== -->
+
+  <div
+    id="admitStudentModal"
+    class="fixed inset-0 z-50 hidden modal-backdrop items-center justify-center p-4"
+  >
+
+    <div class="bg-white rounded-2xl w-full max-w-4xl max-h-[90vh] overflow-y-auto">
+
+      <div class="p-6 border-b flex items-center justify-between">
+
+        <div>
+          <h3 class="text-xl font-bold">
+            Admit Student
+          </h3>
+
+          <p class="text-sm text-gray-500">
+            Create the student record and initial enrollment.
+          </p>
+        </div>
+
+        <button
+          type="button"
+          onclick="closeModal('admitStudentModal')"
+          class="text-gray-400 text-2xl"
+        >
+          ×
+        </button>
+
+      </div>
+
+
+      <form
+        id="admitStudentForm"
+        class="p-6 space-y-6"
+        onsubmit="submitAdmitStudent(event)"
+      >
+
+        <div>
+
+          <h4 class="font-bold mb-4">
+            Student Information
+          </h4>
+
+          <div class="grid grid-cols-1 md:grid-cols-2 gap-4">
+
+            <div>
+              <label class="label">Admission Number *</label>
+              <input
+                id="admissionNumber"
+                required
+                class="input"
+              />
+            </div>
+
+            <div>
+              <label class="label">Gender</label>
+              <select id="studentGender" class="input">
+                <option value="">Select gender</option>
+                <option value="MALE">Male</option>
+                <option value="FEMALE">Female</option>
+                <option value="OTHER">Other</option>
+              </select>
+            </div>
+
+            <div>
+              <label class="label">First Name *</label>
+              <input
+                id="studentFirstName"
+                required
+                class="input"
+              />
+            </div>
+
+            <div>
+              <label class="label">Middle Name</label>
+              <input
+                id="studentMiddleName"
+                class="input"
+              />
+            </div>
+
+            <div>
+              <label class="label">Last Name *</label>
+              <input
+                id="studentLastName"
+                required
+                class="input"
+              />
+            </div>
+
+            <div>
+              <label class="label">Date of Birth</label>
+              <input
+                id="studentDateOfBirth"
+                type="date"
+                class="input"
+              />
+            </div>
+
+          </div>
+
+        </div>
+
+
+        <div class="border-t pt-6">
+
+          <h4 class="font-bold mb-4">
+            Initial Enrollment
+          </h4>
+
+          <div class="grid grid-cols-1 md:grid-cols-2 gap-4">
+
+          <div>
+  <label class="label">
+    Academic Year *
+  </label>
+
+  <select
+    id="admissionAcademicYearId"
+    required
+    class="input"
+    onchange="handleAdmissionAcademicYearChange()"
+  >
+    <option value="">
+      Select academic year
+    </option>
+  </select>
+</div>
+
+
+<div>
+  <label class="label">
+    Term
+  </label>
+
+  <select
+    id="admissionTermId"
+    class="input"
+    disabled
+  >
+    <option value="">
+      Select term
+    </option>
+  </select>
+</div>
+
+
+<div>
+  <label class="label">
+    Grade *
+  </label>
+
+  <select
+    id="admissionGradeId"
+    required
+    class="input"
+    onchange="handleAdmissionGradeChange()"
+  >
+    <option value="">
+      Select grade
+    </option>
+  </select>
+</div>
+
+
+<div>
+  <label class="label">
+    Stream
+  </label>
+
+  <select
+    id="admissionStreamId"
+    class="input"
+    disabled
+  >
+    <option value="">
+      Select stream
+    </option>
+  </select>
+</div>  
+
+            <div>
+              <label class="label">
+                Admission Date
+              </label>
+
+              <input
+                id="admissionDate"
+                type="date"
+                class="input"
+              />
+            </div>
+
+          </div>
+
+        </div>
+
+
+        <div class="flex justify-end gap-3 border-t pt-5">
+
+          <button
+            type="button"
+            onclick="closeModal('admitStudentModal')"
+            class="px-5 py-2.5 rounded-lg border"
+          >
+            Cancel
+          </button>
+
+          <button
+            id="admitStudentButton"
+            type="submit"
+            class="px-5 py-2.5 rounded-lg bg-school-800 text-white font-semibold"
+          >
+            Admit Student
+          </button>
+
+        </div>
+
+      </form>
+
+    </div>
+
+  </div>
+
+
+  <!-- =========================================================
+       TEACHER MODAL
+  ========================================================== -->
+
+  <div
+    id="teacherModal"
+    class="fixed inset-0 z-50 hidden modal-backdrop items-center justify-center p-4"
+  >
+
+    <div class="bg-white rounded-2xl w-full max-w-2xl max-h-[90vh] overflow-y-auto">
+
+      <div class="p-6 border-b flex justify-between items-center">
+
+        <div>
+
+          <h3
+            id="teacherModalTitle"
+            class="text-xl font-bold"
+          >
+            Create Teacher
+          </h3>
+
+          <p class="text-sm text-gray-500">
+            Create or update a teacher account.
+          </p>
+
+        </div>
+
+        <button
+          type="button"
+          onclick="closeModal('teacherModal')"
+          class="text-gray-400 text-2xl"
+        >
+          ×
+        </button>
+
+      </div>
+
+
+      <form
+        id="teacherForm"
+        class="p-6 space-y-5"
+        onsubmit="submitTeacher(event)"
+      >
+
+        <input
+          id="teacherId"
+          type="hidden"
+        />
+
+        <div class="grid grid-cols-1 md:grid-cols-2 gap-4">
+
+          <div>
+            <label class="label">
+              First Name *
+            </label>
+
+            <input
+              id="teacherFirstName"
+              required
+              class="input"
+            />
+          </div>
+
+          <div>
+            <label class="label">
+              Middle Name
+            </label>
+
+            <input
+              id="teacherMiddleName"
+              class="input"
+            />
+          </div>
+
+          <div>
+            <label class="label">
+              Last Name *
+            </label>
+
+            <input
+              id="teacherLastName"
+              required
+              class="input"
+            />
+          </div>
+
+          <div>
+            <label class="label">
+              Employee Number
+            </label>
+
+            <input
+              id="teacherEmployeeNumber"
+              class="input"
+            />
+          </div>
+
+          <div>
+            <label class="label">
+              Email
+            </label>
+
+            <input
+              id="teacherEmail"
+              type="email"
+              class="input"
+            />
+          </div>
+
+          <div>
+            <label class="label">
+              Phone
+            </label>
+
+            <input
+              id="teacherPhone"
+              class="input"
+            />
+          </div>
+
+          <div id="teacherPasswordContainer">
+
+            <label class="label">
+              Password *
+            </label>
+
+            <input
+              id="teacherPassword"
+              type="password"
+              class="input"
+            />
+
+          </div>
+
+        </div>
+
+
+        <div
+          id="teacherPasswordHelp"
+          class="text-xs text-gray-500"
+        >
+          Password is required when creating a teacher account.
+        </div>
+
+
+        <div class="flex justify-end gap-3 border-t pt-5">
+
+          <button
+            type="button"
+            onclick="closeModal('teacherModal')"
+            class="px-5 py-2.5 rounded-lg border"
+          >
+            Cancel
+          </button>
+
+          <button
+            id="teacherSubmitButton"
+            type="submit"
+            class="px-5 py-2.5 rounded-lg bg-school-800 text-white font-semibold"
+          >
+            Create Teacher
+          </button>
+
+        </div>
+
+      </form>
+
+    </div>
+
+  </div>
+
+
+  <!-- =========================================================
+       ENROLLMENT MODAL
+  ========================================================== -->
+
+  <div
+    id="enrollmentModal"
+    class="fixed inset-0 z-50 hidden modal-backdrop items-center justify-center p-4"
+  >
+
+    <div class="bg-white rounded-2xl w-full max-w-2xl">
+
+      <div class="p-6 border-b flex justify-between">
+
+        <div>
+
+          <h3 class="text-xl font-bold">
+            Create Enrollment
+          </h3>
+
+          <p
+            id="enrollmentStudentLabel"
+            class="text-sm text-gray-500"
+          ></p>
+
+        </div>
+
+        <button
+          type="button"
+          onclick="closeModal('enrollmentModal')"
+          class="text-gray-400 text-2xl"
+        >
+          ×
+        </button>
+
+      </div>
+
+
+      <form
+        class="p-6 space-y-5"
+        onsubmit="submitEnrollment(event)"
+      >
+
+        <div class="grid grid-cols-1 md:grid-cols-2 gap-4">
+
+          <div>
+  <label class="label">
+    Academic Year *
+  </label>
+
+  <select
+    id="enrollmentAcademicYearId"
+    required
+    class="input"
+    onchange="handleEnrollmentAcademicYearChange()"
+  >
+    <option value="">
+      Select academic year
+    </option>
+  </select>
+</div>
+
+
+<div>
+  <label class="label">
+    Term
+  </label>
+
+  <select
+    id="enrollmentTermId"
+    class="input"
+    disabled
+  >
+    <option value="">
+      Select term
+    </option>
+  </select>
+</div>
+
+
+<div>
+  <label class="label">
+    Grade *
+  </label>
+
+  <select
+    id="enrollmentGradeId"
+    required
+    class="input"
+    onchange="handleEnrollmentGradeChange()"
+  >
+    <option value="">
+      Select grade
+    </option>
+  </select>
+</div>
+
+
+<div>
+  <label class="label">
+    Stream
+  </label>
+
+  <select
+    id="enrollmentStreamId"
+    class="input"
+    disabled
+  >
+    <option value="">
+      Select stream
+    </option>
+  </select>
+</div>
+          <div>
+            <label class="label">
+              Admission Date
+            </label>
+
+            <input
+              id="enrollmentAdmissionDate"
+              type="date"
+              class="input"
+            />
+          </div>
+
+        </div>
+
+
+        <div class="flex justify-end gap-3 border-t pt-5">
+
+          <button
+            type="button"
+            onclick="closeModal('enrollmentModal')"
+            class="px-5 py-2.5 rounded-lg border"
+          >
+            Cancel
+          </button>
+
+          <button
+            type="submit"
+            class="px-5 py-2.5 rounded-lg bg-school-800 text-white font-semibold"
+          >
+            Create Enrollment
+          </button>
+
+        </div>
+
+      </form>
+
+    </div>
+
+  </div>
+
+
+  <!-- =========================================================
+       PARENT MODAL
+  ========================================================== -->
+
+  <div
+    id="parentModal"
+    class="fixed inset-0 z-50 hidden modal-backdrop items-center justify-center p-4"
+  >
+
+    <div class="bg-white rounded-2xl w-full max-w-2xl max-h-[90vh] overflow-y-auto">
+
+      <div class="p-6 border-b flex justify-between">
+
+        <div>
+
+          <h3 class="text-xl font-bold">
+            Create Parent Account
+          </h3>
+
+          <p
+            id="parentStudentLabel"
+            class="text-sm text-gray-500"
+          ></p>
+
+        </div>
+
+        <button
+          type="button"
+          onclick="closeModal('parentModal')"
+          class="text-gray-400 text-2xl"
+        >
+          ×
+        </button>
+
+      </div>
+
+
+      <form
+        class="p-6 space-y-5"
+        onsubmit="submitParent(event)"
+      >
+
+        <div class="grid grid-cols-1 md:grid-cols-2 gap-4">
+
+          <div>
+            <label class="label">
+              First Name *
+            </label>
+
+            <input
+              id="parentFirstName"
+              required
+              class="input"
+            />
+          </div>
+
+          <div>
+            <label class="label">
+              Middle Name
+            </label>
+
+            <input
+              id="parentMiddleName"
+              class="input"
+            />
+          </div>
+
+          <div>
+            <label class="label">
+              Last Name *
+            </label>
+
+            <input
+              id="parentLastName"
+              required
+              class="input"
+            />
+          </div>
+
+          <div>
+            <label class="label">
+              Relationship
+            </label>
+
+            <input
+              id="parentRelationship"
+              placeholder="Mother, Father, Guardian..."
+              class="input"
+            />
+          </div>
+
+          <div>
+            <label class="label">
+              Email
+            </label>
+
+            <input
+              id="parentEmail"
+              type="email"
+              class="input"
+            />
+          </div>
+
+          <div>
+            <label class="label">
+              Phone
+            </label>
+
+            <input
+              id="parentPhone"
+              class="input"
+            />
+          </div>
+
+          <div>
+            <label class="label">
+              Password *
+            </label>
+
+            <input
+              id="parentPassword"
+              type="password"
+              required
+              class="input"
+            />
+          </div>
+
+          <div class="flex items-center gap-3 pt-7">
+
+            <input
+              id="parentIsPrimary"
+              type="checkbox"
+              class="w-4 h-4"
+            />
+
+            <label
+              for="parentIsPrimary"
+              class="text-sm"
+            >
+              Primary parent
+            </label>
+
+          </div>
+
+        </div>
+
+
+        <div class="flex justify-end gap-3 border-t pt-5">
+
+          <button
+            type="button"
+            onclick="closeModal('parentModal')"
+            class="px-5 py-2.5 rounded-lg border"
+          >
+            Cancel
+          </button>
+
+          <button
+            type="submit"
+            class="px-5 py-2.5 rounded-lg bg-school-800 text-white font-semibold"
+          >
+            Create Parent Account
+          </button>
+
+        </div>
+
+      </form>
+
+    </div>
+
+  </div>
+
+
+  <!-- =========================================================
+       COMMON FIELD STYLES
+  ========================================================== -->
+
+  <style>
+    .label {
+      display: block;
+      font-size: 0.875rem;
+      font-weight: 600;
+      margin-bottom: 0.5rem;
+    }
+
+    .input {
+      width: 100%;
+      border: 1px solid #d1d5db;
+      border-radius: 0.5rem;
+      padding: 0.625rem 0.75rem;
+      outline: none;
+    }
+
+    .input:focus {
+      border-color: #166534;
+      box-shadow: 0 0 0 2px rgba(22, 101, 52, 0.12);
+    }
+
+    .help {
+      margin-top: 0.25rem;
+      font-size: 0.75rem;
+      color: #6b7280;
+    }
+  </style>
+
+
+  <script src="./admissions.js"></script>
+
+</body>
+</html>

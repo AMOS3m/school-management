@@ -1,0 +1,334 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+  <meta charset="UTF-8" />
+
+  <meta
+    name="viewport"
+    content="width=device-width, initial-scale=1.0"
+  />
+
+  <title>Create Administrator</title>
+
+  <script src="https://cdn.tailwindcss.com"></script>
+</head>
+
+
+<body class="min-h-screen bg-slate-100 text-slate-800">
+
+  <!-- HEADER -->
+  <header class="border-b border-slate-200 bg-white">
+
+    <div
+      class="mx-auto flex max-w-5xl items-center justify-between px-4 py-5 sm:px-6"
+    >
+
+      <div>
+        <p class="text-xs font-semibold uppercase tracking-wider text-slate-500">
+          School Management
+        </p>
+
+        <h1 class="mt-1 text-xl font-bold text-slate-900">
+          Administrator Creation
+        </h1>
+      </div>
+
+
+      <button
+        type="button"
+        onclick="goBackToDashboard()"
+        class="rounded-xl border border-slate-200 px-4 py-2 text-sm font-semibold text-slate-700 hover:bg-slate-50"
+      >
+        ← Back
+      </button>
+
+    </div>
+
+  </header>
+
+
+  <!-- MAIN -->
+  <main class="mx-auto max-w-5xl px-4 py-8 sm:px-6">
+
+    <!-- PAGE INTRO -->
+    <div class="mb-8">
+
+      <p class="text-sm font-medium text-slate-500">
+        Head of Institution
+      </p>
+
+      <h2 class="mt-1 text-2xl font-bold text-slate-900 sm:text-3xl">
+        Create Administrator
+      </h2>
+
+      <p class="mt-2 max-w-2xl text-sm text-slate-500">
+        Create the administrative accounts required to operate the school.
+        You can create Academic, Finance and Admissions administrators from
+        this page.
+      </p>
+
+    </div>
+
+
+    <!-- ADMIN TYPE -->
+    <div class="mb-6 rounded-2xl border border-slate-200 bg-white p-6 shadow-sm">
+
+      <label
+        for="adminRole"
+        class="block text-sm font-semibold text-slate-700"
+      >
+        Administrator Role
+      </label>
+
+      <select
+        id="adminRole"
+        class="mt-2 w-full rounded-xl border border-slate-300 bg-white px-4 py-3 text-sm outline-none focus:border-slate-900 focus:ring-2 focus:ring-slate-200"
+      >
+
+        <option value="ACADEMIC_ADMIN">
+          Academic Admin
+        </option>
+
+        <option value="FINANCE_ADMIN">
+          Finance Admin
+        </option>
+
+        <option value="ADMISSIONS_ADMIN">
+          Admissions Admin
+        </option>
+
+      </select>
+
+    </div>
+
+
+    <!-- FORM -->
+    <form
+      id="adminCreationForm"
+      class="rounded-2xl border border-slate-200 bg-white p-6 shadow-sm sm:p-8"
+    >
+
+      <div class="mb-6">
+
+        <h3 class="text-lg font-bold text-slate-900">
+          Administrator Details
+        </h3>
+
+        <p class="mt-1 text-sm text-slate-500">
+          Enter the details for the administrator account.
+        </p>
+
+      </div>
+
+
+      <!-- NAMES -->
+      <div class="grid gap-5 md:grid-cols-3">
+
+        <div>
+
+          <label
+            for="firstName"
+            class="block text-sm font-semibold text-slate-700"
+          >
+            First Name *
+          </label>
+
+          <input
+            id="firstName"
+            name="firstName"
+            type="text"
+            required
+            class="mt-2 w-full rounded-xl border border-slate-300 px-4 py-3 text-sm outline-none focus:border-slate-900 focus:ring-2 focus:ring-slate-200"
+            placeholder="First name"
+          />
+
+        </div>
+
+
+        <div>
+
+          <label
+            for="middleName"
+            class="block text-sm font-semibold text-slate-700"
+          >
+            Middle Name
+          </label>
+
+          <input
+            id="middleName"
+            name="middleName"
+            type="text"
+            class="mt-2 w-full rounded-xl border border-slate-300 px-4 py-3 text-sm outline-none focus:border-slate-900 focus:ring-2 focus:ring-slate-200"
+            placeholder="Middle name"
+          />
+
+        </div>
+
+
+        <div>
+
+          <label
+            for="lastName"
+            class="block text-sm font-semibold text-slate-700"
+          >
+            Last Name *
+          </label>
+
+          <input
+            id="lastName"
+            name="lastName"
+            type="text"
+            required
+            class="mt-2 w-full rounded-xl border border-slate-300 px-4 py-3 text-sm outline-none focus:border-slate-900 focus:ring-2 focus:ring-slate-200"
+            placeholder="Last name"
+          />
+
+        </div>
+
+      </div>
+
+
+      <!-- CONTACT -->
+      <div class="mt-5 grid gap-5 md:grid-cols-2">
+
+        <div>
+
+          <label
+            for="email"
+            class="block text-sm font-semibold text-slate-700"
+          >
+            Email *
+          </label>
+
+          <input
+            id="email"
+            name="email"
+            type="email"
+            required
+            class="mt-2 w-full rounded-xl border border-slate-300 px-4 py-3 text-sm outline-none focus:border-slate-900 focus:ring-2 focus:ring-slate-200"
+            placeholder="admin@school.ac.ke"
+          />
+
+        </div>
+
+
+        <div>
+
+          <label
+            for="phone"
+            class="block text-sm font-semibold text-slate-700"
+          >
+            Phone
+          </label>
+
+          <input
+            id="phone"
+            name="phone"
+            type="tel"
+            class="mt-2 w-full rounded-xl border border-slate-300 px-4 py-3 text-sm outline-none focus:border-slate-900 focus:ring-2 focus:ring-slate-200"
+            placeholder="07XXXXXXXX"
+          />
+
+        </div>
+
+      </div>
+
+
+      <!-- PASSWORD -->
+      <div class="mt-5 grid gap-5 md:grid-cols-2">
+
+        <div>
+
+          <label
+            for="password"
+            class="block text-sm font-semibold text-slate-700"
+          >
+            Password *
+          </label>
+
+          <input
+            id="password"
+            name="password"
+            type="password"
+            minlength="8"
+            required
+            class="mt-2 w-full rounded-xl border border-slate-300 px-4 py-3 text-sm outline-none focus:border-slate-900 focus:ring-2 focus:ring-slate-200"
+            placeholder="Minimum 8 characters"
+          />
+
+        </div>
+
+
+        <div>
+
+          <label
+            for="confirmPassword"
+            class="block text-sm font-semibold text-slate-700"
+          >
+            Confirm Password *
+          </label>
+
+          <input
+            id="confirmPassword"
+            name="confirmPassword"
+            type="password"
+            minlength="8"
+            required
+            class="mt-2 w-full rounded-xl border border-slate-300 px-4 py-3 text-sm outline-none focus:border-slate-900 focus:ring-2 focus:ring-slate-200"
+            placeholder="Repeat password"
+          />
+
+        </div>
+
+      </div>
+
+
+      <!-- ERROR -->
+      <div
+        id="formError"
+        class="mt-5 hidden rounded-xl bg-red-50 px-4 py-3 text-sm font-medium text-red-700"
+      ></div>
+
+
+      <!-- SUCCESS -->
+      <div
+        id="formSuccess"
+        class="mt-5 hidden rounded-xl bg-green-50 px-4 py-3 text-sm font-medium text-green-700"
+      ></div>
+
+
+      <!-- BUTTONS -->
+      <div
+        class="mt-8 flex flex-col-reverse gap-3 sm:flex-row sm:justify-end"
+      >
+
+        <button
+          type="button"
+          onclick="goBackToDashboard()"
+          class="rounded-xl border border-slate-300 px-5 py-3 text-sm font-semibold text-slate-700 hover:bg-slate-50"
+        >
+          Cancel
+        </button>
+
+
+        <button
+          id="createAdminButton"
+          type="submit"
+          class="rounded-xl bg-slate-900 px-5 py-3 text-sm font-semibold text-white hover:bg-slate-800"
+        >
+          Create Administrator
+        </button>
+
+      </div>
+
+    </form>
+
+  </main>
+
+
+  <script src="./admin-creation.js"></script>
+
+</body>
+
+</html>

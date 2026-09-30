@@ -1,0 +1,1657 @@
+
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+
+  <title>Head of Institution Dashboard</title>
+
+  <!-- Tailwind CDN for development -->
+  <script src="https://cdn.tailwindcss.com"></script>
+
+  <style>
+    html {
+      scroll-behavior: smooth;
+    }
+
+    body {
+      font-family: Inter, system-ui, -apple-system, BlinkMacSystemFont,
+        "Segoe UI", sans-serif;
+    }
+
+    .sidebar-transition {
+      transition: transform 0.25s ease;
+    }
+
+    .overlay-transition {
+      transition: opacity 0.25s ease;
+    }
+
+    .stat-card {
+      transition: transform 0.2s ease, box-shadow 0.2s ease;
+    }
+
+    .stat-card:hover {
+      transform: translateY(-2px);
+    }
+  </style>
+</head>
+
+<body class="bg-slate-100 text-slate-800">
+
+  <!-- =========================================================
+       MOBILE OVERLAY
+  ========================================================== -->
+  <div
+    id="sidebarOverlay"
+    class="fixed inset-0 z-40 hidden bg-black/50 opacity-0 overlay-transition lg:hidden"
+    onclick="closeSidebar()"
+  ></div>
+
+
+  <!-- =========================================================
+       SIDEBAR
+  ========================================================== -->
+  <aside
+    id="sidebar"
+    class="fixed inset-y-0 left-0 z-50 flex w-72 -translate-x-full flex-col bg-slate-900 text-white sidebar-transition lg:translate-x-0"
+  >
+
+    <!-- Logo -->
+    <div class="flex h-20 items-center justify-between border-b border-slate-700 px-6">
+
+      <div>
+        <p class="text-xs font-semibold uppercase tracking-wider text-slate-400">
+          School Management
+        </p>
+
+        <h1 class="mt-1 text-lg font-bold">
+          Head of Institution
+        </h1>
+      </div>
+
+      <button
+        onclick="closeSidebar()"
+        class="rounded-lg p-2 text-slate-400 hover:bg-slate-800 hover:text-white lg:hidden"
+        aria-label="Close menu"
+      >
+        ✕
+      </button>
+
+    </div>
+
+
+    <!-- Navigation -->
+    <nav class="flex-1 overflow-y-auto px-4 py-5">
+
+      <p class="mb-2 px-3 text-xs font-semibold uppercase tracking-wider text-slate-500">
+        Main
+      </p>
+
+      <button
+        onclick="showSection('dashboard')"
+        class="nav-item flex w-full items-center gap-3 rounded-xl bg-slate-800 px-3 py-3 text-left text-sm font-medium"
+        data-section="dashboard"
+      >
+        <span>📊</span>
+        <span>Dashboard</span>
+      </button>
+
+
+      <p class="mb-2 mt-7 px-3 text-xs font-semibold uppercase tracking-wider text-slate-500">
+        Administration
+      </p>
+
+      <button
+        onclick="showSection('admins')"
+        class="nav-item flex w-full items-center gap-3 rounded-xl px-3 py-3 text-left text-sm font-medium text-slate-300 hover:bg-slate-800"
+        data-section="admins"
+      >
+        <span>👥</span>
+        <span>Manage Admins</span>
+      </button>
+
+      <button
+        onclick="showSection('teachers')"
+        class="nav-item flex w-full items-center gap-3 rounded-xl px-3 py-3 text-left text-sm font-medium text-slate-300 hover:bg-slate-800"
+        data-section="teachers"
+      >
+        <span>👨‍🏫</span>
+        <span>Manage Teachers</span>
+      </button>
+
+      <button
+        onclick="showSection('parents')"
+        class="nav-item flex w-full items-center gap-3 rounded-xl px-3 py-3 text-left text-sm font-medium text-slate-300 hover:bg-slate-800"
+        data-section="parents"
+      >
+        <span>👨‍👩‍👧‍👦</span>
+        <span>Parents</span>
+      </button>
+
+      <button
+        onclick="showSection('students')"
+        class="nav-item flex w-full items-center gap-3 rounded-xl px-3 py-3 text-left text-sm font-medium text-slate-300 hover:bg-slate-800"
+        data-section="students"
+      >
+        <span>🎓</span>
+        <span>Students</span>
+      </button>
+
+
+      <p class="mb-2 mt-7 px-3 text-xs font-semibold uppercase tracking-wider text-slate-500">
+        Academic
+      </p>
+
+      <button
+        onclick="goToAcademic()"
+        class="flex w-full items-center gap-3 rounded-xl px-3 py-3 text-left text-sm font-medium text-slate-300 hover:bg-slate-800"
+      >
+        <span>📚</span>
+        <span>Academic Administration</span>
+      </button>
+
+      <button
+        onclick="showSection('classes')"
+        class="nav-item flex w-full items-center gap-3 rounded-xl px-3 py-3 text-left text-sm font-medium text-slate-300 hover:bg-slate-800"
+        data-section="classes"
+      >
+        <span>🏫</span>
+        <span>Classes & Streams</span>
+      </button>
+
+      <button
+        onclick="showSection('reports')"
+        class="nav-item flex w-full items-center gap-3 rounded-xl px-3 py-3 text-left text-sm font-medium text-slate-300 hover:bg-slate-800"
+        data-section="reports"
+      >
+        <span>📄</span>
+        <span>Report Cards</span>
+      </button>
+
+
+      <p class="mb-2 mt-7 px-3 text-xs font-semibold uppercase tracking-wider text-slate-500">
+        School
+      </p>
+
+      <button
+        onclick="showSection('attendance')"
+        class="nav-item flex w-full items-center gap-3 rounded-xl px-3 py-3 text-left text-sm font-medium text-slate-300 hover:bg-slate-800"
+        data-section="attendance"
+      >
+        <span>📝</span>
+        <span>Attendance</span>
+      </button>
+
+
+     <button
+  type="button"
+  onclick="showSection('fees')"
+  class="nav-item flex w-full items-center gap-3 rounded-xl px-3 py-3 text-left text-sm font-medium text-slate-300 hover:bg-slate-800"
+  data-section="fees"
+>
+  <span>💰</span>
+  <span>Fees & Finance</span>
+</button> 
+
+
+      <button
+        onclick="showSection('settings')"
+        class="nav-item flex w-full items-center gap-3 rounded-xl px-3 py-3 text-left text-sm font-medium text-slate-300 hover:bg-slate-800"
+        data-section="settings"
+      >
+        <span>⚙️</span>
+        <span>School Settings</span>
+      </button>
+
+    </nav>
+
+
+    <!-- Logout -->
+    <div class="border-t border-slate-700 p-4">
+
+      <button
+        onclick="logout()"
+        class="flex w-full items-center gap-3 rounded-xl px-3 py-3 text-sm font-medium text-red-300 hover:bg-red-500/10"
+      >
+        <span>🚪</span>
+        <span>Logout</span>
+      </button>
+
+    </div>
+
+  </aside>
+
+
+  <!-- =========================================================
+       MAIN
+  ========================================================== -->
+  <div class="min-h-screen lg:pl-72">
+
+    <!-- Header -->
+    <header class="sticky top-0 z-30 border-b border-slate-200 bg-white/95 backdrop-blur">
+
+      <div class="flex h-20 items-center justify-between px-4 sm:px-6 lg:px-8">
+
+        <div class="flex items-center gap-3">
+
+          <button
+            onclick="openSidebar()"
+            class="rounded-xl border border-slate-200 bg-white p-2.5 hover:bg-slate-50 lg:hidden"
+            aria-label="Open menu"
+          >
+            ☰
+          </button>
+
+          <div>
+            <p class="text-xs font-medium text-slate-500">
+              Head of Institution
+            </p>
+
+            <h2
+              id="welcomeName"
+              class="text-lg font-bold text-slate-900 sm:text-xl"
+            >
+              School Overview
+            </h2>
+          </div>
+
+        </div>
+
+
+        <div class="flex items-center gap-3">
+
+          <div class="hidden text-right sm:block">
+            <p id="headerUserName" class="text-sm font-semibold text-slate-800">
+              Head of Institution
+            </p>
+
+            <p class="text-xs text-slate-500">
+              Administrator
+            </p>
+          </div>
+
+          <div
+            class="flex h-10 w-10 items-center justify-center rounded-full bg-slate-900 font-bold text-white"
+          >
+            H
+          </div>
+
+        </div>
+
+      </div>
+
+    </header>
+
+
+    <!-- =======================================================
+         CONTENT
+    ======================================================== -->
+    <main class="p-4 sm:p-6 lg:p-8">
+
+
+      <!-- =====================================================
+           DASHBOARD SECTION
+      ====================================================== -->
+      <section id="section-dashboard">
+
+        <!-- Page heading -->
+        <div class="mb-6 flex flex-col justify-between gap-4 sm:flex-row sm:items-end">
+
+          <div>
+            <p class="text-sm font-medium text-slate-500">
+              Institution overview
+            </p>
+
+            <h1 class="mt-1 text-2xl font-bold text-slate-900 sm:text-3xl">
+              Dashboard
+            </h1>
+
+            <p class="mt-2 text-sm text-slate-500">
+              Monitor the overall academic and administrative status of the school.
+            </p>
+          </div>
+
+          <button
+            onclick="loadDashboard()"
+            class="rounded-xl bg-slate-900 px-4 py-2.5 text-sm font-semibold text-white hover:bg-slate-800"
+          >
+            ↻ Refresh
+          </button>
+
+        </div>
+
+
+        <!-- Academic period -->
+        <div class="mb-6 grid gap-4 sm:grid-cols-2">
+
+          <div class="rounded-2xl border border-slate-200 bg-white p-5 shadow-sm">
+
+            <p class="text-xs font-semibold uppercase tracking-wide text-slate-500">
+              Academic Year
+            </p>
+
+            <p
+              id="academicYear"
+              class="mt-2 text-xl font-bold text-slate-900"
+            >
+              Loading...
+            </p>
+
+          </div>
+
+
+          <div class="rounded-2xl border border-slate-200 bg-white p-5 shadow-sm">
+
+            <p class="text-xs font-semibold uppercase tracking-wide text-slate-500">
+              Current Term
+            </p>
+
+            <p
+              id="currentTerm"
+              class="mt-2 text-xl font-bold text-slate-900"
+            >
+              Loading...
+            </p>
+
+          </div>
+
+        </div>
+
+
+        <!-- School statistics -->
+        <div class="mb-8 grid gap-4 sm:grid-cols-2 xl:grid-cols-3">
+
+          <div class="stat-card rounded-2xl border border-slate-200 bg-white p-5 shadow-sm">
+            <p class="text-sm text-slate-500">Students</p>
+            <p id="totalStudents" class="mt-2 text-3xl font-bold">—</p>
+          </div>
+
+          <div class="stat-card rounded-2xl border border-slate-200 bg-white p-5 shadow-sm">
+            <p class="text-sm text-slate-500">Teachers</p>
+            <p id="totalTeachers" class="mt-2 text-3xl font-bold">—</p>
+          </div>
+
+          <div class="stat-card rounded-2xl border border-slate-200 bg-white p-5 shadow-sm">
+            <p class="text-sm text-slate-500">Grades</p>
+            <p id="totalGrades" class="mt-2 text-3xl font-bold">—</p>
+          </div>
+
+          <div class="stat-card rounded-2xl border border-slate-200 bg-white p-5 shadow-sm">
+            <p class="text-sm text-slate-500">Streams</p>
+            <p id="totalStreams" class="mt-2 text-3xl font-bold">—</p>
+          </div>
+
+          <div class="stat-card rounded-2xl border border-slate-200 bg-white p-5 shadow-sm">
+            <p class="text-sm text-slate-500">Class Teacher Assignments</p>
+            <p id="totalClassTeachers" class="mt-2 text-3xl font-bold">—</p>
+          </div>
+
+          <div class="stat-card rounded-2xl border border-slate-200 bg-white p-5 shadow-sm">
+            <p class="text-sm text-slate-500">Teaching Assignments</p>
+            <p id="totalTeachingAssignments" class="mt-2 text-3xl font-bold">—</p>
+          </div>
+
+        </div>
+
+
+       
+
+        <!-- Progress -->
+        <div class="grid gap-6 xl:grid-cols-2">
+
+
+          <!-- Assessments -->
+          <div class="rounded-2xl border border-slate-200 bg-white p-6 shadow-sm">
+
+            <div class="mb-5">
+              <h3 class="font-bold text-slate-900">
+                Assessment Progress
+              </h3>
+
+              <p class="mt-1 text-sm text-slate-500">
+                Current academic period
+              </p>
+            </div>
+
+            <div class="grid grid-cols-2 gap-4 sm:grid-cols-3">
+
+              <div class="rounded-xl bg-slate-50 p-4">
+                <p class="text-xs text-slate-500">Total</p>
+                <p id="assessmentTotal" class="mt-1 text-2xl font-bold">—</p>
+              </div>
+
+              <div class="rounded-xl bg-slate-50 p-4">
+                <p class="text-xs text-slate-500">Published</p>
+                <p id="assessmentPublished" class="mt-1 text-2xl font-bold">—</p>
+              </div>
+
+              <div class="rounded-xl bg-slate-50 p-4">
+                <p class="text-xs text-slate-500">In Report Cards</p>
+                <p id="assessmentIncluded" class="mt-1 text-2xl font-bold">—</p>
+              </div>
+
+            </div>
+
+          </div>
+
+
+          <!-- Report Cards -->
+          <div class="rounded-2xl border border-slate-200 bg-white p-6 shadow-sm">
+
+            <div class="mb-5">
+              <h3 class="font-bold text-slate-900">
+                Report Card Progress
+              </h3>
+
+              <p class="mt-1 text-sm text-slate-500">
+                Current academic period
+              </p>
+            </div>
+
+            <div class="grid grid-cols-3 gap-3">
+
+              <div class="rounded-xl bg-slate-50 p-4">
+                <p class="text-xs text-slate-500">Total</p>
+                <p id="reportTotal" class="mt-1 text-2xl font-bold">—</p>
+              </div>
+
+              <div class="rounded-xl bg-slate-50 p-4">
+                <p class="text-xs text-slate-500">Draft</p>
+                <p id="reportDraft" class="mt-1 text-2xl font-bold">—</p>
+              </div>
+
+              <div class="rounded-xl bg-slate-50 p-4">
+                <p class="text-xs text-slate-500">Published</p>
+                <p id="reportPublished" class="mt-1 text-2xl font-bold">—</p>
+              </div>
+
+            </div>
+
+          </div>
+
+
+          <!-- Attendance -->
+          <div class="rounded-2xl border border-slate-200 bg-white p-6 shadow-sm">
+
+            <div class="mb-5">
+              <h3 class="font-bold text-slate-900">
+                Attendance Overview
+              </h3>
+
+              <p class="mt-1 text-sm text-slate-500">
+                Current term
+              </p>
+            </div>
+
+            <div class="grid grid-cols-2 gap-3 sm:grid-cols-4">
+
+              <div class="rounded-xl bg-slate-50 p-4">
+                <p class="text-xs text-slate-500">Records</p>
+                <p id="attendanceTotal" class="mt-1 text-2xl font-bold">—</p>
+              </div>
+
+              <div class="rounded-xl bg-slate-50 p-4">
+                <p class="text-xs text-slate-500">Present</p>
+                <p id="attendancePresent" class="mt-1 text-2xl font-bold">—</p>
+              </div>
+
+              <div class="rounded-xl bg-slate-50 p-4">
+                <p class="text-xs text-slate-500">Absent</p>
+                <p id="attendanceAbsent" class="mt-1 text-2xl font-bold">—</p>
+              </div>
+
+              <div class="rounded-xl bg-slate-50 p-4">
+                <p class="text-xs text-slate-500">Late</p>
+                <p id="attendanceLate" class="mt-1 text-2xl font-bold">—</p>
+              </div>
+
+            </div>
+
+          </div>
+
+
+          <!-- Quick management -->
+          <div class="rounded-2xl border border-slate-200 bg-white p-6 shadow-sm">
+
+            <h3 class="font-bold text-slate-900">
+              Head of Institution Actions
+            </h3>
+
+            <p class="mt-1 text-sm text-slate-500">
+              Manage the people and academic structure of the school.
+            </p>
+
+            <div class="mt-5 grid gap-3 sm:grid-cols-2">
+
+              <button
+                onclick="showSection('admins')"
+                class="rounded-xl border border-slate-200 p-4 text-left hover:bg-slate-50"
+              >
+                <span class="text-xl">👥</span>
+                <p class="mt-2 font-semibold">Manage Admins</p>
+                <p class="mt-1 text-xs text-slate-500">
+                  Create and manage school administrators.
+                </p>
+              </button>
+
+              <button
+                onclick="showSection('teachers')"
+                class="rounded-xl border border-slate-200 p-4 text-left hover:bg-slate-50"
+              >
+                <span class="text-xl">👨‍🏫</span>
+                <p class="mt-2 font-semibold">Manage Teachers</p>
+                <p class="mt-1 text-xs text-slate-500">
+                  Create and manage teaching staff.
+                </p>
+              </button>
+
+            </div>
+
+          </div>
+
+        
+        </div>
+
+      </section>
+
+
+      <!-- =====================================================
+           ADMIN MANAGEMENT
+      ====================================================== -->
+      <section id="section-admins" class="hidden">
+        <div class="mb-6">
+          <h1 class="text-2xl font-bold sm:text-3xl">
+            Admin Management
+          </h1>
+
+          <p class="mt-2 text-sm text-slate-500">
+            The Head of Institution is responsible for creating and managing
+            other administrative roles.
+          </p>
+        </div>
+
+
+        <div class="grid gap-4 md:grid-cols-3">
+
+          <div class="rounded-2xl border border-slate-200 bg-white p-6 shadow-sm">
+            <div class="text-3xl">📚</div>
+            <h3 class="mt-4 font-bold">Academic Admin</h3>
+            <p class="mt-2 text-sm text-slate-500">
+              Manages academic years, terms, classes, assessments,
+              timetables and report cards.
+            </p>
+            <button
+              class="mt-5 w-full rounded-xl bg-slate-900 px-4 py-2.5 text-sm font-semibold text-white"
+              onclick="goToAdminCreation('ACADEMIC_ADMIN')"
+            >
+              Create Academic Admin
+            </button>
+          </div>
+
+
+          <div class="rounded-2xl border border-slate-200 bg-white p-6 shadow-sm">
+            <div class="text-3xl">💰</div>
+            <h3 class="mt-4 font-bold">Finance Admin</h3>
+            <p class="mt-2 text-sm text-slate-500">
+              Responsible for school finance and fee administration.
+            </p>
+            <button
+              class="mt-10 w-full rounded-xl bg-slate-900 px-4 py-2.5 text-sm font-semibold text-white"
+              onclick="goToAdminCreation('FINANCE_ADMIN')"
+            >
+              Create Finance Admin
+            </button>
+          </div>
+
+
+          <div class="rounded-2xl border border-slate-200 bg-white p-6 shadow-sm">
+            <div class="text-3xl">📝</div>
+            <h3 class="mt-4 font-bold">Admissions Admin</h3>
+            <p class="mt-2 text-sm text-slate-500">
+              Responsible for admissions and student onboarding.
+            </p>
+            <button
+              class="mt-10 w-full rounded-xl bg-slate-900 px-4 py-2.5 text-sm font-semibold text-white"
+              onclick="goToAdminCreation('ADMISSIONS_ADMIN')"
+            >
+              Create Admissions Admin
+            </button>
+          </div>
+
+        </div>
+
+      </section>
+
+
+      <!-- =====================================================
+           TEACHERS
+      ====================================================== -->
+
+      <section id="section-teachers" class="hidden">
+        
+        
+        <div class="section bg-white rounded-xl border" >
+      
+
+        <div class="p-6 border-b">
+
+          <h3 class="text-lg font-bold">
+            Teachers
+          </h3>
+
+          <p class="text-sm text-gray-500">
+            View teachers and their academic responsibilities.
+          </p>
+
+        </div>
+
+
+       <div class="p-5 flex flex-col sm:flex-row gap-3">
+
+          <input
+            id="teacherSearch"
+            type="search"
+            placeholder="Search teachers..."
+            class="flex-1 border rounded-lg px-4 py-2"
+            onkeydown="handleTeacherSearchKey(event)"
+          />
+
+          <button
+            type="button"
+            onclick="searchTeachers()"
+            class="px-5 py-2 rounded-lg bg-gray-900 text-white"
+          >
+            Search
+          </button>
+
+          <button
+            type="button"
+            onclick="loadTeachers()"
+            class="px-5 py-2 rounded-lg border border-gray-300"
+          >
+            Reset
+          </button>
+
+        </div>
+
+
+        <div class="overflow-x-auto">
+
+          <table class="w-full text-sm">
+
+            <thead class="bg-gray-50">
+
+              <tr>
+
+                <th class="p-4 text-left">
+                  Employee No.
+                </th>
+
+                <th class="p-4 text-left">
+                  Teacher
+                </th>
+
+                <th class="p-4 text-left">
+                  Email
+                </th>
+
+                <th class="p-4 text-left">
+                  Phone
+                </th>
+
+                <th class="p-4 text-left">
+                  Status
+                </th>
+
+                <th class="p-4 text-right">
+                  Action
+                </th>
+
+              </tr>
+
+            </thead>
+
+            <tbody id="teachersTable">
+
+              <tr>
+                <td
+                  colspan="6"
+                  class="p-8 text-center text-gray-500"
+                >
+                  Loading teachers...
+                </td>
+              </tr>
+
+            </tbody>
+
+          </table>
+
+        </div>
+        </div>
+
+      </section>
+
+
+
+    <!-- =====================================================
+           STUDENTS
+      ====================================================== -->
+
+      <section id="section-students" class="hidden">
+        
+      
+        <div class="section bg-white rounded-xl border">
+      
+
+        <div class="p-6 border-b">
+
+          <h3 class="text-lg font-bold">
+            Students
+          </h3>
+
+          <p class="text-sm text-gray-500">
+            View student records. Student creation and admission
+            are handled through the admissions module.
+          </p>
+
+        </div>
+
+      <div class="p-5 flex flex-col sm:flex-row gap-3">
+
+          <input
+            id="studentSearch"
+            type="search"
+            placeholder="Search by admission number or student name..."
+            class="flex-1 border rounded-lg px-4 py-2"
+            onkeydown="handleStudentSearchKey(event)"
+          />
+
+          <button
+            type="button"
+            onclick="searchStudents()"
+            class="px-5 py-2 rounded-lg bg-gray-900 text-white"
+          >
+            Search
+          </button>
+
+          <button
+            type="button"
+            onclick="loadStudents()"
+            class="px-5 py-2 rounded-lg border border-gray-300"
+          >
+            Reset
+          </button>
+
+        </div>
+
+
+        <div class="overflow-x-auto">
+
+          <table class="w-full text-sm">
+
+            <thead class="bg-gray-50">
+
+              <tr>
+
+                <th class="text-left p-4">
+                  Admission No.
+                </th>
+
+                <th class="text-left p-4">
+                  Student
+                </th>
+
+                <th class="text-left p-4">
+                  Gender
+                </th>
+
+                <th class="text-left p-4">
+                  Prent
+                </th>
+
+                <th class="text-left p-4">
+                  Status
+                </th>
+
+                <th class="text-right p-4">
+                  Action
+                </th>
+
+              </tr>
+
+            </thead>
+
+            <tbody id="studentsTable">
+
+              <tr>
+                <td
+                  colspan="5"
+                  class="p-8 text-center text-gray-500"
+                >
+                  Loading students...
+                </td>
+              </tr>
+
+            </tbody>
+
+          </table>
+
+        </div>
+        </div>
+
+        
+
+        
+      </section>
+
+
+
+     <!-- =====================================================
+           PARENTS
+      ====================================================== -->
+
+      <section id="section-parents" class="hidden">
+        
+        
+        <div class="section bg-white rounded-xl border" >
+      
+
+
+      
+
+
+        <div class="p-6 border-b">
+
+          <h3 class="text-lg font-bold">
+            Parents
+          </h3>
+
+          <p class="text-sm text-gray-500">
+            View parent records and linked students.
+            Parent accounts are managed by Admissions Administration.
+          </p>
+
+        </div>
+
+        <div class="p-5 flex flex-col sm:flex-row gap-3">
+
+          <input
+            id="parentSearch"
+            type="search"
+            placeholder="Search by name or phone number..."
+            class="flex-1 border rounded-lg px-4 py-2"
+            onkeydown="handleParentsSearchKey(event)"
+          />
+
+          <button
+            type="button"
+            onclick="searchParents()"
+            class="px-5 py-2 rounded-lg bg-gray-900 text-white"
+          >
+            Search
+          </button>
+
+          <button
+            type="button"
+            onclick="loadParents()"
+            class="px-5 py-2 rounded-lg border border-gray-300"
+          >
+            Reset
+          </button>
+
+        </div>
+
+        <div class="overflow-x-auto">
+
+          <table class="w-full text-sm">
+
+            <thead class="bg-gray-50">
+
+              <tr>
+
+                <th class="text-left p-4">
+                  Email/Phone.
+                </th>
+
+                <th class="text-left p-4">
+                  Parent
+                </th>
+
+                <th class="text-left p-4">
+                  Gender
+                </th>
+
+                <th class="text-left p-4">
+                  student
+                </th>
+
+                <th class="text-left p-4">
+                  Status
+                </th>
+
+                <th class="text-right p-4">
+                  Action
+                </th>
+
+              </tr>
+
+            </thead>
+
+            <tbody id="parentsTable">
+
+              <tr>
+                <td
+                  colspan="6"
+                  class="p-8 text-center text-gray-500"
+                >
+                  Loading parents...
+                </td>
+              </tr>
+
+            </tbody>
+
+          </table>
+
+        </div>
+
+        </div>
+
+
+      
+
+      </section>
+
+
+
+      <!-- =====================================================
+           CLASSES
+      ====================================================== -->
+      <section id="section-classes" class="hidden">
+
+        <div class="mb-6">
+          <h1 class="text-2xl font-bold sm:text-3xl">
+            Classes & Streams
+          </h1>
+
+          <p class="mt-2 text-sm text-slate-500">
+            View the school's grades and streams.
+          </p>
+        </div>
+
+        <div class="grid gap-4 sm:grid-cols-2">
+
+          <div class="rounded-2xl border border-slate-200 bg-white p-6 shadow-sm">
+            <p class="text-sm text-slate-500">Grades</p>
+            <p id="gradeManagementCount" class="mt-2 text-3xl font-bold">—</p>
+          </div>
+
+          <div class="rounded-2xl border border-slate-200 bg-white p-6 shadow-sm">
+            <p class="text-sm text-slate-500">Streams</p>
+            <p id="streamManagementCount" class="mt-2 text-3xl font-bold">—</p>
+          </div>
+
+        </div>
+
+      </section>
+
+
+      <!-- =====================================================
+           REPORTS
+      ====================================================== -->
+      <section id="section-reports" class="hidden">
+
+        <div class="mb-6">
+          <h1 class="text-2xl font-bold sm:text-3xl">
+            Report Cards
+          </h1>
+
+          <p class="mt-2 text-sm text-slate-500">
+            Monitor report-card preparation and publication.
+          </p>
+        </div>
+
+        <div class="grid gap-4 sm:grid-cols-3">
+
+          <div class="rounded-2xl border border-slate-200 bg-white p-6 shadow-sm">
+            <p class="text-sm text-slate-500">Total</p>
+            <p id="reportManagementTotal" class="mt-2 text-3xl font-bold">—</p>
+          </div>
+
+          <div class="rounded-2xl border border-slate-200 bg-white p-6 shadow-sm">
+            <p class="text-sm text-slate-500">Draft</p>
+            <p id="reportManagementDraft" class="mt-2 text-3xl font-bold">—</p>
+          </div>
+
+          <div class="rounded-2xl border border-slate-200 bg-white p-6 shadow-sm">
+            <p class="text-sm text-slate-500">Published</p>
+            <p id="reportManagementPublished" class="mt-2 text-3xl font-bold">—</p>
+          </div>
+
+        </div>
+
+      </section>
+
+
+      <!-- =====================================================
+           ATTENDANCE
+      ====================================================== -->
+      <section id="section-attendance" class="hidden">
+
+        <div class="mb-6">
+          <h1 class="text-2xl font-bold sm:text-3xl">
+            Attendance
+          </h1>
+
+          <p class="mt-2 text-sm text-slate-500">
+            Current-term attendance overview.
+          </p>
+        </div>
+
+        <div class="grid gap-4 sm:grid-cols-2 lg:grid-cols-4">
+
+          <div class="rounded-2xl border border-slate-200 bg-white p-6 shadow-sm">
+            <p class="text-sm text-slate-500">Total Records</p>
+            <p id="attendancePageTotal" class="mt-2 text-3xl font-bold">—</p>
+          </div>
+
+          <div class="rounded-2xl border border-slate-200 bg-white p-6 shadow-sm">
+            <p class="text-sm text-slate-500">Present</p>
+            <p id="attendancePagePresent" class="mt-2 text-3xl font-bold">—</p>
+          </div>
+
+          <div class="rounded-2xl border border-slate-200 bg-white p-6 shadow-sm">
+            <p class="text-sm text-slate-500">Absent</p>
+            <p id="attendancePageAbsent" class="mt-2 text-3xl font-bold">—</p>
+          </div>
+
+          <div class="rounded-2xl border border-slate-200 bg-white p-6 shadow-sm">
+            <p class="text-sm text-slate-500">Late</p>
+            <p id="attendancePageLate" class="mt-2 text-3xl font-bold">—</p>
+          </div>
+
+        </div>
+
+      </section>
+
+
+      <!-- =====================================================
+     FEES & FINANCE OVERVIEW
+====================================================== -->
+<section id="section-fees" class="hidden">
+
+  <!-- PAGE HEADER -->
+  <div class="mb-6 flex flex-col justify-between gap-4 sm:flex-row sm:items-end">
+
+    <div>
+      <p class="text-sm font-medium text-slate-500">
+        Financial overview
+      </p>
+
+      <div class="mt-1 flex flex-wrap items-center gap-3">
+
+        <h1 class="text-2xl font-bold text-slate-900 sm:text-3xl">
+          Fees & Finance
+        </h1>
+
+        <span
+          id="feesTermBadge"
+          class="rounded-full bg-slate-100 px-3 py-1 text-xs font-semibold text-slate-600"
+        >
+          Loading term...
+        </span>
+
+      </div>
+
+      <p class="mt-2 text-sm text-slate-500">
+        Monitor fee collection, outstanding balances and student account
+        status for the current term.
+      </p>
+    </div>
+
+
+    <button
+      type="button"
+      onclick="loadDashboard()"
+      class="rounded-xl bg-slate-900 px-4 py-2.5 text-sm font-semibold text-white hover:bg-slate-800"
+    >
+      ↻ Refresh
+    </button>
+
+  </div>
+
+
+  <!-- =====================================================
+       TOP FINANCIAL CARDS
+  ====================================================== -->
+
+  <div class="mb-6 grid gap-4 sm:grid-cols-2 xl:grid-cols-4">
+
+    <!-- Total Charged -->
+    <div
+      class="rounded-2xl border border-slate-200 bg-white p-5 shadow-sm"
+    >
+
+      <div class="flex items-start justify-between">
+
+        <div>
+          <p class="text-sm font-medium text-slate-500">
+            Total Fees Charged
+          </p>
+
+          <p
+            id="totalFeesCharged"
+            class="mt-2 text-2xl font-bold text-slate-900"
+          >
+            KSh 0.00
+          </p>
+        </div>
+
+        <div
+          class="flex h-11 w-11 items-center justify-center rounded-xl bg-slate-100 text-xl"
+        >
+          💰
+        </div>
+
+      </div>
+
+      <p class="mt-3 text-xs text-slate-500">
+        Current term
+      </p>
+
+    </div>
+
+
+    <!-- Total Collected -->
+    <div
+      class="rounded-2xl border border-slate-200 bg-white p-5 shadow-sm"
+    >
+
+      <div class="flex items-start justify-between">
+
+        <div>
+          <p class="text-sm font-medium text-slate-500">
+            Total Collected
+          </p>
+
+          <p
+            id="totalFeesCollected"
+            class="mt-2 text-2xl font-bold text-slate-900"
+          >
+            KSh 0.00
+          </p>
+        </div>
+
+        <div
+          class="flex h-11 w-11 items-center justify-center rounded-xl bg-green-50 text-xl"
+        >
+          ✓
+        </div>
+
+      </div>
+
+      <p class="mt-3 text-xs text-slate-500">
+        Completed payments
+      </p>
+
+    </div>
+
+
+    <!-- Outstanding -->
+    <div
+      class="rounded-2xl border border-slate-200 bg-white p-5 shadow-sm"
+    >
+
+      <div class="flex items-start justify-between">
+
+        <div>
+          <p class="text-sm font-medium text-slate-500">
+            Outstanding Balance
+          </p>
+
+          <p
+            id="outstandingBalance"
+            class="mt-2 text-2xl font-bold text-slate-900"
+          >
+            KSh 0.00
+          </p>
+        </div>
+
+        <div
+          class="flex h-11 w-11 items-center justify-center rounded-xl bg-red-50 text-xl"
+        >
+          !
+        </div>
+
+      </div>
+
+      <p class="mt-3 text-xs text-slate-500">
+        Amount still outstanding
+      </p>
+
+    </div>
+
+
+    <!-- Collection -->
+    <div
+      class="rounded-2xl border border-slate-200 bg-white p-5 shadow-sm"
+    >
+
+      <div class="flex items-start justify-between">
+
+        <div>
+          <p class="text-sm font-medium text-slate-500">
+            Collection Rate
+          </p>
+
+          <p
+            id="collectionPercentage"
+            class="mt-2 text-2xl font-bold text-slate-900"
+          >
+            0.00%
+          </p>
+        </div>
+
+        <div
+          class="flex h-11 w-11 items-center justify-center rounded-xl bg-blue-50 text-xl"
+        >
+          📈
+        </div>
+
+      </div>
+
+      <div class="mt-4 h-2 overflow-hidden rounded-full bg-slate-100">
+
+        <div
+          id="collectionProgressBar"
+          class="h-full rounded-full bg-slate-900 transition-all duration-500"
+          style="width: 0%"
+        ></div>
+
+      </div>
+
+      <p
+        id="collectionPercentageLabel"
+        class="mt-2 text-xs font-medium text-slate-500"
+      >
+        0.00% collected
+      </p>
+
+    </div>
+
+  </div>
+
+
+  <!-- =====================================================
+       STUDENT ACCOUNT STATUS
+  ====================================================== -->
+
+  <div class="mb-6 grid gap-6 xl:grid-cols-2">
+
+    <!-- Account Status -->
+    <div
+      class="rounded-2xl border border-slate-200 bg-white p-6 shadow-sm"
+    >
+
+      <div class="mb-5">
+
+        <h3 class="font-bold text-slate-900">
+          Student Account Status
+        </h3>
+
+        <p class="mt-1 text-sm text-slate-500">
+          Current-term fee payment status.
+        </p>
+
+      </div>
+
+
+      <div class="grid gap-4 sm:grid-cols-3">
+
+        <!-- With Balance -->
+        <div class="rounded-xl bg-red-50 p-4">
+
+          <p class="text-xs font-medium text-red-600">
+            With Balance
+          </p>
+
+          <p
+            id="studentsWithBalance"
+            class="mt-2 text-2xl font-bold text-red-700"
+          >
+            0
+          </p>
+
+          <p class="mt-1 text-xs text-red-600">
+            Students owing fees
+          </p>
+
+        </div>
+
+
+        <!-- Fully Paid -->
+        <div class="rounded-xl bg-green-50 p-4">
+
+          <p class="text-xs font-medium text-green-600">
+            Fully Paid
+          </p>
+
+          <p
+            id="studentsFullyPaid"
+            class="mt-2 text-2xl font-bold text-green-700"
+          >
+            0
+          </p>
+
+          <p class="mt-1 text-xs text-green-600">
+            Accounts cleared
+          </p>
+
+        </div>
+
+
+        <!-- Partially Paid -->
+        <div class="rounded-xl bg-amber-50 p-4">
+
+          <p class="text-xs font-medium text-amber-600">
+            Partially Paid
+          </p>
+
+          <p
+            id="partiallyPaidAccounts"
+            class="mt-2 text-2xl font-bold text-amber-700"
+          >
+            0
+          </p>
+
+          <p class="mt-1 text-xs text-amber-600">
+            Paying students
+          </p>
+
+        </div>
+
+      </div>
+
+    </div>
+
+
+    <!-- Financial Adjustments -->
+    <div
+      class="rounded-2xl border border-slate-200 bg-white p-6 shadow-sm"
+    >
+
+      <div class="mb-5">
+
+        <h3 class="font-bold text-slate-900">
+          Financial Adjustments
+        </h3>
+
+        <p class="mt-1 text-sm text-slate-500">
+          Credits and debits applied to student accounts.
+        </p>
+
+      </div>
+
+
+      <div class="grid gap-4 sm:grid-cols-3">
+
+        <!-- Credits -->
+        <div class="rounded-xl bg-blue-50 p-4">
+
+          <p class="text-xs font-medium text-blue-600">
+            Credits
+          </p>
+
+          <p
+            id="totalCredits"
+            class="mt-2 text-xl font-bold text-blue-700"
+          >
+            KSh 0.00
+          </p>
+
+          <p class="mt-1 text-xs text-blue-600">
+            Account credits
+          </p>
+
+        </div>
+
+
+        <!-- Debits -->
+        <div class="rounded-xl bg-orange-50 p-4">
+
+          <p class="text-xs font-medium text-orange-600">
+            Debits
+          </p>
+
+          <p
+            id="totalDebits"
+            class="mt-2 text-xl font-bold text-orange-700"
+          >
+            KSh 0.00
+          </p>
+
+          <p class="mt-1 text-xs text-orange-600">
+            Additional charges
+          </p>
+
+        </div>
+
+
+        <!-- Pending -->
+        <div class="rounded-xl bg-slate-50 p-4">
+
+          <p class="text-xs font-medium text-slate-600">
+            Pending Charges
+          </p>
+
+          <p
+            id="pendingCharges"
+            class="mt-2 text-xl font-bold text-slate-900"
+          >
+            0
+          </p>
+
+          <p class="mt-1 text-xs text-slate-500">
+            Awaiting processing
+          </p>
+
+        </div>
+
+      </div>
+
+    </div>
+
+  </div>
+
+
+  <!-- =====================================================
+       COLLECTION SUMMARY
+  ====================================================== -->
+
+  <div
+    class="mb-6 rounded-2xl border border-slate-200 bg-white p-6 shadow-sm"
+  >
+
+    <div class="flex flex-col justify-between gap-4 sm:flex-row sm:items-center">
+
+      <div>
+
+        <h3 class="font-bold text-slate-900">
+          Fee Collection Summary
+        </h3>
+
+        <p class="mt-1 text-sm text-slate-500">
+          Overview of money charged versus money collected.
+        </p>
+
+      </div>
+
+
+      <div class="text-left sm:text-right">
+
+        <p class="text-xs font-medium uppercase tracking-wide text-slate-400">
+          Collection Rate
+        </p>
+
+        <p
+          id="collectionPercentageSummary"
+          class="mt-1 text-2xl font-bold text-slate-900"
+        >
+          0.00%
+        </p>
+
+      </div>
+
+    </div>
+
+
+    <div class="mt-6">
+
+      <div class="mb-2 flex items-center justify-between text-xs">
+
+        <span class="font-medium text-slate-500">
+          Collected
+        </span>
+
+        <span
+          id="collectionAmountSummary"
+          class="font-semibold text-slate-700"
+        >
+          KSh 0.00
+        </span>
+
+      </div>
+
+
+      <div class="h-4 overflow-hidden rounded-full bg-slate-100">
+
+        <div
+          id="collectionSummaryBar"
+          class="h-full rounded-full bg-slate-900 transition-all duration-500"
+          style="width: 0%"
+        ></div>
+
+      </div>
+
+
+      <div class="mt-3 flex flex-col justify-between gap-2 text-xs sm:flex-row">
+
+        <span class="text-slate-500">
+          Charged:
+          <strong
+            id="collectionChargedSummary"
+            class="text-slate-700"
+          >
+            KSh 0.00
+          </strong>
+        </span>
+
+
+        <span class="text-slate-500">
+          Outstanding:
+          <strong
+            id="collectionOutstandingSummary"
+            class="text-slate-700"
+          >
+            KSh 0.00
+          </strong>
+        </span>
+
+      </div>
+
+    </div>
+
+  </div>
+
+
+  <!-- =====================================================
+       FINANCE ADMIN ACTION
+  ====================================================== -->
+
+  <div
+    class="rounded-2xl border border-slate-200 bg-slate-900 p-6 text-white shadow-sm"
+  >
+
+    <div
+      class="flex flex-col justify-between gap-5 sm:flex-row sm:items-center"
+    >
+
+      <div>
+
+        <p class="text-sm font-semibold text-slate-300">
+          Finance Administration
+        </p>
+
+        <h3 class="mt-1 text-xl font-bold">
+          Need detailed fee management?
+        </h3>
+
+        <p class="mt-2 max-w-xl text-sm text-slate-300">
+          Open the Finance Administration module to manage fee structures,
+          charges, payments, adjustments and student fee accounts.
+        </p>
+
+      </div>
+
+
+      <button
+        type="button"
+        onclick="goToFinanceAdmin()"
+        class="shrink-0 rounded-xl bg-white px-5 py-3 text-sm font-semibold text-slate-900 hover:bg-slate-100"
+      >
+        Open Finance Admin →
+      </button>
+
+    </div>
+
+  </div>
+
+</section> 
+
+
+
+
+      <!-- =====================================================
+           SETTINGS
+      ====================================================== -->
+      <section id="section-settings" class="hidden">
+
+        <div class="mb-6">
+          <h1 class="text-2xl font-bold sm:text-3xl">
+            School Settings
+          </h1>
+
+          <p class="mt-2 text-sm text-slate-500">
+            School configuration will be connected here.
+          </p>
+        </div>
+
+        <div class="rounded-2xl border border-slate-200 bg-white p-6 shadow-sm">
+
+          <p class="text-sm text-slate-500">
+            Settings management will be connected after the Head of
+            Institution settings endpoints are finalized.
+          </p>
+
+        </div>
+
+      </section>
+
+
+      <!-- Error -->
+      <div
+        id="errorMessage"
+        class="fixed bottom-5 right-5 z-[100] hidden max-w-sm rounded-xl bg-red-600 px-5 py-4 text-sm font-medium text-white shadow-xl"
+      ></div>
+
+    </main>
+
+  </div>
+
+
+  <script src="./head.js"></script>
+
+</body>
+</html>
+

@@ -1,0 +1,160 @@
+
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+
+  <meta
+    name="viewport"
+    content="width=device-width, initial-scale=1.0"
+  >
+
+  <title>School Management System - Login</title>
+
+  <script src="https://cdn.tailwindcss.com"></script>
+</head>
+
+<body class="min-h-screen bg-gray-100">
+
+  <div class="min-h-screen flex items-center justify-center px-4">
+
+    <div class="w-full max-w-md">
+
+      <!-- Login Card -->
+      <div class="bg-white rounded-2xl shadow-xl p-8">
+
+        <!-- Header -->
+        <div class="text-center mb-8">
+
+          <div
+            class="mx-auto mb-4 w-16 h-16 rounded-full
+                   bg-blue-100 flex items-center justify-center"
+          >
+            <span class="text-2xl">🎓</span>
+          </div>
+
+          <h1 class="text-2xl font-bold text-gray-900">
+            School Management System
+          </h1>
+
+          <p class="mt-2 text-sm text-gray-500">
+            Sign in to your account
+          </p>
+
+        </div>
+
+
+        <!-- Error / Success Message -->
+        <div
+          id="loginMessage"
+          class="hidden mb-5 rounded-lg px-4 py-3 text-sm"
+        ></div>
+
+
+        <!-- Login Form -->
+        <form id="loginForm" class="space-y-5">
+
+          <!-- Identifier -->
+          <div>
+
+            <label
+              for="identifier"
+              class="block text-sm font-medium text-gray-700 mb-2"
+            >
+              Email or Phone
+            </label>
+
+            <input
+              id="identifier"
+              name="identifier"
+              type="text"
+              autocomplete="username"
+              required
+              placeholder="Enter your email or phone"
+              class="w-full px-4 py-3 border border-gray-300
+                     rounded-lg outline-none
+                     focus:ring-2 focus:ring-blue-500
+                     focus:border-blue-500"
+            >
+
+          </div>
+
+
+          <!-- Password -->
+          <div>
+
+            <label
+              for="password"
+              class="block text-sm font-medium text-gray-700 mb-2"
+            >
+              Password
+            </label>
+
+            <div class="relative">
+
+              <input
+                id="password"
+                name="password"
+                type="password"
+                autocomplete="current-password"
+                required
+                placeholder="Enter your password"
+                class="w-full px-4 py-3 pr-12 border border-gray-300
+                       rounded-lg outline-none
+                       focus:ring-2 focus:ring-blue-500
+                       focus:border-blue-500"
+              >
+
+              <button
+                type="button"
+                id="togglePassword"
+                class="absolute right-3 top-1/2
+                       -translate-y-1/2
+                       text-gray-500 hover:text-gray-700"
+              >
+                Show
+              </button>
+
+            </div>
+
+          </div>
+
+
+          <!-- Submit -->
+          <button
+            type="submit"
+            id="loginButton"
+            class="w-full bg-blue-600 hover:bg-blue-700
+                   text-white font-semibold
+                   py-3 rounded-lg
+                   transition duration-200
+                   disabled:opacity-50
+                   disabled:cursor-not-allowed"
+          >
+            Sign In
+          </button>
+
+        </form>
+
+
+        <!-- Footer -->
+        <div class="mt-8 text-center">
+
+          <p class="text-xs text-gray-500">
+            School Management System
+          </p>
+
+        </div>
+
+      </div>
+
+    </div>
+
+  </div>
+
+
+  <script src="./login.js"></script>
+
+</body>
+</html>
+

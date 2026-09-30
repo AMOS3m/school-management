@@ -1,0 +1,1240 @@
+
+
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+
+    <meta
+        name="viewport"
+        content="width=device-width, initial-scale=1.0"
+    >
+
+    <title>Green Valley Academy | Excellence in Education</title>
+
+    <!-- Tailwind CSS -->
+    <script src="https://cdn.tailwindcss.com"></script>
+
+    <!-- Tailwind Configuration -->
+    <script>
+        tailwind.config = {
+            theme: {
+                extend: {
+                    colors: {
+                        school: {
+                            primary: "#14532d",
+                            secondary: "#166534",
+                            accent: "#f59e0b",
+                            light: "#f0fdf4",
+                            dark: "#052e16"
+                        }
+                    }
+                }
+            }
+        };
+    </script>
+
+    <!-- Google Font -->
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link
+        rel="preconnect"
+        href="https://fonts.gstatic.com"
+        crossorigin
+    >
+
+    <link
+        href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&display=swap"
+        rel="stylesheet"
+    >
+
+    <style>
+        html {
+            scroll-behavior: smooth;
+        }
+
+        body {
+            font-family: "Inter", sans-serif;
+        }
+
+        .hero-overlay {
+            background:
+                linear-gradient(
+                    rgba(5, 46, 22, 0.75),
+                    rgba(5, 46, 22, 0.55)
+                );
+        }
+    </style>
+</head>
+
+<body class="bg-white text-gray-800">
+
+    <!-- =========================================================
+         TOP INFORMATION BAR
+    ========================================================== -->
+
+    <div class="hidden md:block bg-school-dark text-white">
+        <div class="max-w-7xl mx-auto px-6 py-2 flex justify-between items-center text-sm">
+
+            <div class="flex items-center gap-6">
+                <span>📞 +254 700 000 000</span>
+                <span>✉ info@greenvalleyacademy.ac.ke</span>
+            </div>
+
+            <div>
+                Admissions Open for 2026
+            </div>
+
+        </div>
+    </div>
+
+
+    <!-- =========================================================
+         NAVIGATION
+    ========================================================== -->
+
+    <header class="bg-white shadow-sm sticky top-0 z-50">
+
+        <nav class="max-w-7xl mx-auto px-6">
+
+            <div class="h-20 flex items-center justify-between">
+
+                <!-- LOGO -->
+
+                <a
+                    href="index.html"
+                    class="flex items-center gap-3"
+                >
+
+                    <div
+                        class="w-12 h-12 rounded-full bg-school-primary text-white flex items-center justify-center font-bold text-lg"
+                    >
+                        GVA
+                    </div>
+
+                    <div>
+                        <h1 class="font-extrabold text-school-dark text-lg leading-tight">
+                            Green Valley
+                        </h1>
+
+                        <p class="text-xs text-gray-500">
+                            Academy
+                        </p>
+                    </div>
+
+                </a>
+
+
+                <!-- DESKTOP NAVIGATION -->
+
+                <div class="hidden lg:flex items-center gap-10 text-sm font-medium">
+
+                    <a
+                        href="#about"
+                        class="hover:text-school-primary transition"
+                    >
+                        About
+                    </a>
+
+                    <a
+                        href="#academics"
+                        class="hover:text-school-primary transition"
+                    >
+                        Academics
+                    </a>
+
+                    <a
+                        href="#facilities"
+                        class="hover:text-school-primary transition"
+                    >
+                        Facilities
+                    </a>
+
+                    <a
+                        href="#gallery"
+                        class="hover:text-school-primary transition"
+                    >
+                        Gallery
+                    </a>
+
+                    <a
+                        href="#news"
+                        class="hover:text-school-primary transition"
+                    >
+                        News
+                    </a>
+
+                    <a
+                        href="#contact"
+                        class="hover:text-school-primary transition"
+                    >
+                        Contact
+                    </a>
+
+                </div>
+
+
+                <!-- ACTION BUTTONS -->
+
+                <div class="hidden md:flex items-center gap-3">
+
+                    <a
+                        href="login.html"
+                        class="px-1 py-1 rounded-lg border border-school-primary text-school-primary font-semibold hover:bg-school-light transition"
+                    >
+                        Staff Portal
+                    </a>
+
+
+                    <a
+                        href="login.html"
+                        class="px-1 py-1 rounded-lg border border-school-primary text-school-primary font-semibold hover:bg-school-light transition"
+                    >
+                        Parents Portal
+                    </a>
+
+
+                    <a
+                        href="login.html"
+                        class="px-1 py-1 rounded-lg border border-school-primary text-school-primary font-semibold hover:bg-school-light transition"
+                    >
+                        Admin Portal
+                    </a> 
+
+
+                    <a
+                        href="#admissions"
+                        class="px-5 py-2.5 rounded-lg bg-school-primary text-white font-semibold hover:bg-school-secondary transition"
+                    >
+                        Admissions
+                    </a>
+
+                </div>
+
+
+                <!-- MOBILE BUTTON -->
+
+                <button
+                    id="mobileMenuButton"
+                    class="lg:hidden text-2xl"
+                    type="button"
+                >
+                    ☰
+                </button>
+
+            </div>
+
+
+            <!-- MOBILE MENU -->
+
+            <div
+                id="mobileMenu"
+                class="hidden lg:hidden pb-6"
+            >
+
+                <div class="flex flex-col gap-4 pt-4 border-t">
+
+                    <a href="#about">
+                        About
+                    </a>
+
+                    <a href="#academics">
+                        Academics
+                    </a>
+
+                    <a href="#facilities">
+                        Facilities
+                    </a>
+
+                    <a href="#gallery">
+                        Gallery
+                    </a>
+
+                    <a href="#news">
+                        News
+                    </a>
+
+                    <a href="#contact">
+                        Contact
+                    </a>
+
+                    <a
+                        href="login.html"
+                        class="text-school-primary font-semibold"
+                    >
+                        Teachers Portal Login
+                    </a>
+
+
+                    <a
+                        href="login.html"
+                        class="text-school-primary font-semibold"
+                    >
+                        Parents Portal Login
+                    </a>
+
+                    <a
+                        href="login.html"
+                        class="text-school-primary font-semibold"
+                    >
+                        Admin Portal Login
+                    </a>
+
+
+
+                    <a
+                        href="#admissions"
+                        class="bg-school-primary text-white px-4 py-3 rounded-lg text-center font-semibold"
+                    >
+                        Apply for Admission
+                    </a>
+
+                </div>
+
+            </div>
+
+        </nav>
+
+    </header>
+
+
+    <!-- =========================================================
+         HERO SECTION
+    ========================================================== -->
+
+    <section
+        class="relative min-h-[650px] flex items-center"
+        style="
+            background-image:
+                url('assets/images/school-hero.jpg');
+            background-size: cover;
+            background-position: center;
+        "
+    >
+
+        <div class="absolute inset-0 hero-overlay"></div>
+
+        <div class="relative max-w-7xl mx-auto px-6 py-24 w-full">
+
+            <div class="max-w-3xl text-white">
+
+                <span
+                    class="inline-block bg-school-accent text-school-dark px-4 py-2 rounded-full text-sm font-bold mb-6"
+                >
+                    Welcome to Green Valley Academy
+                </span>
+
+                <h2
+                    class="text-4xl md:text-6xl font-extrabold leading-tight mb-6"
+                >
+                    Nurturing Learners.
+                    <span class="text-yellow-300">
+                        Building Futures.
+                    </span>
+                </h2>
+
+                <p
+                    class="text-lg md:text-xl text-gray-100 leading-relaxed max-w-2xl mb-8"
+                >
+                    A learner-centred school committed to academic excellence,
+                    character development, creativity and the development of
+                    confident young people prepared for the future.
+                </p>
+
+                <div class="flex flex-wrap gap-4">
+
+                    <a
+                        href="#admissions"
+                        class="px-7 py-3.5 bg-school-accent text-school-dark rounded-lg font-bold hover:bg-yellow-400 transition"
+                    >
+                        Apply for Admission
+                    </a>
+
+                    <a
+                        href="#about"
+                        class="px-7 py-3.5 border border-white text-white rounded-lg font-bold hover:bg-white hover:text-school-dark transition"
+                    >
+                        Discover Our School
+                    </a>
+
+                </div>
+
+            </div>
+
+        </div>
+
+    </section>
+
+
+    <!-- =========================================================
+         QUICK INFORMATION
+    ========================================================== -->
+
+    <section class="relative -mt-10 z-10">
+
+        <div class="max-w-6xl mx-auto px-6">
+
+            <div
+                class="bg-white rounded-2xl shadow-xl grid grid-cols-1 md:grid-cols-3 overflow-hidden"
+            >
+
+                <div class="p-7 text-center border-b md:border-b-0 md:border-r">
+                    <div class="text-3xl mb-3">🎓</div>
+                    <h3 class="font-bold text-lg">
+                        Quality Education
+                    </h3>
+                    <p class="text-sm text-gray-500 mt-2">
+                        Learner-centred CBC education.
+                    </p>
+                </div>
+
+                <div class="p-7 text-center border-b md:border-b-0 md:border-r">
+                    <div class="text-3xl mb-3">👨‍🏫</div>
+                    <h3 class="font-bold text-lg">
+                        Dedicated Teachers
+                    </h3>
+                    <p class="text-sm text-gray-500 mt-2">
+                        Professional and supportive educators.
+                    </p>
+                </div>
+
+                <div class="p-7 text-center">
+                    <div class="text-3xl mb-3">🏫</div>
+                    <h3 class="font-bold text-lg">
+                        Modern Facilities
+                    </h3>
+                    <p class="text-sm text-gray-500 mt-2">
+                        A safe and inspiring learning environment.
+                    </p>
+                </div>
+
+            </div>
+
+        </div>
+
+    </section>
+
+
+    <!-- =========================================================
+         ABOUT
+    ========================================================== -->
+
+    <section
+        id="about"
+        class="py-24"
+    >
+
+        <div class="max-w-7xl mx-auto px-6">
+
+            <div class="grid lg:grid-cols-2 gap-16 items-center">
+
+                <div>
+
+                    <span class="text-school-primary font-bold uppercase tracking-wider text-sm">
+                        About Our School
+                    </span>
+
+                    <h2 class="text-3xl md:text-4xl font-extrabold text-school-dark mt-3 mb-6">
+                        A place where every learner matters
+                    </h2>
+
+                    <p class="text-gray-600 leading-relaxed mb-5">
+                        Green Valley Academy is committed to providing a
+                        supportive environment where learners can discover
+                        their abilities, develop their talents and grow into
+                        responsible members of society.
+                    </p>
+
+                    <p class="text-gray-600 leading-relaxed mb-8">
+                        Our approach combines academic development,
+                        character formation, creativity, collaboration
+                        and practical skills.
+                    </p>
+
+                    <a
+                        href="#contact"
+                        class="inline-flex items-center bg-school-primary text-white px-6 py-3 rounded-lg font-semibold hover:bg-school-secondary transition"
+                    >
+                        Learn More About Us
+                    </a>
+
+                </div>
+
+
+                <div>
+
+                    <img
+                        src="assets/images/school-about.jpg"
+                        alt="Students at Green Valley Academy"
+                        class="w-full h-[420px] object-cover rounded-2xl shadow-lg"
+                    >
+
+                </div>
+
+            </div>
+
+        </div>
+
+    </section>
+
+
+    <!-- =========================================================
+         HEAD OF INSTITUTION MESSAGE
+    ========================================================== -->
+
+    <section class="bg-school-light py-24">
+
+        <div class="max-w-7xl mx-auto px-6">
+
+            <div class="grid lg:grid-cols-2 gap-14 items-center">
+
+                <div>
+
+                    <img
+                        src="assets/images/headteacher.jpg"
+                        alt="Head of Institution"
+                        class="w-full max-w-md mx-auto h-[420px] object-cover rounded-2xl shadow-lg"
+                    >
+
+                </div>
+
+                <div>
+
+                    <span class="text-school-primary font-bold uppercase tracking-wider text-sm">
+                        Message from the Head
+                    </span>
+
+                    <h2 class="text-3xl md:text-4xl font-extrabold text-school-dark mt-3 mb-6">
+                        Welcome to our school community
+                    </h2>
+
+                    <p class="text-gray-600 leading-relaxed mb-5">
+                        Welcome to Green Valley Academy. We believe that
+                        every learner has unique potential and deserves
+                        an environment that encourages curiosity,
+                        confidence and excellence.
+                    </p>
+
+                    <p class="text-gray-600 leading-relaxed mb-8">
+                        Together with parents, teachers and the wider
+                        community, we are committed to preparing our
+                        learners for a successful and meaningful future.
+                    </p>
+
+                    <div>
+
+                        <p class="font-bold text-school-dark">
+                            Dr. John Mwangi
+                        </p>
+
+                        <p class="text-sm text-gray-500">
+                            Head of Institution
+                        </p>
+
+                    </div>
+
+                </div>
+
+            </div>
+
+        </div>
+
+    </section>
+
+
+    <!-- =========================================================
+         ACADEMICS
+    ========================================================== -->
+
+    <section
+        id="academics"
+        class="py-24"
+    >
+
+        <div class="max-w-7xl mx-auto px-6">
+
+            <div class="text-center max-w-2xl mx-auto mb-14">
+
+                <span class="text-school-primary font-bold uppercase tracking-wider text-sm">
+                    Academics
+                </span>
+
+                <h2 class="text-3xl md:text-4xl font-extrabold text-school-dark mt-3 mb-5">
+                    Learning for today and tomorrow
+                </h2>
+
+                <p class="text-gray-600">
+                    Our learning programme focuses on developing knowledge,
+                    competencies, values and practical skills.
+                </p>
+
+            </div>
+
+
+            <div class="grid md:grid-cols-3 gap-7">
+
+                <div class="p-8 border rounded-2xl hover:shadow-lg transition">
+
+                    <div class="text-4xl mb-5">
+                        📚
+                    </div>
+
+                    <h3 class="text-xl font-bold mb-3">
+                        CBC Curriculum
+                    </h3>
+
+                    <p class="text-gray-600 leading-relaxed">
+                        Learners develop competencies through engaging,
+                        learner-centred experiences.
+                    </p>
+
+                </div>
+
+
+                <div class="p-8 border rounded-2xl hover:shadow-lg transition">
+
+                    <div class="text-4xl mb-5">
+                        🔬
+                    </div>
+
+                    <h3 class="text-xl font-bold mb-3">
+                        STEM & Innovation
+                    </h3>
+
+                    <p class="text-gray-600 leading-relaxed">
+                        We encourage scientific thinking, creativity,
+                        problem-solving and innovation.
+                    </p>
+
+                </div>
+
+
+                <div class="p-8 border rounded-2xl hover:shadow-lg transition">
+
+                    <div class="text-4xl mb-5">
+                        🎨
+                    </div>
+
+                    <h3 class="text-xl font-bold mb-3">
+                        Talents & Creativity
+                    </h3>
+
+                    <p class="text-gray-600 leading-relaxed">
+                        Learners are encouraged to discover and develop
+                        their talents through diverse activities.
+                    </p>
+
+                </div>
+
+            </div>
+
+        </div>
+
+    </section>
+
+
+    <!-- =========================================================
+         FACILITIES
+    ========================================================== -->
+
+    <section
+        id="facilities"
+        class="bg-gray-50 py-24"
+    >
+
+        <div class="max-w-7xl mx-auto px-6">
+
+            <div class="text-center mb-14">
+
+                <span class="text-school-primary font-bold uppercase tracking-wider text-sm">
+                    Our Facilities
+                </span>
+
+                <h2 class="text-3xl md:text-4xl font-extrabold text-school-dark mt-3">
+                    An environment designed for learning
+                </h2>
+
+            </div>
+
+
+            <div class="grid sm:grid-cols-2 lg:grid-cols-4 gap-6">
+
+                <div class="bg-white rounded-2xl overflow-hidden shadow-sm">
+
+                    <img
+                        src="assets/images/classrooms.jpg"
+                        alt="Classrooms"
+                        class="w-full h-48 object-cover"
+                    >
+
+                    <div class="p-5">
+                        <h3 class="font-bold">
+                            Modern Classrooms
+                        </h3>
+                    </div>
+
+                </div>
+
+
+                <div class="bg-white rounded-2xl overflow-hidden shadow-sm">
+
+                    <img
+                        src="assets/images/library.jpg"
+                        alt="School library"
+                        class="w-full h-48 object-cover"
+                    >
+
+                    <div class="p-5">
+                        <h3 class="font-bold">
+                            Library
+                        </h3>
+                    </div>
+
+                </div>
+
+
+                <div class="bg-white rounded-2xl overflow-hidden shadow-sm">
+
+                    <img
+                        src="assets/images/laboratory.jpg"
+                        alt="Science laboratory"
+                        class="w-full h-48 object-cover"
+                    >
+
+                    <div class="p-5">
+                        <h3 class="font-bold">
+                            Science Laboratory
+                        </h3>
+                    </div>
+
+                </div>
+
+
+                <div class="bg-white rounded-2xl overflow-hidden shadow-sm">
+
+                    <img
+                        src="assets/images/playground.jpg"
+                        alt="School playground"
+                        class="w-full h-48 object-cover"
+                    >
+
+                    <div class="p-5">
+                        <h3 class="font-bold">
+                            Sports & Recreation
+                        </h3>
+                    </div>
+
+                </div>
+
+            </div>
+
+        </div>
+
+    </section>
+
+
+    <!-- =========================================================
+         GALLERY
+    ========================================================== -->
+
+    <section
+        id="gallery"
+        class="py-24"
+    >
+
+        <div class="max-w-7xl mx-auto px-6">
+
+            <div class="flex flex-col md:flex-row md:items-end md:justify-between mb-12">
+
+                <div>
+
+                    <span class="text-school-primary font-bold uppercase tracking-wider text-sm">
+                        Gallery
+                    </span>
+
+                    <h2 class="text-3xl md:text-4xl font-extrabold text-school-dark mt-3">
+                        Life at Green Valley
+                    </h2>
+
+                </div>
+
+                <a
+                    href="gallery.html"
+                    class="mt-5 md:mt-0 text-school-primary font-bold"
+                >
+                    View Full Gallery →
+                </a>
+
+            </div>
+
+
+            <div class="grid grid-cols-2 md:grid-cols-4 gap-4">
+
+                <img
+                    src="assets/images/gallery-1.jpg"
+                    alt="School life"
+                    class="w-full h-56 object-cover rounded-xl"
+                >
+
+                <img
+                    src="assets/images/gallery-2.jpg"
+                    alt="School activity"
+                    class="w-full h-56 object-cover rounded-xl"
+                >
+
+                <img
+                    src="assets/images/gallery-3.jpg"
+                    alt="Students"
+                    class="w-full h-56 object-cover rounded-xl"
+                >
+
+                <img
+                    src="assets/images/gallery-4.jpg"
+                    alt="School event"
+                    class="w-full h-56 object-cover rounded-xl"
+                >
+
+            </div>
+
+        </div>
+
+    </section>
+
+
+    <!-- =========================================================
+         NEWS & EVENTS
+    ========================================================== -->
+
+    <section
+        id="news"
+        class="bg-school-light py-24"
+    >
+
+        <div class="max-w-7xl mx-auto px-6">
+
+            <div class="text-center mb-14">
+
+                <span class="text-school-primary font-bold uppercase tracking-wider text-sm">
+                    School Updates
+                </span>
+
+                <h2 class="text-3xl md:text-4xl font-extrabold text-school-dark mt-3">
+                    News & Upcoming Events
+                </h2>
+
+            </div>
+
+
+            <div class="grid md:grid-cols-3 gap-7">
+
+                <article class="bg-white rounded-2xl overflow-hidden shadow-sm">
+
+                    <img
+                        src="assets/images/news-1.jpg"
+                        alt="School event"
+                        class="w-full h-48 object-cover"
+                    >
+
+                    <div class="p-6">
+
+                        <p class="text-sm text-school-primary font-semibold mb-2">
+                            August 2026
+                        </p>
+
+                        <h3 class="text-xl font-bold mb-3">
+                            New Term Begins
+                        </h3>
+
+                        <p class="text-gray-600 text-sm leading-relaxed">
+                            We welcome all learners back for another
+                            exciting term of learning and growth.
+                        </p>
+
+                    </div>
+
+                </article>
+
+
+                <article class="bg-white rounded-2xl overflow-hidden shadow-sm">
+
+                    <img
+                        src="assets/images/news-2.jpg"
+                        alt="Parents meeting"
+                        class="w-full h-48 object-cover"
+                    >
+
+                    <div class="p-6">
+
+                        <p class="text-sm text-school-primary font-semibold mb-2">
+                            September 2026
+                        </p>
+
+                        <h3 class="text-xl font-bold mb-3">
+                            Parents' Meeting
+                        </h3>
+
+                        <p class="text-gray-600 text-sm leading-relaxed">
+                            Parents and guardians are invited to our
+                            scheduled school community meeting.
+                        </p>
+
+                    </div>
+
+                </article>
+
+
+                <article class="bg-white rounded-2xl overflow-hidden shadow-sm">
+
+                    <img
+                        src="assets/images/news-3.jpg"
+                        alt="Sports day"
+                        class="w-full h-48 object-cover"
+                    >
+
+                    <div class="p-6">
+
+                        <p class="text-sm text-school-primary font-semibold mb-2">
+                            October 2026
+                        </p>
+
+                        <h3 class="text-xl font-bold mb-3">
+                            Annual Sports Day
+                        </h3>
+
+                        <p class="text-gray-600 text-sm leading-relaxed">
+                            Learners will participate in our annual
+                            sports and games activities.
+                        </p>
+
+                    </div>
+
+                </article>
+
+            </div>
+
+        </div>
+
+    </section>
+
+
+    <!-- =========================================================
+         ADMISSIONS
+    ========================================================== -->
+
+    <section
+        id="admissions"
+        class="py-24 bg-school-primary text-white"
+    >
+
+        <div class="max-w-5xl mx-auto px-6 text-center">
+
+            <span class="text-yellow-300 font-bold uppercase tracking-wider text-sm">
+                Admissions
+            </span>
+
+            <h2 class="text-3xl md:text-5xl font-extrabold mt-3 mb-6">
+                Give your child an opportunity to thrive
+            </h2>
+
+            <p class="text-green-50 text-lg leading-relaxed max-w-2xl mx-auto mb-9">
+                Applications are open for new learners. Contact our
+                admissions office to learn about available places,
+                requirements and the admission process.
+            </p>
+
+            <div class="flex flex-wrap justify-center gap-4">
+
+                <a
+                    href="admissions.html"
+                    class="px-7 py-3.5 bg-school-accent text-school-dark rounded-lg font-bold hover:bg-yellow-400 transition"
+                >
+                    Admission Information
+                </a>
+
+                <a
+                    href="tel:+254700000000"
+                    class="px-7 py-3.5 border border-white rounded-lg font-bold hover:bg-white hover:text-school-primary transition"
+                >
+                    Contact Admissions
+                </a>
+
+            </div>
+
+        </div>
+
+    </section>
+
+
+    <!-- =========================================================
+         PORTAL ACCESS
+    ========================================================== -->
+
+    <section class="py-20">
+
+        <div class="max-w-7xl mx-auto px-6">
+
+            <div class="text-center mb-12">
+
+                <span class="text-school-primary font-bold uppercase tracking-wider text-sm">
+                    School Portals
+                </span>
+
+                <h2 class="text-3xl font-extrabold text-school-dark mt-3">
+                    Access your school account
+                </h2>
+
+            </div>
+
+
+            <div class="grid md:grid-cols-3 gap-6">
+
+                <a
+                    href="login.html?portal=parent"
+                    class="p-8 border rounded-2xl hover:shadow-xl hover:border-school-primary transition"
+                >
+
+                    <div class="text-4xl mb-5">
+                        👨‍👩‍👧
+                    </div>
+
+                    <h3 class="text-xl font-bold mb-2">
+                        Parent Portal
+                    </h3>
+
+                    <p class="text-gray-600 text-sm">
+                        View your child's performance, attendance,
+                        report cards, announcements and school information.
+                    </p>
+
+                    <span class="inline-block mt-5 text-school-primary font-bold">
+                        Parent Login →
+                    </span>
+
+                </a>
+
+
+                <a
+                    href="login.html?portal=teacher"
+                    class="p-8 border rounded-2xl hover:shadow-xl hover:border-school-primary transition"
+                >
+
+                    <div class="text-4xl mb-5">
+                        👨‍🏫
+                    </div>
+
+                    <h3 class="text-xl font-bold mb-2">
+                        Teacher Portal
+                    </h3>
+
+                    <p class="text-gray-600 text-sm">
+                        Access teaching assignments, assessments,
+                        timetable and learner records.
+                    </p>
+
+                    <span class="inline-block mt-5 text-school-primary font-bold">
+                        Teacher Login →
+                    </span>
+
+                </a>
+
+
+                <a
+                    href="login.html?portal=admin"
+                    class="p-8 border rounded-2xl hover:shadow-xl hover:border-school-primary transition"
+                >
+
+                    <div class="text-4xl mb-5">
+                        🏫
+                    </div>
+
+                    <h3 class="text-xl font-bold mb-2">
+                        Administration
+                    </h3>
+
+                    <p class="text-gray-600 text-sm">
+                        Authorized school administrators can access
+                        the school's management system.
+                    </p>
+
+                    <span class="inline-block mt-5 text-school-primary font-bold">
+                        Admin Login →
+                    </span>
+
+                </a>
+
+            </div>
+
+        </div>
+
+    </section>
+
+
+    <!-- =========================================================
+         CONTACT
+    ========================================================== -->
+
+    <section
+        id="contact"
+        class="bg-gray-900 text-white py-20"
+    >
+
+        <div class="max-w-7xl mx-auto px-6">
+
+            <div class="grid md:grid-cols-2 lg:grid-cols-4 gap-10">
+
+                <div>
+
+                    <h3 class="text-xl font-bold mb-5">
+                        Green Valley Academy
+                    </h3>
+
+                    <p class="text-gray-400 text-sm leading-relaxed">
+                        Nurturing learners through quality education,
+                        character development and innovation.
+                    </p>
+
+                </div>
+
+
+                <div>
+
+                    <h3 class="font-bold mb-5">
+                        Quick Links
+                    </h3>
+
+                    <div class="flex flex-col gap-3 text-sm text-gray-400">
+
+                        <a href="#about" class="hover:text-white">
+                            About
+                        </a>
+
+                        <a href="#academics" class="hover:text-white">
+                            Academics
+                        </a>
+
+                        <a href="#admissions" class="hover:text-white">
+                            Admissions
+                        </a>
+
+                        <a href="gallery.html" class="hover:text-white">
+                            Gallery
+                        </a>
+
+                    </div>
+
+                </div>
+
+
+                <div>
+
+                    <h3 class="font-bold mb-5">
+                        Contact
+                    </h3>
+
+                    <div class="space-y-3 text-sm text-gray-400">
+
+                        <p>
+                            📍 Nakuru, Kenya
+                        </p>
+
+                        <p>
+                            📞 +254 700 000 000
+                        </p>
+
+                        <p>
+                            ✉ info@greenvalleyacademy.ac.ke
+                        </p>
+
+                    </div>
+
+                </div>
+
+
+                <div>
+
+                    <h3 class="font-bold mb-5">
+                        Office Hours
+                    </h3>
+
+                    <div class="space-y-3 text-sm text-gray-400">
+
+                        <p>
+                            Monday – Friday
+                        </p>
+
+                        <p>
+                            8:00 AM – 5:00 PM
+                        </p>
+
+                        <p>
+                            Saturday
+                        </p>
+
+                        <p>
+                            9:00 AM – 1:00 PM
+                        </p>
+
+                    </div>
+
+                </div>
+
+            </div>
+
+
+            <div class="border-t border-gray-800 mt-14 pt-7 flex flex-col md:flex-row justify-between gap-4 text-sm text-gray-500">
+
+                <p>
+                    © 2026 Green Valley Academy. All rights reserved.
+                </p>
+
+                <p>
+                    Powered by School Management System
+                </p>
+
+            </div>
+
+        </div>
+
+    </section>
+
+
+    <!-- =========================================================
+         JAVASCRIPT
+    ========================================================== -->
+
+    <script>
+
+        const mobileMenuButton =
+            document.getElementById("mobileMenuButton");
+
+        const mobileMenu =
+            document.getElementById("mobileMenu");
+
+
+        mobileMenuButton.addEventListener("click", () => {
+
+            mobileMenu.classList.toggle("hidden");
+
+        });
+
+
+        /*
+        |--------------------------------------------------------------------------
+        | CLOSE MOBILE MENU WHEN LINK IS CLICKED
+        |--------------------------------------------------------------------------
+        */
+
+        mobileMenu.querySelectorAll("a").forEach(link => {
+
+            link.addEventListener("click", () => {
+
+                mobileMenu.classList.add("hidden");
+
+            });
+
+        });
+
+    </script>
+
+</body>
+</html>
+

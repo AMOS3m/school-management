@@ -1,0 +1,3235 @@
+
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+
+  <meta
+    name="viewport"
+    content="width=device-width, initial-scale=1.0"
+  />
+
+  <title>Teacher Portal</title>
+
+  <!-- Tailwind CDN - suitable for development -->
+  <script src="https://cdn.tailwindcss.com"></script>
+
+  <script>
+    tailwind.config = {
+      theme: {
+        extend: {
+          colors: {
+            school: {
+              50: "#eff6ff",
+              100: "#dbeafe",
+              200: "#bfdbfe",
+              300: "#93c5fd",
+              400: "#60a5fa",
+              500: "#3b82f6",
+              600: "#2563eb",
+              700: "#1d4ed8",
+              800: "#1e40af",
+              900: "#1e3a8a"
+            }
+          }
+        }
+      }
+    };
+  </script>
+
+  <style>
+    html {
+      scroll-behavior: smooth;
+    }
+
+    body {
+      background: #f8fafc;
+    }
+
+    .sidebar-link.active {
+      background: #1e40af;
+      color: white;
+    }
+
+    .section {
+      scroll-margin-top: 90px;
+    }
+
+    .mobile-overlay {
+      display: none;
+    }
+
+    @media (max-width: 1023px) {
+      .teacher-sidebar {
+        transform: translateX(-100%);
+        transition: transform 0.25s ease;
+      }
+
+      .teacher-sidebar.open {
+        transform: translateX(0);
+      }
+
+      .mobile-overlay.active {
+        display: block;
+      }
+    }
+  </style>
+</head>
+
+
+<body class="text-slate-800">
+
+
+  <!-- ================================================================
+       MOBILE OVERLAY
+  ================================================================= -->
+  <div
+    id="mobileOverlay"
+    class="mobile-overlay fixed inset-0 bg-black/50 z-40 lg:hidden"
+    onclick="closeTeacherSidebar()"
+  ></div>
+
+
+  <!-- ================================================================
+       SIDEBAR
+  ================================================================= -->
+  <aside
+    id="teacherSidebar"
+    class="teacher-sidebar fixed left-0 top-0 bottom-0 z-50
+           w-72 bg-slate-950 text-white overflow-y-auto"
+  >
+
+    <!-- Logo -->
+    <div class="h-20 px-6 flex items-center border-b border-white/10">
+
+      <div
+        class="w-11 h-11 rounded-xl bg-school-600
+               flex items-center justify-center
+               font-bold text-lg mr-3"
+      >
+        SM
+      </div>
+
+      <div>
+        <h1 class="font-bold text-lg">
+          School Portal
+        </h1>
+
+        <p class="text-xs text-slate-400">
+          Teacher
+        </p>
+      </div>
+
+      <!-- Mobile close -->
+      <button
+        type="button"
+        onclick="closeTeacherSidebar()"
+        class="ml-auto lg:hidden text-slate-400
+               hover:text-white text-2xl"
+        aria-label="Close menu"
+      >
+        ×
+      </button>
+
+    </div>
+
+
+    <!-- Navigation -->
+    <nav class="p-4">
+
+      <p
+        class="px-3 mb-2 text-xs font-semibold
+               text-slate-500 uppercase tracking-wider"
+      >
+        Main
+      </p>
+
+
+      <a
+        href="#dashboard"
+        class="sidebar-link active flex items-center gap-3
+               px-3 py-3 rounded-lg mb-1"
+        onclick="setTeacherActive(this)"
+      >
+        <span>▦</span>
+        <span>Dashboard</span>
+      </a>
+
+
+      <a
+        href="#my-teaching"
+        class="sidebar-link flex items-center gap-3
+               px-3 py-3 rounded-lg mb-1"
+        onclick="setTeacherActive(this)"
+      >
+        <span>📚</span>
+        <span>My Teaching</span>
+      </a>
+
+
+      <a
+        href="#timetable"
+        class="sidebar-link flex items-center gap-3
+               px-3 py-3 rounded-lg mb-1"
+        onclick="setTeacherActive(this)"
+      >
+        <span>🗓️</span>
+        <span>My Timetable</span>
+      </a>
+
+
+      <p
+        class="px-3 mt-7 mb-2 text-xs font-semibold
+               text-slate-500 uppercase tracking-wider"
+      >
+        Academic Work
+      </p>
+
+
+      <a
+        href="#assessments"
+        class="sidebar-link flex items-center gap-3
+               px-3 py-3 rounded-lg mb-1"
+        onclick="setTeacherActive(this)"
+      >
+        <span>📝</span>
+        <span>Assessments</span>
+      </a>
+
+
+      <a
+        href="#attendance"
+        class="sidebar-link flex items-center gap-3
+               px-3 py-3 rounded-lg mb-1"
+        onclick="setTeacherActive(this)"
+      >
+        <span>✓</span>
+        <span>Attendance</span>
+      </a>
+
+
+      <a
+        href="#class-teacher"
+        class="sidebar-link flex items-center gap-3
+               px-3 py-3 rounded-lg mb-1"
+        onclick="setTeacherActive(this)"
+      >
+        <span>🏫</span>
+        <span>Class Teacher</span>
+      </a>
+
+
+      <p
+        class="px-3 mt-7 mb-2 text-xs font-semibold
+               text-slate-500 uppercase tracking-wider"
+      >
+        Account
+      </p>
+
+
+      <a
+        href="#profile"
+        class="sidebar-link flex items-center gap-3
+               px-3 py-3 rounded-lg mb-1"
+        onclick="setTeacherActive(this)"
+      >
+        <span>👤</span>
+        <span>My Profile</span>
+      </a>
+
+
+      <button
+        type="button"
+        onclick="logoutTeacher()"
+        class="w-full flex items-center gap-3
+               px-3 py-3 rounded-lg mt-1
+               text-red-300 hover:bg-red-500/10"
+      >
+        <span>↪</span>
+        <span>Logout</span>
+      </button>
+
+    </nav>
+
+  </aside>
+
+
+
+  <!-- ================================================================
+       MAIN AREA
+  ================================================================= -->
+  <div class="lg:ml-72 min-h-screen">
+
+
+    <!-- ==============================================================
+         TOP BAR
+    ================================================================= -->
+    <header
+      class="sticky top-0 z-30 bg-white border-b
+             border-slate-200"
+    >
+
+      <div
+        class="h-20 px-4 sm:px-6 lg:px-8
+               flex items-center justify-between"
+      >
+
+        <div class="flex items-center gap-4">
+
+          <button
+            type="button"
+            onclick="openTeacherSidebar()"
+            class="lg:hidden w-10 h-10 rounded-lg
+                   border border-slate-200
+                   flex items-center justify-center"
+            aria-label="Open menu"
+          >
+            ☰
+          </button>
+
+
+          <div>
+            <p
+              class="text-xs text-slate-500
+                     uppercase tracking-wide"
+            >
+              Teacher Portal
+            </p>
+
+            <h2
+              id="pageTitle"
+              class="text-lg sm:text-xl font-bold"
+            >
+              Dashboard
+            </h2>
+          </div>
+
+        </div>
+
+
+        <!-- Teacher mini profile -->
+        <button
+          type="button"
+          onclick="showTeacherSection('profile')"
+          class="flex items-center gap-3"
+        >
+
+          <div
+            id="headerTeacherInitials"
+            class="w-10 h-10 rounded-full
+                   bg-school-100 text-school-800
+                   flex items-center justify-center
+                   font-bold"
+          >
+            T
+          </div>
+
+          <div class="hidden sm:block text-left">
+
+            <p
+              id="headerTeacherName"
+              class="text-sm font-semibold"
+            >
+              Teacher
+            </p>
+
+            <p
+              class="text-xs text-slate-500"
+            >
+              Teacher Account
+            </p>
+
+          </div>
+
+        </button>
+
+      </div>
+
+    </header>
+
+
+
+    <!-- ==============================================================
+         CONTENT
+    ================================================================= -->
+    <main class="p-4 sm:p-6 lg:p-8">
+
+
+      <!-- ============================================================
+           DASHBOARD
+      ============================================================= -->
+      <section
+        id="dashboard"
+        class="section space-y-6"
+      >
+
+        <!-- Welcome -->
+        <div
+          class="rounded-2xl bg-gradient-to-r
+                 from-school-900 to-school-700
+                 text-white p-6 sm:p-8"
+        >
+
+          <div
+            class="flex flex-col lg:flex-row
+                   lg:items-center lg:justify-between
+                   gap-6"
+          >
+
+            <div>
+
+              <p
+                class="text-school-200 text-sm
+                       font-medium mb-2"
+              >
+                Welcome back
+              </p>
+
+              <h1
+                id="dashboardTeacherName"
+                class="text-2xl sm:text-3xl
+                       font-bold"
+              >
+                Teacher
+              </h1>
+
+              <p
+                class="mt-2 text-school-100
+                       max-w-2xl"
+              >
+                Manage your teaching activities,
+                assessments, attendance and
+                academic responsibilities.
+              </p>
+
+            </div>
+
+
+            <div
+              class="bg-white/10 rounded-xl
+                     p-5 min-w-[220px]"
+            >
+
+              <p
+                class="text-xs text-school-200
+                       uppercase tracking-wide"
+              >
+                Employee Number
+              </p>
+
+              <p
+                id="dashboardEmployeeNumber"
+                class="mt-1 font-semibold"
+              >
+                —
+              </p>
+
+            </div>
+
+          </div>
+
+        </div>
+
+
+
+        <!-- Dashboard statistics -->
+        <div
+          class="grid grid-cols-1 sm:grid-cols-2
+                 xl:grid-cols-4 gap-4"
+        >
+
+          <div
+            class="bg-white rounded-xl border
+                   border-slate-200 p-5"
+          >
+
+            <p class="text-sm text-slate-500">
+              Teaching Assignments
+            </p>
+
+            <p
+              id="teachingAssignmentsCount"
+              class="mt-2 text-3xl font-bold"
+            >
+              0
+            </p>
+
+          </div>
+
+
+          <div
+            class="bg-white rounded-xl border
+                   border-slate-200 p-5"
+          >
+
+            <p class="text-sm text-slate-500">
+              Streams
+            </p>
+
+            <p
+              id="teacherStreamsCount"
+              class="mt-2 text-3xl font-bold"
+            >
+              0
+            </p>
+
+          </div>
+
+
+          <div
+            class="bg-white rounded-xl border
+                   border-slate-200 p-5"
+          >
+
+            <p class="text-sm text-slate-500">
+              Class Teacher
+            </p>
+
+            <p
+              id="classTeacherStatus"
+              class="mt-2 text-lg font-bold"
+            >
+              No
+            </p>
+
+          </div>
+
+
+          <div
+            class="bg-white rounded-xl border
+                   border-slate-200 p-5"
+          >
+
+            <p class="text-sm text-slate-500">
+              Recent Assessments
+            </p>
+
+            <p
+              id="recentAssessmentsCount"
+              class="mt-2 text-3xl font-bold"
+            >
+              0
+            </p>
+
+          </div>
+
+        </div>
+
+
+
+        <!-- Today's timetable -->
+        <div
+          class="bg-white rounded-2xl border
+                 border-slate-200"
+        >
+
+          <div
+            class="p-5 sm:p-6 border-b
+                   flex flex-col sm:flex-row
+                   sm:items-center
+                   sm:justify-between gap-3"
+          >
+
+            <div>
+
+              <h3 class="font-bold text-lg">
+                Today's Timetable
+              </h3>
+
+              <p class="text-sm text-slate-500 mt-1">
+                Your scheduled lessons for today.
+              </p>
+
+            </div>
+
+
+            <button
+              type="button"
+              onclick="showTeacherSection('timetable')"
+              class="text-sm text-school-700
+                     font-semibold"
+            >
+              View full timetable →
+            </button>
+
+          </div>
+
+
+          <div
+            id="todayTimetableContainer"
+            class="p-5 sm:p-6"
+          >
+
+            <div
+              class="text-center py-10
+                     text-slate-500"
+            >
+              Loading today's timetable...
+            </div>
+
+          </div>
+
+        </div>
+
+
+
+        <!-- Quick actions -->
+        <div>
+
+          <h3 class="font-bold text-lg mb-4">
+            Quick Actions
+          </h3>
+
+
+          <div
+            class="grid grid-cols-1
+                   sm:grid-cols-2
+                   xl:grid-cols-4 gap-4"
+          >
+
+            <button
+              type="button"
+              onclick="showTeacherSection('assessments')"
+              class="bg-white border border-slate-200
+                     rounded-xl p-5 text-left
+                     hover:border-school-400
+                     hover:shadow-sm transition"
+            >
+
+              <div class="text-2xl mb-3">
+                📝
+              </div>
+
+              <p class="font-semibold">
+                Record Assessment
+              </p>
+
+              <p class="text-sm text-slate-500 mt-1">
+                Create a new learner assessment.
+              </p>
+
+            </button>
+
+
+            <button
+              type="button"
+              onclick="showTeacherSection('attendance')"
+              class="bg-white border border-slate-200
+                     rounded-xl p-5 text-left
+                     hover:border-school-400
+                     hover:shadow-sm transition"
+            >
+
+              <div class="text-2xl mb-3">
+                ✓
+              </div>
+
+              <p class="font-semibold">
+                Record Attendance
+              </p>
+
+              <p class="text-sm text-slate-500 mt-1">
+                Mark attendance for your class.
+              </p>
+
+            </button>
+
+
+            <button
+              type="button"
+              onclick="showTeacherSection('my-teaching')"
+              class="bg-white border border-slate-200
+                     rounded-xl p-5 text-left
+                     hover:border-school-400
+                     hover:shadow-sm transition"
+            >
+
+              <div class="text-2xl mb-3">
+                📚
+              </div>
+
+              <p class="font-semibold">
+                My Teaching
+              </p>
+
+              <p class="text-sm text-slate-500 mt-1">
+                View your subjects and streams.
+              </p>
+
+            </button>
+
+
+            <button
+              type="button"
+              onclick="showTeacherSection('profile')"
+              class="bg-white border border-slate-200
+                     rounded-xl p-5 text-left
+                     hover:border-school-400
+                     hover:shadow-sm transition"
+            >
+
+              <div class="text-2xl mb-3">
+                👤
+              </div>
+
+              <p class="font-semibold">
+                My Profile
+              </p>
+
+              <p class="text-sm text-slate-500 mt-1">
+                View and update your personal details.
+              </p>
+
+            </button>
+
+          </div>
+
+        </div>
+
+      </section>
+
+
+
+      <!-- ============================================================
+           MY TEACHING
+      ============================================================= -->
+      <section
+        id="my-teaching"
+        class="section hidden space-y-6"
+      >
+
+        <div>
+
+          <h2 class="text-2xl font-bold">
+            My Teaching
+          </h2>
+
+          <p class="text-sm text-slate-500 mt-1">
+            Subjects, streams and teaching assignments
+            provided by administration.
+          </p>
+
+        </div>
+
+
+        <!-- Learning areas -->
+        <div
+          class="bg-white rounded-2xl border
+                 border-slate-200"
+        >
+
+          <div class="p-6 border-b">
+
+            <h3 class="font-bold text-lg">
+              My Learning Areas
+            </h3>
+
+          </div>
+
+
+          <div
+            id="learningAreasContainer"
+            class="p-6 grid grid-cols-1
+                   sm:grid-cols-2 xl:grid-cols-3
+                   gap-4"
+          >
+
+            <p class="text-slate-500">
+              Loading...
+            </p>
+
+          </div>
+
+        </div>
+
+
+
+        <!-- Teaching assignments -->
+        <div
+          class="bg-white rounded-2xl border
+                 border-slate-200"
+        >
+
+          <div class="p-6 border-b">
+
+            <h3 class="font-bold text-lg">
+              Teaching Assignments
+            </h3>
+
+            <p class="text-sm text-slate-500 mt-1">
+              The classes and learning areas assigned
+              to you by administration.
+            </p>
+
+          </div>
+
+
+          <div class="overflow-x-auto">
+
+            <table class="w-full text-sm">
+
+              <thead class="bg-slate-50">
+
+                <tr>
+
+                  <th class="p-4 text-left">
+                    Learning Area
+                  </th>
+
+                  <th class="p-4 text-left">
+                    Grade
+                  </th>
+
+                  <th class="p-4 text-left">
+                    Stream
+                  </th>
+
+                </tr>
+
+              </thead>
+
+
+              <tbody
+                id="teachingAssignmentsTable"
+              >
+
+              </tbody>
+
+            </table>
+
+          </div>
+
+        </div>
+
+
+
+        <!-- Streams -->
+        <div
+          class="bg-white rounded-2xl border
+                 border-slate-200"
+        >
+
+          <div class="p-6 border-b">
+
+            <h3 class="font-bold text-lg">
+              My Streams
+            </h3>
+
+          </div>
+
+
+          <div
+            id="teacherStreamsContainer"
+            class="p-6 grid grid-cols-1
+                   sm:grid-cols-2 lg:grid-cols-3
+                   gap-4"
+          >
+
+            <p class="text-slate-500">
+              Loading...
+            </p>
+
+          </div>
+
+        </div>
+
+      </section>
+
+
+
+      <!-- ============================================================
+           TIMETABLE
+      ============================================================= -->
+      <section
+        id="timetable"
+        class="section hidden space-y-6"
+      >
+
+        <div>
+
+          <h2 class="text-2xl font-bold">
+            My Timetable
+          </h2>
+
+          <p class="text-sm text-slate-500 mt-1">
+            Your scheduled teaching periods.
+          </p>
+
+        </div>
+
+
+        <div
+          class="bg-white rounded-2xl border
+                 border-slate-200 overflow-hidden"
+        >
+
+          <div class="overflow-x-auto">
+
+            <table class="w-full text-sm">
+
+              <thead class="bg-slate-50">
+
+                <tr>
+
+                  <th class="p-4 text-left">
+                    Day
+                  </th>
+
+                  <th class="p-4 text-left">
+                    Time
+                  </th>
+
+                  <th class="p-4 text-left">
+                    Learning Area
+                  </th>
+
+                  <th class="p-4 text-left">
+                    Grade
+                  </th>
+
+                  <th class="p-4 text-left">
+                    Stream
+                  </th>
+
+                  <th class="p-4 text-left">
+                    Room
+                  </th>
+
+                </tr>
+
+              </thead>
+
+
+              <tbody id="teacherTimetableTable">
+
+              </tbody>
+
+            </table>
+
+          </div>
+
+        </div>
+
+      </section>
+
+
+
+      
+    <!-- =========================================================
+     ASSESSMENTS
+========================================================= -->
+<section id="assessments" class="section hidden space-y-6">
+
+    <!-- PAGE HEADER -->
+    <div class="flex flex-col md:flex-row md:items-center md:justify-between gap-4">
+
+        <div>
+            <h2 class="text-2xl font-bold text-gray-900">
+                Assessments
+            </h2>
+
+            <p class="text-gray-500 mt-1">
+                Create assessments, record learner results and manage report-card assessments.
+            </p>
+        </div>
+
+        <button
+            type="button"
+            onclick="showAssessmentCreateForm()"
+            class="px-5 py-2.5 rounded-lg bg-blue-600 text-white font-medium hover:bg-blue-700 transition"
+        >
+            + Create Assessment
+        </button>
+
+    </div>
+
+
+    <!-- =====================================================
+         CREATE ASSESSMENT
+    ====================================================== -->
+    <div
+        id="assessmentCreatePanel"
+        class="bg-white rounded-xl shadow-sm border border-gray-200 p-6"
+    >
+
+        <div class="flex items-center justify-between mb-6">
+
+            <div>
+                <h3 class="text-lg font-semibold text-gray-900">
+                    Create Assessment
+                </h3>
+
+                <p class="text-sm text-gray-500 mt-1">
+                    Create an assessment for a specific grade, stream and learning area.
+                </p>
+            </div>
+
+        </div>
+
+
+        <form id="assessmentForm" class="space-y-6">
+
+            <div class="grid grid-cols-1 md:grid-cols-2 gap-5">
+
+                <!-- Assessment Name -->
+                <div>
+                    <label
+                        for="assessmentName"
+                        class="block text-sm font-medium text-gray-700 mb-1"
+                    >
+                        Assessment Name
+                    </label>
+
+                    <input
+                        id="assessmentName"
+                        name="name"
+                        type="text"
+                        required
+                        placeholder="e.g. Mathematics CAT 1"
+                        class="w-full rounded-lg border border-gray-300 px-4 py-2.5 focus:ring-2 focus:ring-blue-500 focus:border-blue-500"
+                    />
+                </div>
+
+
+                <!-- Assessment Type -->
+                <div>
+                    <label
+                        for="assessmentType"
+                        class="block text-sm font-medium text-gray-700 mb-1"
+                    >
+                        Assessment Type
+                    </label>
+
+                    <select
+                        id="assessmentType"
+                        name="type"
+                        required
+                        class="w-full rounded-lg border border-gray-300 px-4 py-2.5"
+                    >
+                        <option value="">Select type</option>
+                        <option value="FORMATIVE">Formative</option>
+                        <option value="SUMMATIVE">Summative</option>
+                        <option value="CONTINUOUS">Continuous Assessment</option>
+                        <option value="MID_TERM">Mid Term</option>
+                        <option value="END_TERM">End Term</option>
+                        <option value="EXAM">Exam</option>
+                    </select>
+                </div>
+
+
+                <!-- Academic Year -->
+                <div>
+                    <label
+                        for="assessmentAcademicYear"
+                        class="block text-sm font-medium text-gray-700 mb-1"
+                    >
+                        Academic Year
+                    </label>
+
+                    <select
+                        id="assessmentAcademicYear"
+                        name="academicYearId"
+                        required
+                        class="w-full rounded-lg border border-gray-300 px-4 py-2.5"
+                    >
+                        <option value="">
+                            Select academic year
+                        </option>
+                    </select>
+                </div>
+
+
+                <!-- Term -->
+                <div>
+                    <label
+                        for="assessmentTerm"
+                        class="block text-sm font-medium text-gray-700 mb-1"
+                    >
+                        Term
+                    </label>
+
+                    <select
+                        id="assessmentTerm"
+                        name="termId"
+                        required
+                        class="w-full rounded-lg border border-gray-300 px-4 py-2.5"
+                    >
+                        <option value="">
+                            Select term
+                        </option>
+                    </select>
+                </div>
+
+
+                <!-- Grade -->
+                <div>
+                    <label
+                        for="assessmentGrade"
+                        class="block text-sm font-medium text-gray-700 mb-1"
+                    >
+                        Grade
+                    </label>
+
+                    <select
+                        id="assessmentGrade"
+                        name="gradeId"
+                        required
+                        class="w-full rounded-lg border border-gray-300 px-4 py-2.5"
+                    >
+                        <option value="">
+                            Select grade
+                        </option>
+                    </select>
+                </div>
+
+
+                <!-- Stream -->
+                <div>
+                    <label
+                        for="assessmentStream"
+                        class="block text-sm font-medium text-gray-700 mb-1"
+                    >
+                        Stream
+                    </label>
+
+                    <select
+                        id="assessmentStream"
+                        name="streamId"
+                        class="w-full rounded-lg border border-gray-300 px-4 py-2.5"
+                    >
+                        <option value="">
+                            All streams / No specific stream
+                        </option>
+                    </select>
+                </div>
+
+
+                <!-- Learning Area -->
+                <div>
+                    <label
+                        for="assessmentLearningArea"
+                        class="block text-sm font-medium text-gray-700 mb-1"
+                    >
+                        Learning Area
+                    </label>
+
+                    <select
+                        id="assessmentLearningArea"
+                        name="learningAreaId"
+                        required
+                        class="w-full rounded-lg border border-gray-300 px-4 py-2.5"
+                    >
+                        <option value="">
+                            Select learning area
+                        </option>
+                    </select>
+                </div>
+
+
+                <!-- Assessment Date -->
+                <div>
+                    <label
+                        for="assessmentDate"
+                        class="block text-sm font-medium text-gray-700 mb-1"
+                    >
+                        Assessment Date
+                    </label>
+
+                    <input
+                        id="assessmentDate"
+                        name="assessmentDate"
+                        type="date"
+                        required
+                        class="w-full rounded-lg border border-gray-300 px-4 py-2.5"
+                    />
+                </div>
+
+
+                <!-- Total Marks -->
+                <div>
+                    <label
+                        for="assessmentTotalMarks"
+                        class="block text-sm font-medium text-gray-700 mb-1"
+                    >
+                        Total Marks
+                    </label>
+
+                    <input
+                        id="assessmentTotalMarks"
+                        name="totalMarks"
+                        type="number"
+                        min="1"
+                        step="0.01"
+                        required
+                        placeholder="e.g. 100"
+                        class="w-full rounded-lg border border-gray-300 px-4 py-2.5"
+                    />
+                </div>
+
+            </div>
+
+
+            <!-- Description -->
+            <div>
+
+                <label
+                    for="assessmentDescription"
+                    class="block text-sm font-medium text-gray-700 mb-1"
+                >
+                    Description
+                </label>
+
+                <textarea
+                    id="assessmentDescription"
+                    name="description"
+                    rows="3"
+                    placeholder="Optional assessment description..."
+                    class="w-full rounded-lg border border-gray-300 px-4 py-2.5"
+                ></textarea>
+
+            </div>
+
+
+            <!-- Assessment mode explanation -->
+            <div class="rounded-lg bg-blue-50 border border-blue-100 p-4">
+
+                <h4 class="font-semibold text-blue-900">
+                    Assessment marking
+                </h4>
+
+                <p class="text-sm text-blue-800 mt-1">
+                    After creating the assessment, you can record overall marks
+                    directly for each learner. You may also add individual
+                    assessment items/questions if detailed marking is required.
+                </p>
+
+            </div>
+
+
+            <!-- Actions -->
+            <div class="flex flex-wrap gap-3">
+
+                <button
+                    type="submit"
+                    class="px-5 py-2.5 rounded-lg bg-blue-600 text-white font-medium hover:bg-blue-700"
+                >
+                    Save Assessment
+                </button>
+
+                <button
+                    type="button"
+                    onclick="hideAssessmentCreateForm()"
+                    class="px-5 py-2.5 rounded-lg border border-gray-300 text-gray-700 hover:bg-gray-50"
+                >
+                    Cancel
+                </button>
+
+            </div>
+
+        </form>
+
+    </div>
+
+
+    <!-- =====================================================
+         MY ASSESSMENTS
+    ====================================================== -->
+    <div
+        id="assessmentListPanel"
+        class="bg-white rounded-xl shadow-sm border border-gray-200"
+    >
+
+        <div class="p-6 border-b border-gray-200 flex flex-col md:flex-row md:items-center md:justify-between gap-3">
+
+            <div>
+                <h3 class="text-lg font-semibold text-gray-900">
+                    My Assessments
+                </h3>
+
+                <p class="text-sm text-gray-500 mt-1">
+                    Assessments created by you.
+                </p>
+            </div>
+
+            <button
+                type="button"
+                onclick="loadMyAssessments()"
+                class="px-4 py-2 border border-gray-300 rounded-lg text-sm font-medium hover:bg-gray-50"
+            >
+                Refresh
+            </button>
+
+        </div>
+
+
+        <div class="overflow-x-auto">
+
+            <table class="min-w-full">
+
+                <thead class="bg-gray-50">
+
+                    <tr>
+
+                        <th class="px-6 py-3 text-left text-xs font-semibold text-gray-500 uppercase">
+                            Assessment
+                        </th>
+
+                        <th class="px-6 py-3 text-left text-xs font-semibold text-gray-500 uppercase">
+                            Type
+                        </th>
+
+                        <th class="px-6 py-3 text-left text-xs font-semibold text-gray-500 uppercase">
+                            Learning Area
+                        </th>
+
+                        <th class="px-6 py-3 text-left text-xs font-semibold text-gray-500 uppercase">
+                            Grade
+                        </th>
+
+                        <th class="px-6 py-3 text-left text-xs font-semibold text-gray-500 uppercase">
+                            Stream
+                        </th>
+
+                        <th class="px-6 py-3 text-left text-xs font-semibold text-gray-500 uppercase">
+                            Date
+                        </th>
+
+                        <th class="px-6 py-3 text-left text-xs font-semibold text-gray-500 uppercase">
+                            Status
+                        </th>
+
+                        <th class="px-6 py-3 text-left text-xs font-semibold text-gray-500 uppercase">
+                            Report Card
+                        </th>
+
+                        <th class="px-6 py-3 text-right text-xs font-semibold text-gray-500 uppercase">
+                            Actions
+                        </th>
+
+                    </tr>
+
+                </thead>
+
+                <tbody
+                    id="teacherAssessmentsTable"
+                    class="divide-y divide-gray-200"
+                ></tbody>
+
+            </table>
+
+        </div>
+
+    </div>
+
+
+    <!-- =====================================================
+         ASSESSMENT WORKSPACE
+    ====================================================== -->
+    <div
+        id="assessmentWorkspace"
+        class="hidden space-y-6"
+    >
+
+        <!-- Workspace Header -->
+        <div class="bg-white rounded-xl shadow-sm border border-gray-200 p-6">
+
+            <div class="flex flex-col lg:flex-row lg:items-center lg:justify-between gap-4">
+
+                <div>
+
+                    <div class="flex items-center gap-3">
+
+                        <button
+                            type="button"
+                            onclick="closeAssessmentWorkspace()"
+                            class="px-3 py-2 border border-gray-300 rounded-lg text-sm hover:bg-gray-50"
+                        >
+                            ← Back
+                        </button>
+
+                        <h3
+                            id="workspaceAssessmentName"
+                            class="text-xl font-bold text-gray-900"
+                        >
+                            Assessment
+                        </h3>
+
+                    </div>
+
+                    <p
+                        id="workspaceAssessmentDescription"
+                        class="text-sm text-gray-500 mt-2"
+                    ></p>
+
+                </div>
+
+
+                <div class="flex flex-wrap gap-2">
+
+                    <span
+                        id="workspaceAssessmentStatus"
+                        class="px-3 py-1.5 rounded-full text-xs font-semibold bg-gray-100 text-gray-700"
+                    >
+                        Draft
+                    </span>
+
+                    <span
+                        id="workspaceReportCardStatus"
+                        class="px-3 py-1.5 rounded-full text-xs font-semibold bg-gray-100 text-gray-700"
+                    >
+                        Not for Report Card
+                    </span>
+
+                </div>
+
+            </div>
+
+
+            <!-- Assessment information -->
+
+            <div class="grid grid-cols-2 md:grid-cols-4 lg:grid-cols-6 gap-4 mt-6">
+
+                <div>
+                    <p class="text-xs text-gray-500">Learning Area</p>
+                    <p
+                        id="workspaceLearningArea"
+                        class="font-medium text-gray-900 mt-1"
+                    >
+                        —
+                    </p>
+                </div>
+
+                <div>
+                    <p class="text-xs text-gray-500">Grade</p>
+                    <p
+                        id="workspaceGrade"
+                        class="font-medium text-gray-900 mt-1"
+                    >
+                        —
+                    </p>
+                </div>
+
+                <div>
+                    <p class="text-xs text-gray-500">Stream</p>
+                    <p
+                        id="workspaceStream"
+                        class="font-medium text-gray-900 mt-1"
+                    >
+                        —
+                    </p>
+                </div>
+
+                <div>
+                    <p class="text-xs text-gray-500">Type</p>
+                    <p
+                        id="workspaceType"
+                        class="font-medium text-gray-900 mt-1"
+                    >
+                        —
+                    </p>
+                </div>
+
+                <div>
+                    <p class="text-xs text-gray-500">Date</p>
+                    <p
+                        id="workspaceDate"
+                        class="font-medium text-gray-900 mt-1"
+                    >
+                        —
+                    </p>
+                </div>
+
+                <div>
+                    <p class="text-xs text-gray-500">Total Marks</p>
+                    <p
+                        id="workspaceTotalMarks"
+                        class="font-medium text-gray-900 mt-1"
+                    >
+                        —
+                    </p>
+                </div>
+
+            </div>
+
+        </div>
+
+
+        <!-- =================================================
+             WORKSPACE TABS
+        ================================================== -->
+
+        <div class="bg-white rounded-xl shadow-sm border border-gray-200">
+
+            <div class="border-b border-gray-200">
+
+                <div class="flex flex-wrap">
+
+                    <button
+                        type="button"
+                        id="overallResultsTab"
+                        onclick="showAssessmentWorkspaceTab('overall')"
+                        class="px-5 py-3 text-sm font-semibold border-b-2 border-blue-600 text-blue-600"
+                    >
+                        Overall Results
+                    </button>
+
+                    <button
+                        type="button"
+                        id="assessmentItemsTab"
+                        onclick="showAssessmentWorkspaceTab('items')"
+                        class="px-5 py-3 text-sm font-medium text-gray-500"
+                    >
+                        Assessment Items
+                    </button>
+
+                    <button
+                        type="button"
+                        id="assessmentReviewTab"
+                        onclick="showAssessmentWorkspaceTab('review')"
+                        class="px-5 py-3 text-sm font-medium text-gray-500"
+                    >
+                        Review & Publish
+                    </button>
+
+                </div>
+
+            </div>
+
+
+            <!-- =============================================
+                 OVERALL RESULTS
+            ============================================== -->
+
+            <div
+                id="overallResultsPanel"
+                class="p-6"
+            >
+
+                <div class="flex flex-col md:flex-row md:items-center md:justify-between gap-3 mb-5">
+
+                    <div>
+
+                        <h4 class="text-lg font-semibold text-gray-900">
+                            Overall Learner Results
+                        </h4>
+
+                        <p class="text-sm text-gray-500 mt-1">
+                            Record the overall assessment mark for each learner.
+                        </p>
+
+                    </div>
+
+                    <span
+                        id="overallLearnerCount"
+                        class="text-sm font-medium text-gray-600"
+                    >
+                        0 learners
+                    </span>
+
+                </div>
+
+
+                <div class="overflow-x-auto">
+
+                    <table class="min-w-full">
+
+                        <thead class="bg-gray-50">
+
+                            <tr>
+
+                                <th class="px-4 py-3 text-left text-xs font-semibold text-gray-500 uppercase">
+                                    #
+                                </th>
+
+                                <th class="px-4 py-3 text-left text-xs font-semibold text-gray-500 uppercase">
+                                    Admission No.
+                                </th>
+
+                                <th class="px-4 py-3 text-left text-xs font-semibold text-gray-500 uppercase">
+                                    Learner
+                                </th>
+
+                                <th class="px-4 py-3 text-left text-xs font-semibold text-gray-500 uppercase">
+                                    Marks
+                                </th>
+
+                                <th class="px-4 py-3 text-left text-xs font-semibold text-gray-500 uppercase">
+                                    Performance
+                                </th>
+
+                                <th class="px-4 py-3 text-left text-xs font-semibold text-gray-500 uppercase">
+                                    Comment
+                                </th>
+
+                                <th class="px-4 py-3 text-right text-xs font-semibold text-gray-500 uppercase">
+                                    Action
+                                </th>
+
+                            </tr>
+
+                        </thead>
+
+                        <tbody
+                            id="assessmentLearnersTable"
+                            class="divide-y divide-gray-200"
+                        ></tbody>
+
+                    </table>
+
+                </div>
+
+            </div>
+
+
+            <!-- =============================================
+                 ASSESSMENT ITEMS
+            ============================================== -->
+
+            <div
+                id="assessmentItemsPanel"
+                class="hidden p-6"
+            >
+
+                <div class="flex flex-col md:flex-row md:items-center md:justify-between gap-3 mb-6">
+
+                    <div>
+
+                        <h4 class="text-lg font-semibold text-gray-900">
+                            Assessment Items
+                        </h4>
+
+                        <p class="text-sm text-gray-500 mt-1">
+                            Optional. Add questions when detailed marking is required.
+                        </p>
+
+                    </div>
+
+                </div>
+
+
+                <!-- Create Item -->
+
+                <div class="rounded-xl border border-gray-200 bg-gray-50 p-5 mb-6">
+
+                    <h5 class="font-semibold text-gray-900 mb-4">
+                        Add Assessment Item
+                    </h5>
+
+                    <form
+                        id="assessmentItemForm"
+                        class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-4"
+                    >
+
+                        <div>
+
+                            <label class="block text-sm font-medium text-gray-700 mb-1">
+                                Question Number
+                            </label>
+
+                            <input
+                                id="assessmentItemQuestionNumber"
+                                type="number"
+                                min="1"
+                                required
+                                class="w-full rounded-lg border border-gray-300 px-3 py-2.5"
+                                placeholder="1"
+                            />
+
+                        </div>
+
+
+                        <div>
+
+                            <label class="block text-sm font-medium text-gray-700 mb-1">
+                                Maximum Marks
+                            </label>
+
+                            <input
+                                id="assessmentItemMaxMarks"
+                                type="number"
+                                min="0.01"
+                                step="0.01"
+                                required
+                                class="w-full rounded-lg border border-gray-300 px-3 py-2.5"
+                                placeholder="10"
+                            />
+
+                        </div>
+
+
+                        <div class="lg:col-span-2">
+
+                            <label class="block text-sm font-medium text-gray-700 mb-1">
+                                Learning Outcome
+                            </label>
+
+                            <select
+                                id="assessmentItemLearningOutcome"
+                                class="w-full rounded-lg border border-gray-300 px-3 py-2.5"
+                            >
+
+                                <option value="">
+                                    Optional learning outcome
+                                </option>
+
+                            </select>
+
+                        </div>
+
+
+                        <div class="md:col-span-2 lg:col-span-3">
+
+                            <label class="block text-sm font-medium text-gray-700 mb-1">
+                                Question / Description
+                            </label>
+
+                            <input
+                                id="assessmentItemDescription"
+                                type="text"
+                                required
+                                class="w-full rounded-lg border border-gray-300 px-3 py-2.5"
+                                placeholder="e.g. Solve the following mathematical problem"
+                            />
+
+                        </div>
+
+
+                        <div class="flex items-end">
+
+                            <button
+                                type="submit"
+                                class="w-full px-4 py-2.5 rounded-lg bg-blue-600 text-white font-medium hover:bg-blue-700"
+                            >
+                                Add Item
+                            </button>
+
+                        </div>
+
+                    </form>
+
+                </div>
+
+
+                <!-- Items table -->
+
+                <div class="overflow-x-auto">
+
+                    <table class="min-w-full">
+
+                        <thead class="bg-gray-50">
+
+                            <tr>
+
+                                <th class="px-4 py-3 text-left text-xs font-semibold text-gray-500 uppercase">
+                                    #
+                                </th>
+
+                                <th class="px-4 py-3 text-left text-xs font-semibold text-gray-500 uppercase">
+                                    Description
+                                </th>
+
+                                <th class="px-4 py-3 text-left text-xs font-semibold text-gray-500 uppercase">
+                                    Learning Outcome
+                                </th>
+
+                                <th class="px-4 py-3 text-left text-xs font-semibold text-gray-500 uppercase">
+                                    Max Marks
+                                </th>
+
+                                <th class="px-4 py-3 text-right text-xs font-semibold text-gray-500 uppercase">
+                                    Action
+                                </th>
+
+                            </tr>
+
+                        </thead>
+
+                        <tbody
+                            id="assessmentItemsTable"
+                            class="divide-y divide-gray-200"
+                        ></tbody>
+
+                    </table>
+
+                </div>
+
+
+                <!-- Selected item marking area -->
+
+                <div
+                    id="assessmentItemResultsPanel"
+                    class="hidden mt-8 border-t border-gray-200 pt-6"
+                >
+
+                    <div class="mb-5">
+
+                        <h5
+                            id="selectedAssessmentItemTitle"
+                            class="text-lg font-semibold text-gray-900"
+                        >
+                            Item Results
+                        </h5>
+
+                        <p class="text-sm text-gray-500 mt-1">
+                            Record learner marks for this assessment item.
+                        </p>
+
+                    </div>
+
+
+                    <div class="overflow-x-auto">
+
+                        <table class="min-w-full">
+
+                            <thead class="bg-gray-50">
+
+                                <tr>
+
+                                    <th class="px-4 py-3 text-left text-xs font-semibold text-gray-500 uppercase">
+                                        Admission No.
+                                    </th>
+
+                                    <th class="px-4 py-3 text-left text-xs font-semibold text-gray-500 uppercase">
+                                        Learner
+                                    </th>
+
+                                    <th class="px-4 py-3 text-left text-xs font-semibold text-gray-500 uppercase">
+                                        Marks
+                                    </th>
+
+                                    <th class="px-4 py-3 text-left text-xs font-semibold text-gray-500 uppercase">
+                                        Performance
+                                    </th>
+
+                                    <th class="px-4 py-3 text-right text-xs font-semibold text-gray-500 uppercase">
+                                        Action
+                                    </th>
+
+                                </tr>
+
+                            </thead>
+
+                            <tbody
+                                id="assessmentItemLearnersTable"
+                                class="divide-y divide-gray-200"
+                            ></tbody>
+
+                        </table>
+
+                    </div>
+
+                </div>
+
+            </div>
+
+
+            <!-- =============================================
+                 REVIEW & PUBLISH
+            ============================================== -->
+
+            <div
+                id="assessmentReviewPanel"
+                class="hidden p-6"
+            >
+
+                <div class="max-w-3xl">
+
+                    <h4 class="text-lg font-semibold text-gray-900">
+                        Review & Publish
+                    </h4>
+
+                    <p class="text-sm text-gray-500 mt-1 mb-6">
+                        Review the assessment before locking it.
+                    </p>
+
+
+                    <div class="grid grid-cols-1 md:grid-cols-2 gap-4">
+
+                        <div class="rounded-lg bg-gray-50 p-4">
+                            <p class="text-sm text-gray-500">
+                                Learners
+                            </p>
+
+                            <p
+                                id="reviewLearnerCount"
+                                class="text-xl font-bold text-gray-900 mt-1"
+                            >
+                                0
+                            </p>
+                        </div>
+
+
+                        <div class="rounded-lg bg-gray-50 p-4">
+                            <p class="text-sm text-gray-500">
+                                Overall Results
+                            </p>
+
+                            <p
+                                id="reviewResultCount"
+                                class="text-xl font-bold text-gray-900 mt-1"
+                            >
+                                0
+                            </p>
+                        </div>
+
+
+                        <div class="rounded-lg bg-gray-50 p-4">
+                            <p class="text-sm text-gray-500">
+                                Assessment Items
+                            </p>
+
+                            <p
+                                id="reviewItemCount"
+                                class="text-xl font-bold text-gray-900 mt-1"
+                            >
+                                0
+                            </p>
+                        </div>
+
+
+                        <div class="rounded-lg bg-gray-50 p-4">
+                            <p class="text-sm text-gray-500">
+                                Status
+                            </p>
+
+                            <p
+                                id="reviewStatus"
+                                class="text-xl font-bold text-gray-900 mt-1"
+                            >
+                                Draft
+                            </p>
+                        </div>
+
+                    </div>
+
+
+                    <!-- Publish -->
+
+                    <div
+                        id="publishAssessmentBox"
+                        class="mt-6 rounded-xl border border-blue-200 bg-blue-50 p-5"
+                    >
+
+                        <h5 class="font-semibold text-blue-900">
+                            Publish Assessment
+                        </h5>
+
+                        <p class="text-sm text-blue-800 mt-1">
+                            Publishing locks the assessment from further
+                            modifications.
+                        </p>
+
+                        <button
+                            type="button"
+                            onclick="publishCurrentAssessment()"
+                            class="mt-4 px-5 py-2.5 rounded-lg bg-blue-600 text-white font-medium hover:bg-blue-700"
+                        >
+                            Publish Assessment
+                        </button>
+
+                    </div>
+
+
+                    <!-- Report Card -->
+
+                    <div
+                        id="reportCardControlBox"
+                        class="mt-5 rounded-xl border border-gray-200 bg-white p-5"
+                    >
+
+                        <h5 class="font-semibold text-gray-900">
+                            Report Card
+                        </h5>
+
+                        <p class="text-sm text-gray-500 mt-1">
+                            This option becomes available after the assessment
+                            has been published.
+                        </p>
+
+                        <div class="flex items-center gap-3 mt-4">
+
+                            <input
+                                id="workspaceReportCardCheckbox"
+                                type="checkbox"
+                                class="w-4 h-4"
+                                disabled
+                            />
+
+                            <label
+                                for="workspaceReportCardCheckbox"
+                                class="text-sm font-medium text-gray-700"
+                            >
+                                Include this assessment in the report card
+                            </label>
+
+                        </div>
+
+                    </div>
+
+                </div>
+
+            </div>
+
+        </div>
+
+    </div>
+
+</section>
+
+    <!-- ============================================================
+     ATTENDANCE
+============================================================= -->
+<section
+  id="attendance"
+  class="section hidden space-y-6"
+>
+
+  <div>
+
+    <h2 class="text-2xl font-bold">
+      Attendance
+    </h2>
+
+    <p class="text-sm text-slate-500 mt-1">
+      Record learner attendance and view
+      attendance records you have recorded.
+    </p>
+
+  </div>
+
+
+  <!-- ==========================================================
+       ATTENDANCE FILTERS
+  =========================================================== -->
+
+  <div
+    class="bg-white rounded-2xl border
+           border-slate-200 p-6"
+  >
+
+    <div
+      class="grid grid-cols-1
+             md:grid-cols-2
+             xl:grid-cols-5 gap-5"
+    >
+
+      <!-- Academic Year -->
+
+      <div>
+
+        <label
+          for="attendanceAcademicYear"
+          class="block text-sm font-medium mb-2"
+        >
+          Academic Year
+        </label>
+
+        <select
+          id="attendanceAcademicYear"
+          class="w-full border border-slate-300
+                 rounded-lg px-4 py-2.5"
+        >
+
+          <option value="">
+            Select academic year
+          </option>
+
+        </select>
+
+      </div>
+
+
+      <!-- Term -->
+
+      <div>
+
+        <label
+          for="attendanceTerm"
+          class="block text-sm font-medium mb-2"
+        >
+          Term
+        </label>
+
+        <select
+          id="attendanceTerm"
+          class="w-full border border-slate-300
+                 rounded-lg px-4 py-2.5"
+          disabled
+        >
+
+          <option value="">
+            Select term
+          </option>
+
+        </select>
+
+      </div>
+
+
+      <!-- Grade -->
+
+      <div>
+
+        <label
+          for="attendanceGrade"
+          class="block text-sm font-medium mb-2"
+        >
+          Grade
+        </label>
+
+        <select
+          id="attendanceGrade"
+          class="w-full border border-slate-300
+                 rounded-lg px-4 py-2.5"
+        >
+
+          <option value="">
+            Select grade
+          </option>
+
+        </select>
+
+      </div>
+
+
+      <!-- Stream -->
+
+      <div>
+
+        <label
+          for="attendanceStream"
+          class="block text-sm font-medium mb-2"
+        >
+          Stream
+        </label>
+
+        <select
+          id="attendanceStream"
+          class="w-full border border-slate-300
+                 rounded-lg px-4 py-2.5"
+          disabled
+        >
+
+          <option value="">
+            Select stream
+          </option>
+
+        </select>
+
+      </div>
+
+
+      <!-- Date -->
+
+      <div>
+
+        <label
+          for="attendanceDate"
+          class="block text-sm font-medium mb-2"
+        >
+          Date
+        </label>
+
+        <input
+          id="attendanceDate"
+          type="date"
+          class="w-full border border-slate-300
+                 rounded-lg px-4 py-2.5"
+        />
+
+      </div>
+
+    </div>
+
+
+    <!-- Second row -->
+
+    <div
+      class="grid grid-cols-1
+             md:grid-cols-2 gap-5 mt-5"
+    >
+
+      <!-- Attendance Type -->
+
+      <div>
+
+        <label
+          for="attendanceType"
+          class="block text-sm font-medium mb-2"
+        >
+          Attendance Type
+        </label>
+
+        <select
+          id="attendanceType"
+          class="w-full border border-slate-300
+                 rounded-lg px-4 py-2.5"
+        >
+
+          <option value="DAILY">
+            Daily
+          </option>
+
+          <option value="LESSON">
+            Lesson
+          </option>
+
+        </select>
+
+      </div>
+
+    </div>
+
+
+    <!-- Load learners -->
+
+    <div class="mt-5">
+
+      <button
+        type="button"
+        onclick="loadAttendanceLearners()"
+        class="px-5 py-2.5 rounded-lg
+               bg-school-800 text-white"
+      >
+        Load Learners
+      </button>
+
+    </div>
+
+  </div>
+
+
+
+  <!-- ==========================================================
+       ATTENDANCE RECORDING
+  =========================================================== -->
+
+  <div
+    class="bg-white rounded-2xl border
+           border-slate-200"
+  >
+
+    <div class="p-6 border-b">
+
+      <h3 class="text-lg font-bold">
+        Record Attendance
+      </h3>
+
+      <p class="text-sm text-slate-500 mt-1">
+        Mark each learner as present, absent,
+        late or excused.
+      </p>
+
+    </div>
+
+
+    <div class="overflow-x-auto">
+
+      <table class="w-full text-sm">
+
+        <thead class="bg-slate-50">
+
+          <tr>
+
+            <th class="p-4 text-left">
+              Admission No.
+            </th>
+
+            <th class="p-4 text-left">
+              Learner
+            </th>
+
+            <th class="p-4 text-left">
+              Status
+            </th>
+
+            <th class="p-4 text-left">
+              Remarks
+            </th>
+
+          </tr>
+
+        </thead>
+
+
+        <tbody id="attendanceLearnersTable">
+
+          <tr>
+
+            <td
+              colspan="4"
+              class="p-8 text-center
+                     text-slate-500"
+            >
+              Select academic year, term, grade
+              and stream, then load learners.
+            </td>
+
+          </tr>
+
+        </tbody>
+
+      </table>
+
+    </div>
+
+
+    <div
+      class="p-6 border-t
+             flex justify-end"
+    >
+
+      <button
+        type="button"
+        onclick="saveAttendance()"
+        class="px-5 py-2.5 rounded-lg
+               bg-school-800 text-white"
+      >
+        Save Attendance
+      </button>
+
+    </div>
+
+  </div>
+
+
+
+  <!-- ==========================================================
+       ATTENDANCE HISTORY
+  =========================================================== -->
+
+  <div
+    class="bg-white rounded-2xl border
+           border-slate-200"
+  >
+
+    <div
+      class="p-6 border-b
+             flex flex-col sm:flex-row
+             sm:items-center
+             sm:justify-between gap-3"
+    >
+
+      <div>
+
+        <h3 class="text-lg font-bold">
+          Attendance I Have Recorded
+        </h3>
+
+        <p class="text-sm text-slate-500 mt-1">
+          View attendance records associated
+          with your account.
+        </p>
+
+      </div>
+
+
+      <button
+        type="button"
+        onclick="loadTeacherAttendanceHistory()"
+        class="px-4 py-2 rounded-lg
+               border border-slate-300
+               text-sm"
+      >
+        Refresh
+      </button>
+
+    </div>
+
+
+    <div class="overflow-x-auto">
+
+      <table class="w-full text-sm">
+
+        <thead class="bg-slate-50">
+
+          <tr>
+
+            <th class="p-4 text-left">
+              Date
+            </th>
+
+            <th class="p-4 text-left">
+              Learner
+            </th>
+
+            <th class="p-4 text-left">
+              Grade
+            </th>
+
+            <th class="p-4 text-left">
+              Stream
+            </th>
+
+            <th class="p-4 text-left">
+              Status
+            </th>
+
+            <th class="p-4 text-left">
+              Remarks
+            </th>
+
+          </tr>
+
+        </thead>
+
+
+        <tbody
+          id="teacherAttendanceHistoryTable"
+        >
+
+        </tbody>
+
+      </table>
+
+    </div>
+
+  </div>
+
+</section>  
+
+      <!-- ============================================================
+           CLASS TEACHER
+      ============================================================= -->
+      <section
+        id="class-teacher"
+        class="section hidden space-y-6"
+      >
+
+        <div>
+
+          <h2 class="text-2xl font-bold">
+            Class Teacher
+          </h2>
+
+          <p class="text-sm text-slate-500 mt-1">
+            Your current class-teacher responsibilities.
+          </p>
+
+        </div>
+
+
+        <div
+          id="classTeacherContainer"
+          class="grid grid-cols-1
+                 md:grid-cols-2 xl:grid-cols-3
+                 gap-5"
+        >
+
+          <p class="text-slate-500">
+            Loading...
+          </p>
+
+        </div>
+
+      </section>
+
+
+
+      <!-- ============================================================
+           PROFILE
+      ============================================================= -->
+      <section
+        id="profile"
+        class="section hidden space-y-6"
+      >
+
+        <div
+          class="flex flex-col sm:flex-row
+                 sm:items-center
+                 sm:justify-between gap-4"
+        >
+
+          <div>
+
+            <h2 class="text-2xl font-bold">
+              My Profile
+            </h2>
+
+            <p class="text-sm text-slate-500 mt-1">
+              View the profile created by school
+              administration and update your
+              personal information.
+            </p>
+
+          </div>
+
+
+          <button
+            type="button"
+            onclick="enableTeacherProfileEdit()"
+            class="px-5 py-2.5 rounded-lg
+                   bg-school-800 text-white"
+          >
+            Edit Profile
+          </button>
+
+        </div>
+
+
+
+        <!-- Profile header -->
+        <div
+          class="bg-gradient-to-r
+                 from-school-900 to-school-700
+                 rounded-2xl text-white p-6 sm:p-8"
+        >
+
+          <div
+            class="flex flex-col sm:flex-row
+                   sm:items-center gap-5"
+          >
+
+            <div
+              id="profileInitials"
+              class="w-20 h-20 rounded-full
+                     bg-white/20
+                     flex items-center justify-center
+                     text-2xl font-bold"
+            >
+              T
+            </div>
+
+
+            <div>
+
+              <h3
+                id="profileFullName"
+                class="text-2xl font-bold"
+              >
+                Teacher
+              </h3>
+
+              <p
+                id="profileEmployeeNumber"
+                class="text-school-200 mt-1"
+              >
+                Employee No: —
+              </p>
+
+              <p
+                id="profileStatus"
+                class="text-sm mt-2"
+              >
+                Active
+              </p>
+
+            </div>
+
+          </div>
+
+        </div>
+
+
+
+        <!-- Personal information -->
+        <div
+          class="bg-white rounded-2xl border
+                 border-slate-200"
+        >
+
+          <div class="p-6 border-b">
+
+            <h3 class="text-lg font-bold">
+              Personal Information
+            </h3>
+
+            <p class="text-sm text-slate-500 mt-1">
+              These are the personal details associated
+              with your school account.
+            </p>
+
+          </div>
+
+
+          <form
+            id="teacherProfileForm"
+            class="p-6"
+          >
+
+            <div
+              class="grid grid-cols-1
+                     md:grid-cols-2 gap-5"
+            >
+
+              <div>
+
+                <label
+                  for="profileFirstName"
+                  class="block text-sm font-medium mb-2"
+                >
+                  First Name
+                </label>
+
+                <input
+                  id="profileFirstName"
+                  type="text"
+                  disabled
+                  class="w-full border border-slate-300
+                         rounded-lg px-4 py-2.5
+                         disabled:bg-slate-50"
+                />
+
+              </div>
+
+
+              <div>
+
+                <label
+                  for="profileMiddleName"
+                  class="block text-sm font-medium mb-2"
+                >
+                  Middle Name
+                </label>
+
+                <input
+                  id="profileMiddleName"
+                  type="text"
+                  disabled
+                  class="w-full border border-slate-300
+                         rounded-lg px-4 py-2.5
+                         disabled:bg-slate-50"
+                />
+
+              </div>
+
+
+              <div>
+
+                <label
+                  for="profileLastName"
+                  class="block text-sm font-medium mb-2"
+                >
+                  Last Name
+                </label>
+
+                <input
+                  id="profileLastName"
+                  type="text"
+                  disabled
+                  class="w-full border border-slate-300
+                         rounded-lg px-4 py-2.5
+                         disabled:bg-slate-50"
+                />
+
+              </div>
+
+
+              <div>
+
+                <label
+                  for="profileEmail"
+                  class="block text-sm font-medium mb-2"
+                >
+                  Email
+                </label>
+
+                <input
+                  id="profileEmail"
+                  type="email"
+                  disabled
+                  class="w-full border border-slate-300
+                         rounded-lg px-4 py-2.5
+                         disabled:bg-slate-50"
+                />
+
+              </div>
+
+
+              <div>
+
+                <label
+                  for="profilePhone"
+                  class="block text-sm font-medium mb-2"
+                >
+                  Phone
+                </label>
+
+                <input
+                  id="profilePhone"
+                  type="tel"
+                  disabled
+                  class="w-full border border-slate-300
+                         rounded-lg px-4 py-2.5
+                         disabled:bg-slate-50"
+                />
+
+              </div>
+
+
+              <div>
+
+                <label
+                  for="profileEmployeeNumber"
+                  class="block text-sm font-medium mb-2"
+                >
+                  Employee Number
+                </label>
+
+                <input
+                  id="profileEmployeeNumber"
+                  type="text"
+                  disabled
+                  class="w-full border border-slate-300
+                         rounded-lg px-4 py-2.5
+                         bg-slate-100"
+                />
+
+                <p class="text-xs text-slate-500 mt-1">
+                  Managed by school administration.
+                </p>
+
+              </div>
+
+            </div>
+
+
+            <div
+              id="profileEditActions"
+              class="hidden mt-6
+                     flex flex-col sm:flex-row
+                     sm:justify-end gap-3"
+            >
+
+              <button
+                type="button"
+                onclick="cancelTeacherProfileEdit()"
+                class="px-5 py-2.5 rounded-lg
+                       border border-slate-300"
+              >
+                Cancel
+              </button>
+
+
+              <button
+                type="submit"
+                class="px-5 py-2.5 rounded-lg
+                       bg-school-800 text-white"
+              >
+                Save Changes
+              </button>
+
+            </div>
+
+          </form>
+
+        </div>
+
+
+
+        <!-- Administrative information -->
+        <div
+          class="bg-white rounded-2xl border
+                 border-slate-200"
+        >
+
+          <div class="p-6 border-b">
+
+            <h3 class="text-lg font-bold">
+              School Information
+            </h3>
+
+            <p class="text-sm text-slate-500 mt-1">
+              These details are controlled by
+              administration.
+            </p>
+
+          </div>
+
+
+          <div
+            class="p-6 grid grid-cols-1
+                   md:grid-cols-2 gap-5"
+          >
+
+            <div
+              class="rounded-xl bg-slate-50 p-4"
+            >
+
+              <p class="text-xs text-slate-500">
+                Employee Number
+              </p>
+
+              <p
+                id="profileAdminEmployeeNumber"
+                class="font-semibold mt-1"
+              >
+                —
+              </p>
+
+            </div>
+
+
+            <div
+              class="rounded-xl bg-slate-50 p-4"
+            >
+
+              <p class="text-xs text-slate-500">
+                Account Status
+              </p>
+
+              <p
+                id="profileAdminStatus"
+                class="font-semibold mt-1"
+              >
+                —
+              </p>
+
+            </div>
+
+
+            <div
+              class="rounded-xl bg-slate-50 p-4"
+            >
+
+              <p class="text-xs text-slate-500">
+                Class Teacher
+              </p>
+
+              <p
+                id="profileAdminClassTeacher"
+                class="font-semibold mt-1"
+              >
+                —
+              </p>
+
+            </div>
+
+
+            <div
+              class="rounded-xl bg-slate-50 p-4"
+            >
+
+              <p class="text-xs text-slate-500">
+                Learning Areas
+              </p>
+
+              <p
+                id="profileAdminLearningAreas"
+                class="font-semibold mt-1"
+              >
+                —
+              </p>
+
+            </div>
+
+          </div>
+
+        </div>
+
+      </section>
+
+
+
+      <!-- ============================================================
+           GLOBAL MESSAGE
+      ============================================================= -->
+      <div
+        id="teacherMessage"
+        class="hidden fixed
+               bottom-5 right-5 z-[100]
+               max-w-sm"
+      ></div>
+
+    </main>
+
+  </div>
+
+
+
+  <!-- ================================================================
+       JAVASCRIPT
+  ================================================================= -->
+
+  <!--
+    Use your existing API/authentication JavaScript here.
+
+    The teacher.js file will:
+      1. authenticate the teacher
+      2. call /api/teachers/me/dashboard
+      3. render dashboard data
+      4. retrieve teacher profile
+      5. handle assessment creation
+      6. handle attendance
+      7. render assessment history
+      8. render attendance history
+      9. handle profile editing
+  -->
+
+  <script src="./teacher.js"></script>
+
+
+  <script>
+
+    /*
+    |--------------------------------------------------------------------------
+    | SIDEBAR
+    |--------------------------------------------------------------------------
+    */
+
+    function openTeacherSidebar() {
+
+      const sidebar =
+        document.getElementById(
+          "teacherSidebar"
+        );
+
+      const overlay =
+        document.getElementById(
+          "mobileOverlay"
+        );
+
+      sidebar?.classList.add("open");
+      overlay?.classList.add("active");
+    }
+
+
+    function closeTeacherSidebar() {
+
+      const sidebar =
+        document.getElementById(
+          "teacherSidebar"
+        );
+
+      const overlay =
+        document.getElementById(
+          "mobileOverlay"
+        );
+
+      sidebar?.classList.remove("open");
+      overlay?.classList.remove("active");
+    }
+
+
+
+    /*
+    |--------------------------------------------------------------------------
+    | ACTIVE SIDEBAR LINK
+    |--------------------------------------------------------------------------
+    */
+
+    function setTeacherActive(element) {
+
+      document
+        .querySelectorAll(".sidebar-link")
+        .forEach(link => {
+
+          link.classList.remove("active");
+
+        });
+
+      element?.classList.add("active");
+
+      closeTeacherSidebar();
+    }
+
+
+
+    /*
+    |--------------------------------------------------------------------------
+    | SHOW SECTION
+    |--------------------------------------------------------------------------
+    */
+
+    function showTeacherSection(sectionId) {
+
+      const sections =
+        document.querySelectorAll(
+          ".section"
+        );
+
+      sections.forEach(section => {
+
+        section.classList.add("hidden");
+
+      });
+
+
+      const section =
+        document.getElementById(
+          sectionId
+        );
+
+      if (section) {
+
+        section.classList.remove("hidden");
+
+      }
+
+
+      const titles = {
+
+        dashboard: "Dashboard",
+
+        "my-teaching":
+          "My Teaching",
+
+        timetable:
+          "My Timetable",
+
+        assessments:
+          "Assessments",
+
+        attendance:
+          "Attendance",
+
+        "class-teacher":
+          "Class Teacher",
+
+        profile:
+          "My Profile"
+
+      };
+
+
+      const pageTitle =
+        document.getElementById(
+          "pageTitle"
+        );
+
+      if (pageTitle) {
+
+        pageTitle.textContent =
+          titles[sectionId] ||
+          "Teacher Portal";
+
+      }
+
+
+      document
+        .querySelectorAll(".sidebar-link")
+        .forEach(link => {
+
+          link.classList.remove(
+            "active"
+          );
+
+          const href =
+            link.getAttribute("href");
+
+          if (
+            href ===
+            `#${sectionId}`
+          ) {
+
+            link.classList.add(
+              "active"
+            );
+
+          }
+
+        });
+
+
+      closeTeacherSidebar();
+
+
+      if (
+        window.location.hash !==
+        `#${sectionId}`
+      ) {
+
+        history.replaceState(
+          null,
+          "",
+          `#${sectionId}`
+        );
+
+      }
+
+    }
+
+
+
+    /*
+    |--------------------------------------------------------------------------
+    | HASH NAVIGATION
+    |--------------------------------------------------------------------------
+    */
+
+    function handleTeacherHash() {
+
+      const hash =
+        window.location.hash
+          .replace("#", "");
+
+      const validSections = [
+
+        "dashboard",
+        "my-teaching",
+        "timetable",
+        "assessments",
+        "attendance",
+        "class-teacher",
+        "profile"
+
+      ];
+
+
+      if (
+        validSections.includes(
+          hash
+        )
+      ) {
+
+        showTeacherSection(hash);
+
+      } else {
+
+        showTeacherSection(
+          "dashboard"
+        );
+
+      }
+
+    }
+
+
+    window.addEventListener(
+      "hashchange",
+      handleTeacherHash
+    );
+
+
+
+    /*
+    |--------------------------------------------------------------------------
+    | PROFILE EDIT UI
+    |--------------------------------------------------------------------------
+    */
+
+    function enableTeacherProfileEdit() {
+
+      [
+        "profileFirstName",
+        "profileMiddleName",
+        "profileLastName",
+        "profileEmail",
+        "profilePhone"
+      ].forEach(id => {
+
+        const field =
+          document.getElementById(id);
+
+        if (field) {
+
+          field.disabled = false;
+
+        }
+
+      });
+
+
+      const actions =
+        document.getElementById(
+          "profileEditActions"
+        );
+
+      actions?.classList.remove(
+        "hidden"
+      );
+
+    }
+
+
+
+    function cancelTeacherProfileEdit() {
+
+      if (
+        typeof window.loadTeacherProfile ===
+        "function"
+      ) {
+
+        window.loadTeacherProfile();
+
+      }
+
+
+      [
+        "profileFirstName",
+        "profileMiddleName",
+        "profileLastName",
+        "profileEmail",
+        "profilePhone"
+      ].forEach(id => {
+
+        const field =
+          document.getElementById(id);
+
+        if (field) {
+
+          field.disabled = true;
+
+        }
+
+      });
+
+
+      document
+        .getElementById(
+          "profileEditActions"
+        )
+        ?.classList.add(
+          "hidden"
+        );
+
+    }
+
+
+
+    /*
+    |--------------------------------------------------------------------------
+    | LOGOUT
+    |--------------------------------------------------------------------------
+    */
+
+    function logoutTeacher() {
+
+      if (
+        typeof window.logout ===
+        "function"
+      ) {
+
+        window.logout();
+
+        return;
+
+      }
+
+
+      localStorage.removeItem(
+        "token"
+      );
+
+      localStorage.removeItem(
+        "accessToken"
+      );
+
+      window.location.href =
+        "./index.html";
+    }
+
+
+
+    /*
+    |--------------------------------------------------------------------------
+    | INITIAL SECTION
+    |--------------------------------------------------------------------------
+    */
+
+    document.addEventListener(
+      "DOMContentLoaded",
+      () => {
+
+        handleTeacherHash();
+
+      }
+    );
+
+  </script>
+  
+
+</body>
+
+</html>
+

@@ -1,0 +1,2107 @@
+
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+
+  <title>Academic Administration | School Management System</title>
+
+  <script src="https://cdn.tailwindcss.com"></script>
+
+  <script>
+    tailwind.config = {
+      theme: {
+        extend: {
+          colors: {
+            school: {
+              50: "#f0fdf4",
+              100: "#dcfce7",
+              600: "#16a34a",
+              700: "#15803d",
+              800: "#166534",
+              900: "#14532d"
+            }
+          }
+        }
+      }
+    };
+  </script>
+
+  <style>
+    html {
+      scroll-behavior: smooth;
+    }
+
+    body {
+      font-family: Arial, Helvetica, sans-serif;
+    }
+
+    .sidebar-link.active {
+      background: #166534;
+      color: white;
+    }
+
+    .sidebar-link {
+      transition: all 0.2s ease;
+    }
+
+    .sidebar-link:hover {
+      background: #dcfce7;
+      color: #166534;
+    }
+
+    .sidebar-link.active:hover {
+      background: #166534;
+      color: white;
+    }
+
+    .section {
+      scroll-margin-top: 90px;
+    }
+
+    .modal {
+      background: rgba(0, 0, 0, 0.5);
+    }
+  </style>
+</head>
+
+<body class="bg-gray-100 text-gray-800">
+
+  <!-- =========================================================
+       MOBILE OVERLAY
+  ========================================================== -->
+
+  <div
+    id="mobileOverlay"
+    class="fixed inset-0 bg-black/40 z-30 hidden lg:hidden"
+    onclick="closeSidebar()"
+  ></div>
+
+
+  <!-- =========================================================
+       SIDEBAR
+  ========================================================== -->
+
+  <aside
+    id="sidebar"
+    class="fixed top-0 left-0 z-40 h-screen w-72 bg-white border-r border-gray-200 transform -translate-x-full lg:translate-x-0 transition-transform duration-300"
+  >
+
+    <div class="h-full flex flex-col">
+
+      <!-- School identity -->
+
+      <div class="px-6 py-6 border-b border-gray-200">
+
+        <div class="flex items-center gap-3">
+
+          <div
+            class="w-11 h-11 rounded-xl bg-school-800 text-white flex items-center justify-center font-bold text-lg"
+          >
+            SMS
+          </div>
+
+          <div>
+            <h1 class="font-bold text-gray-900">
+              School Management
+            </h1>
+
+            <p class="text-xs text-gray-500">
+              Academic Administration
+            </p>
+          </div>
+
+        </div>
+
+      </div>
+
+
+      <!-- Navigation -->
+
+      <nav class="flex-1 overflow-y-auto px-4 py-5 space-y-1">
+
+        <p class="px-3 mb-2 text-xs font-semibold text-gray-400 uppercase">
+          Main
+        </p>
+
+        <a
+          href="#dashboard"
+          class="sidebar-link active flex items-center gap-3 px-3 py-3 rounded-lg"
+          onclick="setActive(this)"
+        >
+          <span>▦</span>
+          <span>Dashboard</span>
+        </a>
+
+
+        <p class="px-3 mt-6 mb-2 text-xs font-semibold text-gray-400 uppercase">
+          Academic Setup
+        </p>
+
+        <a
+          href="#academic-years"
+          class="sidebar-link flex items-center gap-3 px-3 py-3 rounded-lg"
+          onclick="setActive(this)"
+        >
+          <span>📅</span>
+          <span>Academic Years</span>
+        </a>
+
+        <a
+          href="#terms"
+          class="sidebar-link flex items-center gap-3 px-3 py-3 rounded-lg"
+          onclick="setActive(this)"
+        >
+          <span>◷</span>
+          <span>Terms</span>
+        </a>
+
+        <a
+          href="#grades"
+          class="sidebar-link flex items-center gap-3 px-3 py-3 rounded-lg"
+          onclick="setActive(this)"
+        >
+          <span>▤</span>
+          <span>Grades & Streams</span>
+        </a>
+
+
+        <p class="px-3 mt-6 mb-2 text-xs font-semibold text-gray-400 uppercase">
+          People
+        </p>
+
+        <a
+          href="#students"
+          class="sidebar-link flex items-center gap-3 px-3 py-3 rounded-lg"
+          onclick="setActive(this)"
+        >
+          <span>👨‍🎓</span>
+          <span>Students</span>
+        </a>
+
+        <a
+          href="#teachers"
+          class="sidebar-link flex items-center gap-3 px-3 py-3 rounded-lg"
+          onclick="setActive(this)"
+        >
+          <span>👨‍🏫</span>
+          <span>Teachers</span>
+        </a>
+
+        <a
+          href="#parents"
+          class="sidebar-link flex items-center gap-3 px-3 py-3 rounded-lg"
+          onclick="setActive(this)"
+        >
+          <span>👨‍👩‍👧</span>
+          <span>Parents</span>
+        </a>
+
+
+        <p class="px-3 mt-6 mb-2 text-xs font-semibold text-gray-400 uppercase">
+          Academic Management
+        </p>
+
+        <a
+          href="#teaching-assignments"
+          class="sidebar-link flex items-center gap-3 px-3 py-3 rounded-lg"
+          onclick="setActive(this)"
+        >
+          <span>📚</span>
+          <span>Teaching Assignments</span>
+        </a>
+
+        <a
+          href="#class-teachers"
+          class="sidebar-link flex items-center gap-3 px-3 py-3 rounded-lg"
+          onclick="setActive(this)"
+        >
+          <span>👥</span>
+          <span>Class Teachers</span>
+        </a>
+
+        <a
+          href="#timetables"
+          class="sidebar-link flex items-center gap-3 px-3 py-3 rounded-lg"
+          onclick="setActive(this)"
+        >
+          <span>🗓️</span>
+          <span>Timetables</span>
+        </a>
+
+        <a
+          href="#assessments"
+          class="sidebar-link flex items-center gap-3 px-3 py-3 rounded-lg"
+          onclick="setActive(this)"
+        >
+          <span>📝</span>
+          <span>Assessments</span>
+        </a>
+
+        <a
+          href="#report-cards"
+          class="sidebar-link flex items-center gap-3 px-3 py-3 rounded-lg"
+          onclick="setActive(this)"
+        >
+          <span>📄</span>
+          <span>Report Cards</span>
+        </a>
+
+
+        <p class="px-3 mt-6 mb-2 text-xs font-semibold text-gray-400 uppercase">
+          Communication
+        </p>
+
+        <a
+          href="#announcements"
+          class="sidebar-link flex items-center gap-3 px-3 py-3 rounded-lg"
+          onclick="setActive(this)"
+        >
+          <span>📢</span>
+          <span>Announcements</span>
+        </a>
+
+        <a
+          href="#events"
+          class="sidebar-link flex items-center gap-3 px-3 py-3 rounded-lg"
+          onclick="setActive(this)"
+        >
+          <span>📆</span>
+          <span>Events</span>
+        </a>
+
+      </nav>
+
+
+      <!-- User -->
+
+      <div class="border-t border-gray-200 p-4">
+
+        <div class="flex items-center gap-3">
+
+          <div
+            class="w-10 h-10 rounded-full bg-school-100 text-school-800 flex items-center justify-center font-bold"
+          >
+            A
+          </div>
+
+          <div class="flex-1 min-w-0">
+
+            <p
+              id="adminName"
+              class="font-semibold text-sm truncate"
+            >
+              Academic Admin
+            </p>
+
+            <p class="text-xs text-gray-500">
+              Academic Administration
+            </p>
+
+          </div>
+
+          <button
+            onclick="logout()"
+            class="text-gray-400 hover:text-red-600"
+            title="Logout"
+          >
+            ↪
+          </button>
+
+        </div>
+
+      </div>
+
+    </div>
+
+  </aside>
+
+
+  <!-- =========================================================
+       MAIN
+  ========================================================== -->
+
+  <main class="lg:ml-72 min-h-screen">
+
+    <!-- Header -->
+
+    <header
+      class="sticky top-0 z-20 bg-white border-b border-gray-200"
+    >
+
+      <div class="px-4 sm:px-6 lg:px-8 py-4 flex items-center gap-4">
+
+        <button
+          onclick="openSidebar()"
+          class="lg:hidden text-gray-600 text-xl"
+        >
+          ☰
+        </button>
+
+        <div class="flex-1">
+
+          <h2 class="text-xl font-bold text-gray-900">
+            Academic Administration
+          </h2>
+
+          <p class="text-sm text-gray-500">
+            Manage academic operations and monitor school performance.
+          </p>
+
+        </div>
+
+        <div class="hidden sm:block">
+
+          <span
+            id="currentDate"
+            class="text-sm text-gray-500"
+          ></span>
+
+        </div>
+
+      </div>
+
+    </header>
+
+
+    <div class="p-4 sm:p-6 lg:p-8 space-y-8">
+
+
+      <!-- =====================================================
+           DASHBOARD
+      ====================================================== -->
+
+      <section id="dashboard" class="section">
+
+        <div class="mb-6">
+
+          <h3 class="text-2xl font-bold text-gray-900">
+            Academic Dashboard
+          </h3>
+
+          <p class="text-gray-500 mt-1">
+            Overview of the academic administration system.
+          </p>
+
+        </div>
+
+
+        <!-- Overview cards -->
+
+        <div class="grid grid-cols-1 sm:grid-cols-2 xl:grid-cols-4 gap-5">
+
+          <div class="bg-white rounded-xl border p-5">
+
+            <p class="text-sm text-gray-500">
+              Academic Years
+            </p>
+
+            <p
+              id="academicYearsCount"
+              class="text-3xl font-bold mt-2"
+            >
+              0
+            </p>
+
+          </div>
+
+
+          <div class="bg-white rounded-xl border p-5">
+
+            <p class="text-sm text-gray-500">
+              Teachers
+            </p>
+
+            <p
+              id="teachersCount"
+              class="text-3xl font-bold mt-2"
+            >
+              0
+            </p>
+
+          </div>
+
+
+          <div class="bg-white rounded-xl border p-5">
+
+            <p class="text-sm text-gray-500">
+              Teaching Assignments
+            </p>
+
+            <p
+              id="teachingAssignmentsCount"
+              class="text-3xl font-bold mt-2"
+            >
+              0
+            </p>
+
+          </div>
+
+
+          <div class="bg-white rounded-xl border p-5">
+
+            <p class="text-sm text-gray-500">
+              Class Teachers
+            </p>
+
+            <p
+              id="classTeachersCount"
+              class="text-3xl font-bold mt-2"
+            >
+              0
+            </p>
+
+          </div>
+
+
+          <div class="bg-white rounded-xl border p-5">
+
+            <p class="text-sm text-gray-500">
+              Published Assessments
+            </p>
+
+            <p
+              id="assessmentsCount"
+              class="text-3xl font-bold mt-2"
+            >
+              0
+            </p>
+
+          </div>
+
+
+          <div class="bg-white rounded-xl border p-5">
+
+            <p class="text-sm text-gray-500">
+              Recommended Assessments
+            </p>
+
+            <p
+              id="recommendedAssessmentsCount"
+              class="text-3xl font-bold mt-2"
+            >
+              0
+            </p>
+
+          </div>
+
+
+          <div class="bg-white rounded-xl border p-5">
+
+            <p class="text-sm text-gray-500">
+              Draft Report Cards
+            </p>
+
+            <p
+              id="draftReportCardsCount"
+              class="text-3xl font-bold mt-2"
+            >
+              0
+            </p>
+
+          </div>
+
+
+          <div class="bg-white rounded-xl border p-5">
+
+            <p class="text-sm text-gray-500">
+              Published Report Cards
+            </p>
+
+            <p
+              id="publishedReportCardsCount"
+              class="text-3xl font-bold mt-2"
+            >
+              0
+            </p>
+
+          </div>
+
+        </div>
+
+      </section>
+
+
+      <!-- =====================================================
+           ACADEMIC YEARS
+      ====================================================== -->
+
+      <section
+        id="academic-years"
+        class="section bg-white rounded-xl border"
+      >
+
+        <div class="p-6 border-b flex flex-col sm:flex-row sm:items-center justify-between gap-4">
+
+          <div>
+
+            <h3 class="text-lg font-bold">
+              Academic Years
+            </h3>
+
+            <p class="text-sm text-gray-500">
+              Create, view and update academic years.
+            </p>
+
+          </div>
+
+          <button
+            onclick="openAcademicYearModal()"
+            class="px-4 py-2 rounded-lg bg-school-800 text-white hover:bg-school-700"
+          >
+            + Add Academic Year
+          </button>
+
+        </div>
+
+
+        <div class="overflow-x-auto">
+
+          <table class="w-full text-sm">
+
+            <thead class="bg-gray-50">
+
+              <tr>
+
+                <th class="text-left p-4">Name</th>
+                <th class="text-left p-4">Start Date</th>
+                <th class="text-left p-4">End Date</th>
+                <th class="text-right p-4">Actions</th>
+
+              </tr>
+
+            </thead>
+
+            <tbody id="academicYearsTable">
+
+              <tr>
+                <td colspan="4" class="p-8 text-center text-gray-500">
+                  Loading academic years...
+                </td>
+              </tr>
+
+            </tbody>
+
+          </table>
+
+        </div>
+
+      </section>
+
+
+      <!-- =====================================================
+           TERMS
+      ====================================================== -->
+
+      <section
+        id="terms"
+        class="section bg-white rounded-xl border"
+      >
+
+        <div class="p-6 border-b flex flex-col sm:flex-row sm:items-center justify-between gap-4">
+
+          <div>
+
+            <h3 class="text-lg font-bold">
+              Terms
+            </h3>
+
+            <p class="text-sm text-gray-500">
+              Manage terms under academic years.
+            </p>
+
+          </div>
+
+          <button
+            onclick="openTermModal()"
+            class="px-4 py-2 rounded-lg bg-school-800 text-white"
+          >
+            + Add Term
+          </button>
+
+        </div>
+
+
+        <div class="overflow-x-auto">
+
+          <table class="w-full text-sm">
+
+            <thead class="bg-gray-50">
+
+              <tr>
+
+                <th class="text-left p-4">Academic Year</th>
+                <th class="text-left p-4">Term</th>
+                <th class="text-left p-4">Name</th>
+                <th class="text-left p-4">Start</th>
+                <th class="text-left p-4">End</th>
+                <th class="text-right p-4">Actions</th>
+
+              </tr>
+
+            </thead>
+
+            <tbody id="termsTable"></tbody>
+
+          </table>
+
+        </div>
+
+      </section>
+
+
+    <!-- =====================================================
+     GRADES & STREAMS
+====================================================== -->
+
+<section id="grades" class="section">
+
+  <div class="mb-5">
+    <h3 class="text-xl font-bold">Grades & Streams</h3>
+    <p class="text-sm text-gray-500">
+      Configure grades and their streams.
+    </p>
+  </div>
+
+  <div class="grid grid-cols-1 xl:grid-cols-2 gap-6">
+
+    <!-- =================================================
+         GRADES
+    ================================================== -->
+
+    <div class="bg-white rounded-xl border">
+
+      <div class="p-5 border-b flex justify-between items-center">
+
+        <div>
+          <h4 class="font-bold">Grades</h4>
+
+          <p class="text-sm text-gray-500">
+            Manage grades and their education levels.
+          </p>
+        </div>
+
+        <button
+          type="button"
+          onclick="openGradeModal()"
+          class="px-3 py-2 rounded-lg bg-school-800 text-white text-sm hover:bg-school-900"
+        >
+          + Grade
+        </button>
+
+      </div>
+
+
+      <div class="overflow-x-auto">
+
+        <table class="w-full text-sm">
+
+          <thead class="bg-gray-50 border-b">
+
+            <tr>
+
+              <th class="text-left px-5 py-3 font-semibold text-gray-600">
+                Grade
+              </th>
+
+              <th class="text-left px-5 py-3 font-semibold text-gray-600">
+                Education Level
+              </th>
+
+              <th class="text-left px-5 py-3 font-semibold text-gray-600">
+                Streams
+              </th>
+
+              <th class="text-right px-5 py-3 font-semibold text-gray-600">
+                Actions
+              </th>
+
+            </tr>
+
+          </thead>
+
+
+          <tbody id="gradesTable">
+
+            <tr>
+
+              <td
+                colspan="4"
+                class="px-5 py-8 text-center text-gray-500"
+              >
+                Loading grades...
+              </td>
+
+            </tr>
+
+          </tbody>
+
+        </table>
+
+      </div>
+
+    </div>
+
+    <div class="bg-white rounded-xl border">
+  <div class="p-5 border-b flex justify-between items-center">
+    <div>
+      <h4 class="font-bold">Streams</h4>
+      <p class="text-sm text-gray-500">
+        Create and update streams for each grade.
+      </p>
+    </div>
+
+    <button
+      type="button"
+      onclick="openStreamModal()"
+      class="px-3 py-2 rounded-lg bg-school-800 text-white text-sm hover:bg-school-900"
+    >
+      + Add Stream
+    </button>
+  </div>
+
+  <div class="overflow-x-auto">
+    <table class="w-full text-sm">
+      <thead class="bg-gray-50 border-b">
+        <tr>
+          <th class="text-left px-5 py-3 font-semibold text-gray-600">
+            #
+          </th>
+
+          <th class="text-left px-5 py-3 font-semibold text-gray-600">
+            Stream
+          </th>
+
+          <th class="text-left px-5 py-3 font-semibold text-gray-600">
+            Grade
+          </th>
+
+          <th class="text-left px-5 py-3 font-semibold text-gray-600">
+            Education Level
+          </th>
+
+          <th class="text-right px-5 py-3 font-semibold text-gray-600">
+            Actions
+          </th>
+        </tr>
+      </thead>
+
+      <tbody id="streamsTable">
+        <tr>
+          <td
+            colspan="5"
+            class="px-5 py-8 text-center text-gray-500"
+          >
+            Loading streams...
+          </td>
+        </tr>
+      </tbody>
+    </table>
+  </div>
+</div>
+    
+      <!-- =====================================================
+           STUDENTS
+      ====================================================== -->
+
+      <section
+        id="students"
+        class="section bg-white rounded-xl border"
+      >
+
+        <div class="p-6 border-b">
+
+          <h3 class="text-lg font-bold">
+            Students
+          </h3>
+
+          <p class="text-sm text-gray-500">
+            View student records. Student creation and admission
+            are handled through the admissions module.
+          </p>
+
+        </div>
+
+      <div class="p-5 flex flex-col sm:flex-row gap-3">
+
+          <input
+            id="studentSearch"
+            type="search"
+            placeholder="Search by admission number or student name..."
+            class="flex-1 border rounded-lg px-4 py-2"
+            onkeydown="handleStudentSearchKey(event)"
+          />
+
+          <button
+            type="button"
+            onclick="searchStudents()"
+            class="px-5 py-2 rounded-lg bg-gray-900 text-white"
+          >
+            Search
+          </button>
+
+          <button
+            type="button"
+            onclick="loadStudents()"
+            class="px-5 py-2 rounded-lg border border-gray-300"
+          >
+            Reset
+          </button>
+
+        </div>
+
+
+        <div class="overflow-x-auto">
+
+          <table class="w-full text-sm">
+
+            <thead class="bg-gray-50">
+
+              <tr>
+
+                <th class="text-left p-4">
+                  Admission No.
+                </th>
+
+                <th class="text-left p-4">
+                  Student
+                </th>
+
+                <th class="text-left p-4">
+                  Gender
+                </th>
+
+                <th class="text-left p-4">
+                  Parent
+                </th>
+
+              
+                <th class="text-right p-4">
+                  Action
+                </th>
+
+              </tr>
+
+            </thead>
+
+            <tbody id="studentsTable">
+
+              <tr>
+                <td
+                  colspan="5"
+                  class="p-8 text-center text-gray-500"
+                >
+                  Loading students...
+                </td>
+              </tr>
+
+            </tbody>
+
+          </table>
+
+        </div>
+
+        
+      </section>
+
+
+      <!-- =====================================================
+           TEACHERS
+      ====================================================== -->
+
+      <section
+        id="teachers"
+        class="section bg-white rounded-xl border"
+      >
+
+        <div class="p-6 border-b">
+
+          <h3 class="text-lg font-bold">
+            Teachers
+          </h3>
+
+          <p class="text-sm text-gray-500">
+            View teachers and their academic responsibilities.
+          </p>
+
+        </div>
+
+
+       <div class="p-5 flex flex-col sm:flex-row gap-3">
+
+          <input
+            id="teacherSearch"
+            type="search"
+            placeholder="Search teachers..."
+            class="flex-1 border rounded-lg px-4 py-2"
+            onkeydown="handleTeacherSearchKey(event)"
+          />
+
+          <button
+            type="button"
+            onclick="searchTeachers()"
+            class="px-5 py-2 rounded-lg bg-gray-900 text-white"
+          >
+            Search
+          </button>
+
+          <button
+            type="button"
+            onclick="loadTeachers()"
+            class="px-5 py-2 rounded-lg border border-gray-300"
+          >
+            Reset
+          </button>
+
+        </div>
+
+
+        <div class="overflow-x-auto">
+
+          <table class="w-full text-sm">
+
+            <thead class="bg-gray-50">
+
+              <tr>
+
+                <th class="p-4 text-left">
+                  Employee No.
+                </th>
+
+                <th class="p-4 text-left">
+                  Teacher
+                </th>
+
+                <th class="p-4 text-left">
+                  Email
+                </th>
+
+                <th class="p-4 text-left">
+                  Phone
+                </th>
+
+                <th class="p-4 text-left">
+                  Status
+                </th>
+
+                <th class="p-4 text-right">
+                  Action
+                </th>
+
+              </tr>
+
+            </thead>
+
+            <tbody id="teachersTable">
+
+              <tr>
+                <td
+                  colspan="6"
+                  class="p-8 text-center text-gray-500"
+                >
+                  Loading teachers...
+                </td>
+              </tr>
+
+            </tbody>
+
+          </table>
+
+        </div>
+
+      </section>
+
+
+      <!-- =====================================================
+           PARENTS
+      ====================================================== -->
+
+      <section
+        id="parents"
+        class="section bg-white rounded-xl border"
+      >
+
+
+      
+
+
+        <div class="p-6 border-b">
+
+          <h3 class="text-lg font-bold">
+            Parents
+          </h3>
+
+          <p class="text-sm text-gray-500">
+            View parent records and linked students.
+            Parent accounts are managed by Admissions Administration.
+          </p>
+
+        </div>
+
+        <div class="p-5 flex flex-col sm:flex-row gap-3">
+
+          <input
+            id="parentSearch"
+            type="search"
+            placeholder="Search by name or phone number..."
+            class="flex-1 border rounded-lg px-4 py-2"
+            onkeydown="handleParentsSearchKey(event)"
+          />
+
+          <button
+            type="button"
+            onclick="searchParents()"
+            class="px-5 py-2 rounded-lg bg-gray-900 text-white"
+          >
+            Search
+          </button>
+
+          <button
+            type="button"
+            onclick="loadParents()"
+            class="px-5 py-2 rounded-lg border border-gray-300"
+          >
+            Reset
+          </button>
+
+        </div>
+
+        <div class="overflow-x-auto">
+
+          <table class="w-full text-sm">
+
+            <thead class="bg-gray-50">
+
+              <tr>
+
+                <th class="text-left p-4">
+                  Email/Phone.
+                </th>
+
+                <th class="text-left p-4">
+                  Parent
+                </th>
+
+                <th class="text-left p-4">
+                  Gender
+                </th>
+
+                <th class="text-left p-4">
+                  student
+                </th>
+
+                <th class="text-left p-4">
+                  Status
+                </th>
+
+                <th class="text-right p-4">
+                  Action
+                </th>
+
+              </tr>
+
+            </thead>
+
+            <tbody id="parentsTable">
+
+              <tr>
+                <td
+                  colspan="6"
+                  class="p-8 text-center text-gray-500"
+                >
+                  Loading parents...
+                </td>
+              </tr>
+
+            </tbody>
+
+          </table>
+
+        </div>
+
+
+      
+
+      </section>
+
+
+      <!-- =====================================================
+           TEACHING ASSIGNMENTS
+      ====================================================== -->
+
+      <section
+        id="teaching-assignments"
+        class="section bg-white rounded-xl border"
+      >
+
+        <div class="p-6 border-b flex flex-col sm:flex-row sm:items-center justify-between gap-4">
+
+          <div>
+
+            <h3 class="text-lg font-bold">
+              Teaching Assignments
+            </h3>
+
+            <p class="text-sm text-gray-500">
+              Assign teachers to learning areas, grades and streams.
+            </p>
+
+          </div>
+
+          <button
+            onclick="openTeachingAssignment()"
+            class="px-4 py-2 rounded-lg bg-school-800 text-white"
+          >
+            + Assign Teacher
+          </button>
+
+        </div>
+
+
+        <div class="overflow-x-auto">
+
+          <table class="w-full text-sm">
+
+            <thead class="bg-gray-50">
+
+              <tr>
+
+                <th class="p-4 text-left">Teacher</th>
+                <th class="p-4 text-left">Learning Area</th>
+                <th class="p-4 text-left">Grade</th>
+                <th class="p-4 text-left">Stream</th>
+                <th class="p-4 text-right">Action</th>
+
+              </tr>
+
+            </thead>
+
+            <tbody id="teachingAssignmentsTable"></tbody>
+
+          </table>
+
+        </div>
+
+      </section>
+
+
+      <!-- =====================================================
+           CLASS TEACHERS
+      ====================================================== -->
+
+      <section
+        id="class-teachers"
+        class="section bg-white rounded-xl border"
+      >
+
+        <div class="p-6 border-b flex flex-col sm:flex-row sm:items-center justify-between gap-4">
+
+          <div>
+
+            <h3 class="text-lg font-bold">
+              Class Teacher Assignments
+            </h3>
+
+            <p class="text-sm text-gray-500">
+              Assign and manage class teachers.
+            </p>
+
+          </div>
+
+          <button
+            onclick="openClassTeacherAssignment()"
+            class="px-4 py-2 rounded-lg bg-school-800 text-white"
+          >
+            + Assign Class Teacher
+          </button>
+
+        </div>
+
+
+        <div class="overflow-x-auto">
+
+          <table class="w-full text-sm">
+
+            <thead class="bg-gray-50">
+
+              <tr>
+
+                <th class="p-4 text-left">Teacher</th>
+                <th class="p-4 text-left">Grade</th>
+                <th class="p-4 text-left">Stream</th>
+                <th class="p-4 text-left">Academic Year</th>
+                <th class="p-4 text-left">Term</th>
+                <th class="p-4 text-right">Action</th>
+
+              </tr>
+
+            </thead>
+
+            <tbody id="classTeachersTable"></tbody>
+
+          </table>
+
+        </div>
+
+      </section>
+
+
+      <!-- =====================================================
+           TIMETABLES
+      ====================================================== -->
+
+      <section
+        id="timetables"
+        class="section"
+      >
+
+        <div class="mb-5">
+
+          <h3 class="text-xl font-bold">
+            Timetable Management
+          </h3>
+
+          <p class="text-sm text-gray-500">
+            Create and manage teacher, stream, academic and examination timetables.
+          </p>
+
+        </div>
+
+
+        <div class="grid grid-cols-1 md:grid-cols-2 xl:grid-cols-4 gap-5">
+
+
+          <div class="bg-white border rounded-xl p-6">
+
+            <div class="text-3xl mb-4">
+              👨‍🏫
+            </div>
+
+            <h4 class="font-bold">
+              Teacher Timetable
+            </h4>
+
+            <p class="text-sm text-gray-500 mt-2">
+              Manage individual teacher schedules.
+            </p>
+
+            <button
+              onclick="openTimetable('teacher')"
+              class="mt-5 w-full py-2 rounded-lg bg-school-800 text-white"
+            >
+              Manage
+            </button>
+
+          </div>
+
+
+          <div class="bg-white border rounded-xl p-6">
+
+            <div class="text-3xl mb-4">
+              🏫
+            </div>
+
+        
+            <h4 class="font-bold">
+              Stream Timetable
+            </h4>
+
+            <p class="text-sm text-gray-500 mt-2">
+              Manage timetables for individual streams.
+            </p>
+
+            <button
+              onclick="openTimetable('stream')"
+              class="mt-5 w-full py-2 rounded-lg bg-school-800 text-white"
+            >
+              Manage
+            </button>
+
+          </div>
+
+
+          
+          <div class="bg-white border rounded-xl p-6">
+
+            <div class="text-3xl mb-4">
+              📝
+            </div>
+
+            <h4 class="font-bold">
+              Examination Timetable
+            </h4>
+
+            <p class="text-sm text-gray-500 mt-2">
+              Create and update examination schedules.
+            </p>
+
+            <button
+              onclick="openTimetable('examination')"
+              class="mt-5 w-full py-2 rounded-lg bg-school-800 text-white"
+            >
+              Manage
+            </button>
+
+          </div>
+
+        </div>
+
+      </section>
+
+
+
+      <!-- =========================================================
+     EXAMINATION TIMETABLE
+========================================================= -->
+
+<section
+  id="examination-timetable-section"
+  class="section hidden"
+>
+
+  <!-- Header -->
+  <div class="flex flex-col md:flex-row md:items-center md:justify-between gap-4 mb-6">
+
+    <div>
+      <h3 class="text-xl font-bold text-gray-800">
+        Examination Timetable
+      </h3>
+
+      <p class="text-sm text-gray-500 mt-1">
+        Create and manage examination schedules for each grade.
+      </p>
+    </div>
+
+    <button
+      onclick="showExaminationTimetableForm()"
+      class="px-5 py-2.5 rounded-lg bg-school-800 text-white hover:bg-school-900"
+    >
+      + Create Examination Timetable
+    </button>
+
+  </div>
+
+
+  <!-- =======================================================
+       CREATE TIMETABLE
+  ======================================================== -->
+
+  <div
+    id="examination-timetable-form"
+    class="hidden bg-white border rounded-xl p-6 mb-6"
+  >
+
+    <div class="flex items-center justify-between mb-5">
+
+      <div>
+        <h4 class="font-bold text-lg text-gray-800">
+          Create Examination Timetable
+        </h4>
+
+        <p class="text-sm text-gray-500">
+          Define the examination before adding examination papers.
+        </p>
+      </div>
+
+      <button
+        onclick="hideExaminationTimetableForm()"
+        class="text-gray-500 hover:text-gray-800"
+      >
+        ✕
+      </button>
+
+    </div>
+
+
+    <form
+      id="create-examination-timetable-form"
+      onsubmit="createExaminationTimetable(event)"
+      class="grid grid-cols-1 md:grid-cols-2 gap-5"
+    >
+
+      <!-- Name -->
+      <div>
+        <label class="block text-sm font-medium text-gray-700 mb-1">
+          Examination Name
+        </label>
+
+        <input
+          id="exam-timetable-name"
+          type="text"
+          required
+          placeholder="e.g. End Term Examination"
+          class="w-full border rounded-lg px-3 py-2.5 focus:ring-2 focus:ring-school-500"
+        >
+      </div>
+
+
+      <!-- Examination Type -->
+      <div>
+        <label class="block text-sm font-medium text-gray-700 mb-1">
+          Examination Type
+        </label>
+
+        <select
+          id="exam-timetable-type"
+          class="w-full border rounded-lg px-3 py-2.5"
+        >
+
+          <option value="">
+            Select examination type
+          </option>
+
+          <option value="CAT">
+            CAT
+          </option>
+
+          <option value="MID_TERM">
+            Mid Term
+          </option>
+
+          <option value="END_TERM">
+            End Term
+          </option>
+
+          <option value="MOCK">
+            Mock
+          </option>
+
+          <option value="OTHER">
+            Other
+          </option>
+
+        </select>
+      </div>
+
+
+      <!-- Academic Year -->
+      <div>
+
+        <label class="block text-sm font-medium text-gray-700 mb-1">
+          Academic Year
+        </label>
+
+        <select
+          id="exam-academic-year"
+          required
+          class="w-full border rounded-lg px-3 py-2.5"
+        >
+
+          <option value="">
+            Loading academic years...
+          </option>
+
+        </select>
+
+      </div>
+
+
+      <!-- Term -->
+      <div>
+
+        <label class="block text-sm font-medium text-gray-700 mb-1">
+          Term
+        </label>
+
+        <select
+          id="exam-term"
+          class="w-full border rounded-lg px-3 py-2.5"
+        >
+
+          <option value="">
+            Select term
+          </option>
+
+        </select>
+
+      </div>
+
+
+      <!-- Buttons -->
+      <div class="md:col-span-2 flex justify-end gap-3 pt-2">
+
+        <button
+          type="button"
+          onclick="hideExaminationTimetableForm()"
+          class="px-5 py-2.5 border rounded-lg text-gray-700 hover:bg-gray-50"
+        >
+          Cancel
+        </button>
+
+        <button
+          type="submit"
+          class="px-5 py-2.5 rounded-lg bg-school-800 text-white hover:bg-school-900"
+        >
+          Create Timetable
+        </button>
+
+      </div>
+
+    </form>
+
+  </div>
+
+
+  <!-- =======================================================
+       TIMETABLE LIST
+  ======================================================== -->
+
+  <div id="examination-timetables-container">
+
+    <div class="bg-white border rounded-xl p-8 text-center text-gray-500">
+
+      <div class="text-4xl mb-3">
+        📝
+      </div>
+
+      <p>
+        Loading examination timetables...
+      </p>
+
+    </div>
+
+  </div>
+
+
+  <!-- =======================================================
+       SELECTED TIMETABLE
+  ======================================================== -->
+
+  <div
+    id="selected-examination-timetable"
+    class="hidden mt-6"
+  >
+
+    <div class="bg-white border rounded-xl p-6">
+
+      <!-- Selected timetable header -->
+
+      <div class="flex flex-col md:flex-row md:items-center md:justify-between gap-4 mb-6">
+
+        <div>
+
+          <h4
+            id="selected-examination-title"
+            class="text-xl font-bold text-gray-800"
+          >
+            Examination Timetable
+          </h4>
+
+          <p
+            id="selected-examination-meta"
+            class="text-sm text-gray-500 mt-1"
+          ></p>
+
+        </div>
+
+        <button
+          onclick="showExaminationEntryForm()"
+          class="px-5 py-2.5 rounded-lg bg-school-800 text-white hover:bg-school-900"
+        >
+          + Add Examination
+        </button>
+
+      </div>
+
+
+      <!-- =====================================================
+           ADD EXAMINATION ENTRY FORM
+      ====================================================== -->
+
+      <div
+        id="examination-entry-form"
+        class="hidden border rounded-xl bg-gray-50 p-5 mb-6"
+      >
+
+        <div class="flex justify-between items-center mb-5">
+
+          <div>
+
+            <h5 class="font-bold text-gray-800">
+              Add Examination
+            </h5>
+
+            <p class="text-sm text-gray-500">
+              Add an examination paper to this timetable.
+            </p>
+
+          </div>
+
+          <button
+            onclick="hideExaminationEntryForm()"
+            class="text-gray-500 hover:text-gray-800"
+          >
+            ✕
+          </button>
+
+        </div>
+
+
+        <form
+          id="create-examination-entry-form"
+          onsubmit="createExaminationEntry(event)"
+          class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-5"
+        >
+
+          <!-- Date -->
+          <div>
+
+            <label class="block text-sm font-medium text-gray-700 mb-1">
+              Examination Date
+            </label>
+
+            <input
+              id="exam-entry-date"
+              type="date"
+              required
+              class="w-full border rounded-lg px-3 py-2.5"
+            >
+
+          </div>
+
+
+          <!-- Grade -->
+          <div>
+
+            <label class="block text-sm font-medium text-gray-700 mb-1">
+              Grade
+            </label>
+
+            <select
+              id="exam-entry-grade"
+              required
+              class="w-full border rounded-lg px-3 py-2.5"
+            >
+
+              <option value="">
+                Select grade
+              </option>
+
+            </select>
+
+          </div>
+
+
+          <!-- Learning Area -->
+          <div>
+
+            <label class="block text-sm font-medium text-gray-700 mb-1">
+              Learning Area
+            </label>
+
+            <select
+              id="exam-entry-learning-area"
+              required
+              class="w-full border rounded-lg px-3 py-2.5"
+            >
+
+              <option value="">
+                Select learning area
+              </option>
+
+            </select>
+
+          </div>
+
+
+          <!-- Start -->
+          <div>
+
+            <label class="block text-sm font-medium text-gray-700 mb-1">
+              Start Time
+            </label>
+
+            <input
+              id="exam-entry-start-time"
+              type="time"
+              required
+              class="w-full border rounded-lg px-3 py-2.5"
+            >
+
+          </div>
+
+
+          <!-- End -->
+          <div>
+
+            <label class="block text-sm font-medium text-gray-700 mb-1">
+              End Time
+            </label>
+
+            <input
+              id="exam-entry-end-time"
+              type="time"
+              required
+              class="w-full border rounded-lg px-3 py-2.5"
+            >
+
+          </div>
+
+
+          <!-- Buttons -->
+          <div class="lg:col-span-3 flex justify-end gap-3">
+
+            <button
+              type="button"
+              onclick="hideExaminationEntryForm()"
+              class="px-5 py-2.5 border rounded-lg"
+            >
+              Cancel
+            </button>
+
+            <button
+              type="submit"
+              class="px-5 py-2.5 rounded-lg bg-school-800 text-white"
+            >
+              Add Examination
+            </button>
+
+          </div>
+
+        </form>
+
+      </div>
+
+
+      <!-- =====================================================
+           ENTRIES TABLE
+      ====================================================== -->
+
+      <div
+        id="examination-entries-container"
+        class="overflow-x-auto"
+      >
+
+        <div class="py-10 text-center text-gray-500">
+          Select an examination timetable.
+        </div>
+
+      </div>
+
+    </div>
+
+  </div>
+
+</section>
+
+
+      <!-- =====================================================
+           ASSESSMENTS
+      ====================================================== -->
+
+      <section
+        id="assessments"
+        class="section bg-white rounded-xl border"
+      >
+
+        <div class="p-6 border-b">
+
+          <h3 class="text-lg font-bold">
+            Assessment Review
+          </h3>
+
+          <p class="text-sm text-gray-500">
+            Review published assessments before report-card processing.
+          </p>
+
+        </div>
+
+
+        <div class="grid grid-cols-1 md:grid-cols-3 gap-5 p-6">
+
+          <div class="border rounded-xl p-5">
+
+            <p class="text-sm text-gray-500">
+              Published
+            </p>
+
+            <p
+              id="assessmentPublished"
+              class="text-2xl font-bold mt-2"
+            >
+              0
+            </p>
+
+          </div>
+
+
+          <div class="border rounded-xl p-5">
+
+            <p class="text-sm text-gray-500">
+              Recommended
+            </p>
+
+            <p
+              id="assessmentRecommended"
+              class="text-2xl font-bold mt-2"
+            >
+              0
+            </p>
+
+          </div>
+
+
+          <div class="border rounded-xl p-5">
+
+            <p class="text-sm text-gray-500">
+              Excluded
+            </p>
+
+            <p
+              id="assessmentExcluded"
+              class="text-2xl font-bold mt-2"
+            >
+              0
+            </p>
+
+          </div>
+
+        </div>
+
+
+        <div class="px-6 pb-6">
+
+          <button
+            onclick="openAssessmentReview()"
+            class="px-4 py-2 rounded-lg bg-school-800 text-white"
+          >
+            Review Assessments
+          </button>
+
+        </div>
+
+      </section>
+
+
+      <!-- =====================================================
+           REPORT CARDS
+      ====================================================== -->
+
+      <section
+        id="report-cards"
+        class="section bg-white rounded-xl border"
+      >
+
+        <div class="p-6 border-b flex flex-col sm:flex-row justify-between gap-4">
+
+          <div>
+
+            <h3 class="text-lg font-bold">
+              Report Cards
+            </h3>
+
+            <p class="text-sm text-gray-500">
+              Monitor report-card generation and published records.
+            </p>
+
+          </div>
+
+          <button
+            onclick="openReportCardGeneration()"
+            class="px-4 py-2 rounded-lg bg-school-800 text-white"
+          >
+            Generate Report Card
+          </button>
+
+        </div>
+
+
+        <div class="grid grid-cols-1 md:grid-cols-3 gap-5 p-6">
+
+          <div class="border rounded-xl p-5">
+
+            <p class="text-sm text-gray-500">
+              Total
+            </p>
+
+            <p
+              id="reportCardsTotal"
+              class="text-2xl font-bold mt-2"
+            >
+              0
+            </p>
+
+          </div>
+
+
+          <div class="border rounded-xl p-5">
+
+            <p class="text-sm text-gray-500">
+              Draft
+            </p>
+
+            <p
+              id="reportCardsDraft"
+              class="text-2xl font-bold mt-2"
+            >
+              0
+            </p>
+
+          </div>
+
+
+          <div class="border rounded-xl p-5">
+
+            <p class="text-sm text-gray-500">
+              Published
+            </p>
+
+            <p
+              id="reportCardsPublished"
+              class="text-2xl font-bold mt-2"
+            >
+              0
+            </p>
+
+          </div>
+
+        </div>
+
+      </section>
+
+
+      <!-- =====================================================
+           ANNOUNCEMENTS
+      ====================================================== -->
+
+      <section
+        id="announcements"
+        class="section bg-white rounded-xl border"
+      >
+
+        <div class="p-6 border-b flex justify-between items-center">
+
+          <div>
+
+            <h3 class="text-lg font-bold">
+              Academic Announcements
+            </h3>
+
+            <p class="text-sm text-gray-500">
+              View academic announcements.
+            </p>
+
+          </div>
+
+          <button
+            onclick="createAnnouncement()"
+            class="px-4 py-2 rounded-lg bg-school-800 text-white"
+          >
+            + Announcement
+          </button>
+
+        </div>
+
+
+        <div
+          id="announcementsList"
+          class="p-6 space-y-4"
+        >
+
+          <div class="text-center text-gray-500">
+            Announcements will appear here.
+          </div>
+
+        </div>
+
+      </section>
+
+
+      <!-- =====================================================
+           EVENTS
+      ====================================================== -->
+
+      <section
+        id="events"
+        class="section bg-white rounded-xl border"
+      >
+
+        <div class="p-6 border-b flex justify-between items-center">
+
+          <div>
+
+            <h3 class="text-lg font-bold">
+              Academic Events
+            </h3>
+
+            <p class="text-sm text-gray-500">
+              Create and manage academic events.
+            </p>
+
+          </div>
+
+          <button
+            onclick="createEvent()"
+            class="px-4 py-2 rounded-lg bg-school-800 text-white"
+          >
+            + Event
+          </button>
+
+        </div>
+
+
+        <div
+          id="eventsList"
+          class="p-6"
+        >
+
+          <div class="text-center text-gray-500">
+            Events will appear here.
+          </div>
+
+        </div>
+
+      </section>
+
+
+    </div>
+
+  </main>
+
+
+  <!-- =========================================================
+       MODAL
+  ========================================================== -->
+
+  <div
+    id="modal"
+    class="modal fixed inset-0 z-50 hidden items-center justify-center p-4"
+  >
+
+    <div
+      class="bg-white rounded-xl shadow-xl w-full max-w-lg"
+      onclick="event.stopPropagation()"
+    >
+
+      <div class="p-5 border-b flex items-center justify-between">
+
+        <h3
+          id="modalTitle"
+          class="text-lg font-bold"
+        >
+          Modal
+        </h3>
+
+        <button
+          onclick="closeModal()"
+          class="text-gray-400 hover:text-gray-700 text-xl"
+        >
+          ×
+        </button>
+
+      </div>
+
+      <div
+        id="modalBody"
+        class="p-5"
+      ></div>
+
+    </div>
+
+  </div>
+
+<script src="./academic.js"></script>
+</body>
+</html>
+
