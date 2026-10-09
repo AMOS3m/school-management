@@ -1,6 +1,6 @@
 const bcrypt = require("bcrypt");
 
-const prisma = require("../../lib/prisma");
+const prisma = require("/prisma");
 
 const { DayOfWeek } = require("@prisma/client");
 
