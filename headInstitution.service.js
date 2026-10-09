@@ -1,5 +1,5 @@
 
-const prisma = require("../../lib/prisma");
+const prisma = require("/prisma");
 
 async function getHeadInstitutionDashboard() {
 
