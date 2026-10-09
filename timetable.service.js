@@ -1,5 +1,5 @@
 
-const prisma  = require("/prisma");
+const prisma  = require("./prisma");
 
 async function createTimetable({ name, academicYearId, termId }) {
   if (!name || !academicYearId) {
