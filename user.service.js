@@ -1,5 +1,5 @@
 const bcrypt = require("bcrypt");
-const prisma = require("/prisma");
+const prisma = require("./prisma");
 
 const ADMIN_ROLES = [
   "HEAD_OF_INSTITUTION",
