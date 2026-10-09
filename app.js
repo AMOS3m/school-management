@@ -4,34 +4,34 @@ const express = require("express");
 
 const cors = require("cors");
 
-const authRoutes = require("./modules/auth/auth.routes");
+const authRoutes = require("./auth.routes");
 
-const studentRoutes = require("./modules/students/student.routes");
+const studentRoutes = require("./student.routes");
 
-const teacherRoutes = require("./modules/teachers/teacher.routes");
-const parentRoutes = require("./modules/parents/parent.routes");
+const teacherRoutes = require("./teacher.routes");
+const parentRoutes = require("./parent.routes");
 
-const timetableRoutes = require("./modules/timetables/timetable.routes");
+const timetableRoutes = require("./timetable.routes");
 
-const userRoutes = require("./modules/users/user.routes");
+const userRoutes = require("./user.routes");
 
-const attendanceRoutes = require("./modules/attendance/attendance.routes");
+const attendanceRoutes = require("./attendance.routes");
 
-const reportCardRoutes = require("./modules/reportCards/reportCard.routes");
+const reportCardRoutes = require("./reportCard.routes");
 
-const academicAdminRoutes = require("./modules/academicAdmin/academicAdmin.routes");
+const academicAdminRoutes = require("./academicAdmin.routes");
 
-const classTeacherRoutes = require("./modules/classTeachers/classTeacher.routes");
+const classTeacherRoutes = require("./classTeacher.routes");
 
-const assessmentRoutes = require("./modules/assessments/assessment.routes");
+const assessmentRoutes = require("./assessment.routes");
 
-const teacherTeachingAssignmentRoutes = require("./modules/teacherTeachingAssignment/teacherTeachingAssignment.routes");
+const teacherTeachingAssignmentRoutes = require("./teacherTeachingAssignment.routes");
 
-const headInstitutionRoutes = require("./modules/headInstitution/headInstitution.routes");
+const headInstitutionRoutes = require("./headInstitution.routes");
 
-const admissionAdminRoutes = require("./modules/admissions/admissionsAdmin.routes");
+const admissionAdminRoutes = require("./admissionsAdmin.routes");
 
-const examinationTimetableRoutes = require("./modules/examinationTimetable/examinationTimetable.routes");
+const examinationTimetableRoutes = require("./examinationTimetable.routes");
 
 const app = express();
 
@@ -50,38 +50,38 @@ app.get("/", (req, res) => {
   });
 });
 
-app.use("/api/auth", authRoutes);
+app.use("/api", authRoutes);
 
-app.use("/api/students", studentRoutes);
+app.use("/api", studentRoutes);
 
-app.use("/api/teachers", teacherRoutes);
+app.use("/api", teacherRoutes);
 
-app.use("/api/parents", parentRoutes);
+app.use("/api", parentRoutes);
 
-app.use("/api/timetables", timetableRoutes);
+app.use("/api", timetableRoutes);
 
-app.use("/api/users", userRoutes);
+app.use("/api", userRoutes);
 
-app.use("/api/attendance", attendanceRoutes);
+app.use("/api", attendanceRoutes);
 
-app.use("/api/academic-admin", academicAdminRoutes);
+app.use("/api", academicAdminRoutes);
 
-app.use("/api/class-teacher", classTeacherRoutes);
+app.use("/api", classTeacherRoutes);
 
-app.use("/api/assessments", assessmentRoutes);
+app.use("/api", assessmentRoutes);
 
-app.use("/api/report-cards", reportCardRoutes);
+app.use("/api", reportCardRoutes);
 
-app.use("/api/teacher-teaching-assignments", teacherTeachingAssignmentRoutes);
+app.use("/api", teacherTeachingAssignmentRoutes);
 
-app.use("/api/head-institution", headInstitutionRoutes);
+app.use("/api", headInstitutionRoutes);
 
-app.use("/api/admissions-admin", admissionAdminRoutes);
+app.use("/api", admissionAdminRoutes);
 
-app.use("/api/examination-timetable", examinationTimetableRoutes);
+app.use("/api", examinationTimetableRoutes);
 
 const PORT = process.env.PORT || 5000;
 
 app.listen(PORT, () => {
-  console.log(`Server running on http://localhost:${PORT}`);
+  console.log(`Server running on port ${PORT}`);
 });
