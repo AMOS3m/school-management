@@ -5,7 +5,7 @@ const router = express.Router();
 
 const headInstitutionController = require("./headInstitution.controller");
 
-const authenticate = require("../../middleware/auth.middleware");
+const authenticate = require("./auth.middleware");
 
 
 router.get(
