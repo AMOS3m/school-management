@@ -7,9 +7,9 @@ const teacherTeachingAssignmentController =
   require(
     "./teacherTeachingAssignment.controller"
   );
-const authenticate = require("../../middleware/auth.middleware");
+const authenticate = require("./auth.middleware");
 
-const requirePermission = require("../../middleware/permission.middleware");
+const requirePermission = require("./permission.middleware");
 
 
 /*
