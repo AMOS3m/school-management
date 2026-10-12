@@ -5,9 +5,9 @@ const express = require("express");
 const academicAdminController =
   require("./academicAdmin.controller");
 
-const authenticate = require("../../middleware/auth.middleware");
+const authenticate = require("./auth.middleware");
 
- const requirePermission = require("../../middleware/permission.middleware");
+ const requirePermission = require("./permission.middleware");
 const { AssessmentType } = require("@prisma/client");
 
 const router = express.Router();
