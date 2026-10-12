@@ -9,7 +9,6 @@ const authRoutes = require("./auth.routes");
 const studentRoutes = require("./student.routes");
 
 const teacherRoutes = require("./teacher.routes");
-const parentRoutes = require("./parent.routes");
 
 const timetableRoutes = require("./timetable.routes");
 
@@ -55,8 +54,6 @@ app.use("/api", authRoutes);
 app.use("/api", studentRoutes);
 
 app.use("/api", teacherRoutes);
-
-app.use("/api", parentRoutes);
 
 app.use("/api", timetableRoutes);
 
