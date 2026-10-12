@@ -7,9 +7,9 @@ const admissionsAdminController =
   require("./admissionsAdmin.controller");
 
 const authMiddleware =
-  require("../../middleware/auth.middleware");
+  require("./auth.middleware");
 
-const requirePermission = require("../../middleware/permission.middleware");
+const requirePermission = require("./permission.middleware");
 
 
 /*
