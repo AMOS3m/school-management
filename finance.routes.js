@@ -5,8 +5,8 @@ const router = express.Router();
 
 const financeController = require("./finance.controller");
 
-const { authenticate } = require("../../middleware/auth.middleware");
-const { authorize } = require("../../middleware/permission.middleware");
+const { authenticate } = require("./auth.middleware");
+const { authorize } = require("./permission.middleware");
 
 
 /*
