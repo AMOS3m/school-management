@@ -4,8 +4,8 @@ const router = express.Router();
 
 const userController = require("./user.controller");
 
-const authMiddleware = require("../../middleware/auth.middleware");
-const requirePermission = require("../../middleware/permission.middleware");
+const authMiddleware = require("./auth.middleware");
+const requirePermission = require("./permission.middleware");
 
 router.post(
   "/admins",
