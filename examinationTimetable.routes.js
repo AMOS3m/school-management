@@ -6,8 +6,8 @@ const examinationTimetableController =
   require("./examinationTimetable.controller");
 
 
-const authenticate = require("../../middleware/auth.middleware");
-const requirePermission = require("../../middleware/permission.middleware");
+const authenticate = require("./auth.middleware");
+const requirePermission = require("./permission.middleware");
 
 
 
