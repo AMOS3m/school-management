@@ -2,8 +2,8 @@ const express = require("express");
 
 const assessmentController = require("./assessment.controller");
 
-const authenticate = require("../../middleware/auth.middleware");
-const requirePermission = require("../../middleware/permission.middleware");
+const authenticate = require("./auth.middleware");
+const requirePermission = require("./permission.middleware");
 
 const router = express.Router();
 
