@@ -7,9 +7,9 @@ const router = express.Router();
 
 const reportCardController = require("./reportCard.controller");
 
-const authenticate = require("../../middleware/auth.middleware");
+const authenticate = require("./auth.middleware");
 
-const requirePermission = require("../../middleware/permission.middleware");
+const requirePermission = require("./permission.middleware");
 
 
 router.get(
