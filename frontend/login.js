@@ -300,7 +300,7 @@ loginForm?.addEventListener(
 
       const response =
         await fetch(
-          `${API_BASE}/auth/login`,
+          `${API_BASE}/api/login`,
           {
 
             method: "POST",
