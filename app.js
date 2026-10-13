@@ -38,7 +38,7 @@ app.use(express.json());
 
 app.use(
   cors({
-    origin: "http://localhost:3000",
+    origin: "http://school-management-system-sigma-snowy-25.vercel.app",
     credentials: true,
   })
 );
