@@ -225,21 +225,22 @@ async function createAdmin(event) {
     |--------------------------------------------------------------------------
     */
 
-    const data = await response.json();
+    const contentType = response.headers.get("content-type") || "";
+
+const data = contentType.includes("application/json")
+  ? await response.json()
+  : await response.text();
+
+if (!response.ok) {
+  throw new Error(
+    typeof data === "object" && data !== null
+      ? data.message || data.error || "Failed to create administrator."
+      : `Server returned HTTP ${response.status}. Check the API route.`
+  );
+}
 
 
-    /*
-    |--------------------------------------------------------------------------
-    | Handle failed request
-    |--------------------------------------------------------------------------
-    */
 
-    if (!response.ok) {
-      throw new Error(
-        data.message ||
-        "Failed to create administrator."
-      );
-    }
 
 
     /*
