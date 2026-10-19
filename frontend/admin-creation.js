@@ -1,4 +1,4 @@
-const API_BASE_URL = "https://school-management-ke.onrender.com";
+const API_BASE_URL = "https://school-management-ke.onrender.com/api";
 
 
 document.addEventListener("DOMContentLoaded", () => {
@@ -197,7 +197,7 @@ async function createAdmin(event) {
 
   try {
     const response = await fetch(
-      `${API_BASE_URL}/users/admins`,
+      `${API_BASE_URL}/admins`,
       {
         method: "POST",
 
