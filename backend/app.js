@@ -8,17 +8,17 @@ const authRoutes = require("./auth.routes");
 
 const studentRoutes = require("./student.routes");
 
-const teacherRoutes = require("./teacher.routes");
+const teacherRoutes = require("./teachers/teacher.routes");
 
 const timetableRoutes = require("./timetable.routes");
 
 const userRoutes = require("./user.routes");
 
-const attendanceRoutes = require("./attendance.routes");
+const attendanceRoutes = require("./attendance/attendance.routes");
 
 const reportCardRoutes = require("./reportCard.routes");
 
-const academicAdminRoutes = require("./academicAdmin.routes");
+const academicAdminRoutes = require("./academicAdmin/academicAdmin.routes");
 
 const classTeacherRoutes = require("./classTeacher.routes");
 
@@ -28,7 +28,7 @@ const teacherTeachingAssignmentRoutes = require("./teacherTeachingAssignment.rou
 
 const headInstitutionRoutes = require("./headInstitution.routes");
 
-const admissionAdminRoutes = require("./admissionsAdmin.routes");
+const admissionAdminRoutes = require("./admissionsAdmin/admissionsAdmin.routes");
 
 const examinationTimetableRoutes = require("./examinationTimetable.routes");
 
