@@ -1,4 +1,4 @@
-const teacherService = require("../teacher.service");
+const teacherService = require("./Teachers/teacher.service");
 
 
 
