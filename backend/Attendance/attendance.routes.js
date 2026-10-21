@@ -2,7 +2,7 @@
 
 const express = require("express");
 
-const attendanceController = require("./attendance.controller");
+const attendanceController = require(".Atttendance/attendance.controller");
 
 const authenticate = require("../auth.middleware");
 const requirePermission = require("../permission.middleware");
