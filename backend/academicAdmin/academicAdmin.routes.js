@@ -3,7 +3,7 @@ const express = require("express");
 
 
 const academicAdminController =
-  require("./academicAdmin.controller");
+  require("./academicAdmin/academicAdmin.controller");
 
 const authenticate = require("../auth.middleware");
 
