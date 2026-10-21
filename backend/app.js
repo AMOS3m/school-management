@@ -8,13 +8,13 @@ const authRoutes = require("./auth.routes");
 
 const studentRoutes = require("./student.routes");
 
-const teacherRoutes = require("./teachers/teacher.routes");
+const teacherRoutes = require("./Teachers/teacher.routes");
 
 const timetableRoutes = require("./timetable.routes");
 
 const userRoutes = require("./user.routes");
 
-const attendanceRoutes = require("./attendance/attendance.routes");
+const attendanceRoutes = require("./Attendance/attendance.routes");
 
 const reportCardRoutes = require("./reportCard.routes");
 
