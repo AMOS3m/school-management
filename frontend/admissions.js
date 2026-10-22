@@ -4,7 +4,7 @@
 |--------------------------------------------------------------------------
 */
 
-const API_BASE_URL = "https://school-management-ke.onrender.com/api";
+const API_BASE_URL = "https://school-management-ke.onrender.com";
 
 let students = [];
 let teachers = [];
