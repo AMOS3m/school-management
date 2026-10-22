@@ -1,6 +1,6 @@
 
 
-const attendanceService = require("./Attendance/attendance.service");
+const attendanceService = require("./attendance.service");
 
 
 /*
