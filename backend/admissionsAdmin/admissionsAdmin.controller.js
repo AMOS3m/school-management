@@ -1,4 +1,4 @@
-const admissionsAdminService = require("./admissionsAdmin/admissionsAdmin.service");
+const admissionsAdminService = require("./admissionsAdmin.service");
 
 
 /*
