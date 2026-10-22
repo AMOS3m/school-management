@@ -53,15 +53,15 @@ app.use("/api", authRoutes);
 
 app.use("/api", studentRoutes);
 
-app.use("/api", teacherRoutes);
+app.use("/api/teachers", teacherRoutes);
 
 app.use("/api", timetableRoutes);
 
 app.use("/api", userRoutes);
 
-app.use("/api", attendanceRoutes);
+app.use("/api/attendance", attendanceRoutes);
 
-app.use("/api", academicAdminRoutes);
+app.use("/api/academic-admin", academicAdminRoutes);
 
 app.use("/api", classTeacherRoutes);
 
@@ -73,7 +73,7 @@ app.use("/api", teacherTeachingAssignmentRoutes);
 
 app.use("/api", headInstitutionRoutes);
 
-app.use("/api", admissionAdminRoutes);
+app.use("/api/admissions-admin", admissionAdminRoutes);
 
 app.use("/api", examinationTimetableRoutes);
 
