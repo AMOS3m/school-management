@@ -1,5 +1,5 @@
 
-const academicAdminService = require("./academicAdmin/academicAdmin.service");
+const academicAdminService = require("./academicAdmin.service");
 
 
 
