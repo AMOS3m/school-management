@@ -3827,7 +3827,7 @@ async function loadTeachers(search = "") {
     } else {
 
       endpoint =
-        "/teachers";
+        "/teachers/";
     }
 
 
