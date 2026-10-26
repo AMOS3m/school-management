@@ -38,7 +38,7 @@ app.use(express.json());
 
 app.use(
   cors({
-    origin: "https://school-management-amos.netlify.app/",
+    origin: "https://school-management-system-sigma-snowy-25.vercel.app/",
     credentials: true,
   })
 );
