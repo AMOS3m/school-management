@@ -3827,7 +3827,7 @@ async function loadTeachers(search = "") {
     } else {
 
       endpoint =
-        "/teachers/";
+        "/teachers/us";
     }
 
 
@@ -4182,7 +4182,7 @@ async function submitTeacher(event) {
     if (teacherId) {
 
       await apiRequest(
-        `/teachers/${teacherId}`,
+        `/teachers/us${teacherId}`,
         {
           method: "PUT",
           body: JSON.stringify(data),
@@ -4219,7 +4219,7 @@ async function submitTeacher(event) {
 
 
       await apiRequest(
-        "/teachers",
+        "/teacher/us",
         {
           method: "POST",
           body: JSON.stringify(data),
