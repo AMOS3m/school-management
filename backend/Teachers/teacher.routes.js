@@ -34,28 +34,28 @@ router.get(
 
 
 router.get(
-  "/",
+  "/us",
   authenticate,
   requirePermission("TEACHER_VIEW"),
   teacherController.getTeachers
 );
 
 router.get(
-  "/:id",
+  "/us:id",
   authenticate,
   requirePermission("TEACHER_VIEW"),
   teacherController.getTeacherById
 );
 
 router.post(
-  "/",
+  "/us",
   authenticate,
   requirePermission("TEACHER_CREATE"),
   teacherController.createTeacher
 );
 
 router.put(
-  "/:id",
+  "/us:id",
   authenticate,
   requirePermission("TEACHER_UPDATE"),
   teacherController.updateTeacher
@@ -63,7 +63,7 @@ router.put(
 
 
 router.post(
-  "/:teacherId/learning-areas",
+  "/us:teacherId/learning-areas",
   authenticate,
   requirePermission("TEACHER_UPDATE"),
   teacherController.assignLearningArea
@@ -71,14 +71,14 @@ router.post(
 
 
 router.post(
-  "/:teacherId/streams",
+  "/us:teacherId/streams",
  authenticate,
   requirePermission("TEACHER_UPDATE"),
   teacherController.assignStream
 );
 
 router.post(
-  "/:teacherId/teaching-assignments",
+  "/us:teacherId/teaching-assignments",
   authenticate,
   requirePermission("TEACHER_ASSIGNMENT_CREATE"),
   teacherController.createTeachingAssignment
