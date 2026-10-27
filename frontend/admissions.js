@@ -4029,7 +4029,7 @@ function openTeacherModal() {
 }
 
 
-function editTeacher(teacherId) {
+function createTeacher(teacherId) {
 
   const teacher =
     teachers.find(
