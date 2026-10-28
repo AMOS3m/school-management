@@ -4044,7 +4044,7 @@ async function createTeacher(data) {
     password: password,
   };
 
-  await apiRequest("/teacher/us", {
+  await apiRequest("/teachers/us", {
     method: "POST",
     body: JSON.stringify(teacherData),
   });
@@ -4204,6 +4204,9 @@ async function submitTeacher(event) {
     showError(error.message || "Failed to save teacher.");
   }
 }
+
+
+
 
 async function loadParents(search = "") {
 
