@@ -4055,6 +4055,21 @@ async function createTeacher(data) {
 }
 
 
+async function updateTeacher(teacherId, data) {
+  await apiRequest(
+    `/teachers/us/${encodeURIComponent(teacherId)}`,
+    {
+      method: "PUT",
+      body: JSON.stringify(data),
+    }
+  );
+
+  showSuccess("Teacher updated successfully.");
+
+  return true;
+}
+
+
 function editTeacher(teacherId) {
 
   const teacher =
@@ -4176,15 +4191,7 @@ async function submitTeacher(event) {
   try {
     if (teacherId) {
       // Update existing teacher
-      await apiRequest(
-        `/teachers/us/${encodeURIComponent(teacherId)}`,
-        {
-          method: "PUT",
-          body: JSON.stringify(data),
-        }
-      );
-
-      showSuccess("Teacher updated successfully.");
+      await updateTeacher(teacherId, data);
     } else {
       // Create new teacher
       const created = await createTeacher(data);
@@ -4200,11 +4207,13 @@ async function submitTeacher(event) {
     await loadAdmissionsDashboard();
 
   } catch (error) {
-    console.error(error);
-    showError(error.message || "Failed to save teacher.");
+    console.error("Failed to save teacher:", error);
+
+    showError(
+      error.message || "Failed to save teacher."
+    );
   }
 }
-
 
 
 
