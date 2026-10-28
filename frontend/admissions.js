@@ -4029,7 +4029,33 @@ function openTeacherModal() {
 }
 
 
-function createTeacher(teacherId) {
+async function createTeacher(data) {
+  const password = document
+    .getElementById("teacherPassword")
+    .value;
+
+  if (!password) {
+    showError("Teacher password is required.");
+    return false;
+  }
+
+  const teacherData = {
+    ...data,
+    password: password,
+  };
+
+  await apiRequest("/teacher/us", {
+    method: "POST",
+    body: JSON.stringify(teacherData),
+  });
+
+  showSuccess("Teacher created successfully.");
+
+  return true;
+}
+
+
+function editTeacher(teacherId) {
 
   const teacher =
     teachers.find(
@@ -4115,142 +4141,70 @@ function createTeacher(teacherId) {
 
 
 async function submitTeacher(event) {
-
   event.preventDefault();
 
-
-  const teacherId =
-    document.getElementById(
-      "teacherId"
-    ).value;
-
+  const teacherId = document
+    .getElementById("teacherId")
+    .value;
 
   const data = {
+    firstName: document
+      .getElementById("teacherFirstName")
+      .value.trim(),
 
-    firstName:
-      document
-        .getElementById(
-          "teacherFirstName"
-        )
-        .value
-        .trim(),
+    middleName: document
+      .getElementById("teacherMiddleName")
+      .value.trim(),
 
-    middleName:
-      document
-        .getElementById(
-          "teacherMiddleName"
-        )
-        .value
-        .trim(),
+    lastName: document
+      .getElementById("teacherLastName")
+      .value.trim(),
 
-    lastName:
-      document
-        .getElementById(
-          "teacherLastName"
-        )
-        .value
-        .trim(),
+    employeeNumber: document
+      .getElementById("teacherEmployeeNumber")
+      .value.trim(),
 
-    employeeNumber:
-      document
-        .getElementById(
-          "teacherEmployeeNumber"
-        )
-        .value
-        .trim(),
+    email: document
+      .getElementById("teacherEmail")
+      .value.trim(),
 
-    email:
-      document
-        .getElementById(
-          "teacherEmail"
-        )
-        .value
-        .trim(),
-
-    phone:
-      document
-        .getElementById(
-          "teacherPhone"
-        )
-        .value
-        .trim(),
+    phone: document
+      .getElementById("teacherPhone")
+      .value.trim(),
   };
 
-
   try {
-
     if (teacherId) {
-
+      // Update existing teacher
       await apiRequest(
-        `/teachers/us${teacherId}`,
+        `/teachers/us/${encodeURIComponent(teacherId)}`,
         {
           method: "PUT",
           body: JSON.stringify(data),
         }
       );
 
-
-      showSuccess(
-        "Teacher updated successfully."
-      );
-
+      showSuccess("Teacher updated successfully.");
     } else {
+      // Create new teacher
+      const created = await createTeacher(data);
 
-      const password =
-        document
-          .getElementById(
-            "teacherPassword"
-          )
-          .value;
-
-
-      if (!password) {
-
-        showError(
-          "Teacher password is required."
-        );
-
+      if (!created) {
         return;
       }
-
-
-      data.password =
-        password;
-
-
-      await apiRequest(
-        "/teacher/us",
-        {
-          method: "POST",
-          body: JSON.stringify(data),
-        }
-      );
-
-
-      showSuccess(
-        "Teacher created successfully."
-      );
     }
-
 
     closeModal("teacherModal");
 
     await loadTeachers();
-
     await loadAdmissionsDashboard();
 
   } catch (error) {
-
-    showError(error.message);
+    console.error(error);
+    showError(error.message || "Failed to save teacher.");
   }
 }
 
-
-/*
-|--------------------------------------------------------------------------
-| PARENTS
-|--------------------------------------------------------------------------
-*/
 async function loadParents(search = "") {
 
   const table =
